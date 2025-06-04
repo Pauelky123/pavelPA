@@ -2,134 +2,104 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PavelPA — Telegram-бот</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PavelPA — Telegram-ассистент Павла</title>
   <style>
     body {
+      background-color: #121212;
+      color: #eee;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: #000;
-      color: #fff;
-      overflow: hidden;
-    }
-
-    canvas#bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
-    .container {
+      padding: 20px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
+    }
+    h1 {
+      font-weight: 900;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-align: center;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .about {
+      max-width: 600px;
+      background-color: #222;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0072ff55;
+      margin-top: 40px;
       text-align: center;
     }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      white-space: nowrap;
-      border-right: 4px solid #00ffff;
-      width: 0;
-      overflow: hidden;
-      animation: typing 3s steps(40, end) forwards, blink 0.75s step-end infinite;
+    .about h2 {
+      margin-bottom: 16px;
+      font-size: 2rem;
+    }
+    .about p {
+      line-height: 1.5;
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #000;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn:hover {
+      background-color: #1a1a1a;
+    }
+    .btn .icon {
+      width: 24px;
+      height: 24px;
     }
 
+    /* Дополнительно, для анимации текста можно оставить, если есть */
     @keyframes typing {
       from { width: 0; }
       to { width: 100%; }
     }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-
-    p {
+    .typing-text {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #0072ff;
+      width: 0;
+      animation: typing 3s steps(40, end) forwards;
       font-size: 1.2rem;
-      max-width: 600px;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeIn 2s ease 3s forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: #00ffff;
-      color: #000;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      transition: background-color 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #00cccc;
+      margin-top: 10px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <canvas id="bg"></canvas>
 
-  <div class="container">
-    <h1>PavelPA — твой Telegram-ассистент</h1>
-    <p>Этот бот поможет тебе с заметками, напоминаниями, ответами на вопросы и даже голосом!</p>
-    <a class="btn" href="https://t.me/username_pasha_Bot" target="_blank">🚀 Перейти к боту</a>
+  <h1>PavelPA — Telegram-ассистент Павла</h1>
+
+  <!-- Пример другого контента -->
+  <p class="typing-text">Привет! Я твой персональный помощник в Telegram.</p>
+
+  <div class="about">
+    <h2>👤 Обо мне</h2>
+    <p>
+      Привет! Меня зовут Павел — я увлекаюсь программированием, видеомонтажом, технологиями и спортом.<br />
+      Создаю полезные проекты, изучаю новое каждый день и делюсь этим с другими.
+    </p>
+    <a class="btn" href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok" class="icon" />
+      Мой TikTok @pauelky
+    </a>
   </div>
 
-  <script>
-    // Анимация звёзд / частиц
-    const canvas = document.getElementById('bg');
-    const ctx = canvas.getContext('2d');
-    let w, h;
-    let particles = [];
-
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 2 + 1,
-        dx: (Math.random() - 0.5) * 0.5,
-        dy: (Math.random() - 0.5) * 0.5
-      });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#00ffff";
-      for (let p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if (p.x < 0 || p.x > w) p.dx *= -1;
-        if (p.y < 0 || p.y > h) p.dy *= -1;
-      }
-      requestAnimationFrame(draw);
-    }
-    draw();
-  </script>
 </body>
 </html>
