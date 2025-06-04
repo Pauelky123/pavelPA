@@ -3,240 +3,98 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PavelPA - Telegram Assistant</title>
+<title>PavelPA - Стильный сайт</title>
 <style>
-  /* Основные стили */
-  body {
-    margin: 0;
+  /* Черно-белая палитра */
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: black;
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: black url('https://cdn.pixabay.com/photo/2016/11/29/09/32/stars-1867617_1280.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    overflow: hidden;
   }
-  header, footer {
+  h1, h2 {
+    font-weight: 300;
     text-align: center;
-    padding: 15px 10px;
-    background: rgba(0,0,0,0.7);
-    border-bottom: 1px solid #444;
   }
-  footer {
-    border-top: 1px solid #444;
-    margin-top: auto;
-  }
-  main {
-    flex: 1;
+  .container {
+    position: relative;
+    z-index: 2;
+    padding: 50px 20px;
     max-width: 700px;
+    margin: 0 auto;
+  }
+  /* Кнопка */
+  .btn {
+    display: block;
     margin: 30px auto;
-    background: rgba(0,0,0,0.75);
-    border-radius: 12px;
-    padding: 25px 30px;
-  }
-
-  h1 {
-    margin-bottom: 5px;
-    font-weight: 700;
-  }
-  h2 {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #666;
-    padding-bottom: 5px;
-  }
-  p {
-    line-height: 1.4;
-  }
-  a {
-    color: #ddd;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  a:hover {
-    color: #aaa;
-  }
-
-  /* Кнопка Telegram */
-  .btn-tg {
-    display: inline-block;
-    margin: 15px 0 25px;
-    padding: 12px 25px;
-    background: #000;
-    border: 2px solid white;
-    border-radius: 30px;
-    font-weight: 700;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    user-select: none;
-  }
-  .btn-tg:hover {
+    padding: 12px 24px;
     background: white;
     color: black;
-    border-color: white;
-  }
-
-  /* Чат */
-  #chat-container {
-    max-width: 100%;
-    height: 380px;
-    background: rgba(255 255 255 / 0.07);
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-  }
-  #chat-messages {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 12px;
-    padding-right: 10px;
-  }
-  .message {
-    margin: 6px 0;
-    padding: 10px 14px;
-    border-radius: 22px;
-    max-width: 70%;
-    clear: both;
-    font-size: 14px;
-    line-height: 1.3;
-    user-select: text;
-  }
-  .user-message {
-    background: #2f80ed;
-    align-self: flex-end;
-    color: white;
-  }
-  .bot-message {
-    background: #444;
-    align-self: flex-start;
-    color: #eee;
-  }
-  #chat-input {
-    display: flex;
-  }
-  #chat-input input {
-    flex-grow: 1;
-    padding: 10px 14px;
-    border-radius: 22px;
     border: none;
-    outline: none;
-    font-size: 15px;
-    color: #fff;
-    background: rgba(255 255 255 / 0.1);
-  }
-  #chat-input input::placeholder {
-    color: #bbb;
-  }
-  #chat-input button {
-    margin-left: 10px;
-    padding: 10px 22px;
-    border-radius: 22px;
-    border: none;
-    background: #2f80ed;
-    color: white;
+    border-radius: 25px;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: 700;
-    transition: background 0.3s ease;
+    text-decoration: none;
+    width: 220px;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-  #chat-input button:hover {
-    background: #1c5bbf;
-  }
-
-  /* Ссылки соцсетей */
-  .social-links a {
-    margin-right: 15px;
-    font-size: 18px;
+  .btn:hover {
+    background: #555;
     color: white;
   }
-  .social-links a:hover {
-    color: #2f80ed;
+  /* Анимация звездного неба */
+  #stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: black;
+    z-index: 1;
   }
-
-  @media(max-width: 480px) {
-    main {
-      margin: 15px 10px;
-      padding: 20px 15px;
-    }
-    #chat-container {
-      height: 320px;
-    }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 2s infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.2; }
+    to { opacity: 0.8; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>PavelPA — твой Telegram-ассистент</h1>
-  <a href="https://t.me/username_pasha_Bot" target="_blank" class="btn-tg" rel="noopener noreferrer">Перейти к боту в Telegram</a>
-</header>
+<div id="stars"></div>
 
-<main>
-  <section>
-    <h2>Живой чат</h2>
-    <p>Задавай вопросы прямо здесь — бот ответит автоматически:</p>
-    <div id="chat-container">
-      <div id="chat-messages"></div>
-      <div id="chat-input">
-        <input type="text" id="user-input" placeholder="Напиши вопрос..." autocomplete="off" />
-        <button onclick="sendMessage()">Отправить</button>
-      </div>
-    </div>
-  </section>
+<div class="container">
+  <h1>PavelPA</h1>
+  <h2>Telegram-ассистент Pavel</h2>
 
-  <section>
-    <h2>Обо мне</h2>
-    <p>Привет! Я Павел, создатель этого помощника PavelPA. Здесь ты можешь пообщаться с ботом, задать вопросы и получать помощь прямо в Telegram.</p>
-    <p>Также подписывайся на мои соцсети:</p>
-    <div class="social-links">
-      <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer" title="TikTok">@pauelky</a>
-    </div>
-  </section>
-</main>
+  <a href="https://t.me/username_pasha_Bot" target="_blank" class="btn">Запустить бота в Telegram</a>
 
-<footer>
-  &copy; 2025 PavelPA. Все права защищены.
-</footer>
+  <h3>Социальные сети</h3>
+  <p><a href="https://www.tiktok.com/@pauelky" target="_blank" style="color:#ccc; text-decoration:none;">TikTok: @pauelky</a></p>
+</div>
 
 <script>
-  const chatMessages = document.getElementById('chat-messages');
-  const userInput = document.getElementById('user-input');
+// Генерация звезд на фоне
+const starsContainer = document.getElementById('stars');
+const starCount = 100;
 
-  const botReplies = [
-    "Привет! Чем могу помочь?",
-    "Расскажи подробнее.",
-    "Интересный вопрос!",
-    "Я пока учусь, но постараюсь ответить.",
-    "Спасибо за твое сообщение!",
-    "Пока не знаю ответа, но скоро узнаю."
-  ];
-
-  function appendMessage(text, className) {
-    const message = document.createElement('div');
-    message.className = 'message ' + className;
-    message.textContent = text;
-    chatMessages.appendChild(message);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function sendMessage() {
-    const text = userInput.value.trim();
-    if (!text) return;
-    appendMessage(text, 'user-message');
-    userInput.value = '';
-    
-    setTimeout(() => {
-      const reply = botReplies[Math.floor(Math.random() * botReplies.length)];
-      appendMessage(reply, 'bot-message');
-    }, 1000);
-  }
-
-  userInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
-  });
+for(let i = 0; i < starCount; i++) {
+  const star = document.createElement('div');
+  star.classList.add('star');
+  const size = Math.random() * 2 + 1;
+  star.style.width = `${size}px`;
+  star.style.height = `${size}px`;
+  star.style.top = `${Math.random() * 100}%`;
+  star.style.left = `${Math.random() * 100}%`;
+  star.style.animationDuration = `${Math.random() * 3 + 1}s`;
+  starsContainer.appendChild(star);
+}
 </script>
 
 </body>
