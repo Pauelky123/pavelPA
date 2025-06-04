@@ -3,132 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PavelPA — Telegram-ассистент Павла</title>
+  <title>PavelPA - Telegram Assistant</title>
   <style>
     body {
-      background-color: #121212;
-      color: #eee;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 20px;
-      min-height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #e0e0e0;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    h1 {
-      font-weight: 900;
+    header {
+      padding: 40px 20px;
+      text-align: center;
+      background: rgba(0,0,0,0.3);
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+    header h1 {
       font-size: 3rem;
-      margin-bottom: 10px;
-      text-align: center;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin: 0;
+      color: #00ffe7;
+      text-shadow: 0 0 10px #00ffe7;
     }
-    .about {
-      max-width: 600px;
-      background-color: #222;
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #0072ff55;
-      margin-top: 40px;
-      text-align: center;
-      animation: pulse 3s ease-in-out infinite alternate;
-    }
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 20px #0072ff55;
-      }
-      100% {
-        box-shadow: 0 0 35px #00c6ffaa;
-      }
-    }
-    .about h2 {
-      margin-bottom: 16px;
-      font-size: 2rem;
-    }
-    .about p {
-      line-height: 1.5;
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-    }
-    .buttons {
+    nav {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      gap: 30px;
+      margin: 20px 0;
     }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background-color: #000;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 8px;
+    nav a {
       text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s, transform 0.3s;
-      cursor: pointer;
-      user-select: none;
-      min-width: 180px;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0, 114, 255, 0.5);
+      color: #00ffe7;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      border: 2px solid transparent;
+      border-radius: 25px;
+      transition: all 0.3s ease;
     }
-    .btn:hover {
-      background-color: #0072ff;
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0, 198, 255, 0.8);
+    nav a:hover {
+      background: #00ffe7;
+      color: #0f2027;
+      border-color: #00ffe7;
+      box-shadow: 0 0 10px #00ffe7;
     }
-    .btn .icon {
-      width: 24px;
-      height: 24px;
-      filter: drop-shadow(0 0 2px #00c6ff);
+    main {
+      flex-grow: 1;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,255,231,0.2);
     }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+    section {
+      margin-bottom: 40px;
     }
-    .typing-text {
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 3px solid #0072ff;
-      width: 0;
-      animation: typing 4s steps(40, end) forwards, blinkCaret 0.75s step-end infinite;
-      font-size: 1.2rem;
-      margin-top: 10px;
+    section h2 {
+      border-bottom: 2px solid #00ffe7;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    footer {
       text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      color: #00ffe7;
+      font-weight: 700;
+      font-size: 1.2rem;
+      animation: fadeInUp 2s ease forwards;
+      opacity: 0;
     }
-    @keyframes blinkCaret {
-      from, to { border-color: transparent; }
-      50% { border-color: #0072ff; }
+    /* Анимация появления */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-
-  <h1>PavelPA — Telegram-ассистент Павла</h1>
-
-  <p class="typing-text">Привет! Я твой персональный помощник в Telegram.</p>
-
-  <div class="about">
-    <h2>👤 Обо мне</h2>
-    <p>
-      Привет! Меня зовут Павел — я увлекаюсь программированием, видеомонтажом, технологиями и спортом.<br />
-      Создаю полезные проекты, изучаю новое каждый день и делюсь этим с другими.
-    </p>
-    <div class="buttons">
-      <a class="btn" href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok" class="icon" />
-        Мой TikTok @pauelky
-      </a>
-      <a class="btn" href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" class="icon" />
-        Мой Telegram-бот
-      </a>
-    </div>
-  </div>
-
+  <header>
+    <h1>PavelPA</h1>
+    <nav>
+      <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener">Telegram Бот</a>
+      <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener">TikTok @pauelky</a>
+      <a href="#about">Обо мне</a>
+    </nav>
+  </header>
+  <main>
+    <section id="about">
+      <h2>Обо мне</h2>
+      <p>Привет! Я — Pavel, разработчик этого Telegram-ассистента и твой помощник в Telegram. Здесь ты можешь задать вопрос, получить цитату или оставить заметки. Спасибо, что посетил мой сайт!</p>
+    </section>
+  </main>
+  <footer>
+    Подписывайся на мои соцсети!
+  </footer>
 </body>
 </html>
