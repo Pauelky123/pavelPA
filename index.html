@@ -33,6 +33,15 @@
       box-shadow: 0 0 20px #0072ff55;
       margin-top: 40px;
       text-align: center;
+      animation: pulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 20px #0072ff55;
+      }
+      100% {
+        box-shadow: 0 0 35px #00c6ffaa;
+      }
     }
     .about h2 {
       margin-bottom: 16px;
@@ -59,18 +68,22 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.3s;
       cursor: pointer;
       user-select: none;
       min-width: 180px;
       justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 114, 255, 0.5);
     }
     .btn:hover {
-      background-color: #1a1a1a;
+      background-color: #0072ff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 198, 255, 0.8);
     }
     .btn .icon {
       width: 24px;
       height: 24px;
+      filter: drop-shadow(0 0 2px #00c6ff);
     }
 
     @keyframes typing {
@@ -82,10 +95,14 @@
       white-space: nowrap;
       border-right: 3px solid #0072ff;
       width: 0;
-      animation: typing 3s steps(40, end) forwards;
+      animation: typing 4s steps(40, end) forwards, blinkCaret 0.75s step-end infinite;
       font-size: 1.2rem;
       margin-top: 10px;
       text-align: center;
+    }
+    @keyframes blinkCaret {
+      from, to { border-color: transparent; }
+      50% { border-color: #0072ff; }
     }
   </style>
 </head>
