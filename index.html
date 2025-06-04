@@ -2,183 +2,116 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PavelPA | Личный сайт</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PavelPA — Telegram-ассистент и Pavel</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Orbitron', sans-serif;
-      background: black;
-      color: white;
+    /* Базовые стили и чёрно-белая палитра */
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #000;
+      color: #eee;
       overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-    canvas {
+
+    /* Анимированное звездное небо */
+    body::before {
+      content: "";
       position: fixed;
-      top: 0; left: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: black url('https://raw.githubusercontent.com/juliangarnier/anime/master/demo/starfield/stars.png') repeat;
+      animation: starMove 120s linear infinite;
       z-index: -1;
+      opacity: 0.8;
     }
+    @keyframes starMove {
+      0% {background-position: 0 0;}
+      100% {background-position: 10000px 0;}
+    }
+
+    /* Контейнер для всего содержимого */
     .container {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 60px 20px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-    #typed-text {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      white-space: pre-wrap;
-      max-width: 800px;
-      text-align: center;
-      min-height: 100px;
-    }
-    .social-links {
-      display: flex;
-      justify-content: space-between;
-      width: 300px;
-      margin: 20px 0;
-    }
-    .social-links a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.2rem;
-      transition: 0.3s;
-    }
-    .social-links a:hover {
-      color: #00ffcc;
-    }
-    .skills {
-      margin: 40px 0;
+      max-width: 960px;
       width: 100%;
-      max-width: 500px;
-    }
-    .skill {
-      margin: 10px 0;
-    }
-    .skill-name {
-      margin-bottom: 5px;
-    }
-    .progress {
-      background: #333;
+      background: rgba(0 0 0 / 0.6);
       border-radius: 20px;
-      overflow: hidden;
+      box-shadow: 0 0 40px rgba(255 255 255 / 0.2);
+      padding: 40px 30px;
+      gap: 30px;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
     }
-    .progress-bar {
-      height: 15px;
-      background: #00ffcc;
-      width: 0;
-      transition: width 2s ease-in-out;
-    }
-    .download-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: white;
-      color: black;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .download-button:hover {
-      background: #00ffcc;
-      color: black;
-    }
-    footer {
+
+    /* Блоки слева и справа для ссылок */
+    .side-link {
+      flex: 1;
+      max-width: 150px;
       text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      opacity: 0.6;
+      font-size: 16px;
+    }
+    .side-link a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #eee;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 14px;
+      border: 1.5px solid #eee;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .side-link a:hover {
+      background: #eee;
+      color: #000;
+      box-shadow: 0 0 8px #eee;
+    }
+
+    /* Центр — раздел Про меня */
+    .about-section {
+      flex: 3;
+      background: rgba(255 255 255 / 0.07);
+      padding: 25px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(255 255 255 / 0.1);
+      color: #eee;
+      line-height: 1.6;
+      font-size: 18px;
+      text-align: center;
+      border: 1.5px solid rgba(255 255 255 / 0.15);
+      backdrop-filter: blur(8px);
+    }
+    .about-section h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255 255 255 / 0.6);
     }
   </style>
 </head>
 <body>
-
-<canvas id="stars"></canvas>
-
-<div class="container">
-  <h1>PavelPA</h1>
-  <div id="typed-text"></div>
-
-  <div class="social-links">
-    <a href="https://t.me/username_pasha_Bot" target="_blank">Telegram</a>
-    <a href="https://www.tiktok.com/@pauelky" target="_blank">TikTok</a>
-  </div>
-
-  <div class="skills">
-    <div class="skill">
-      <div class="skill-name">Python</div>
-      <div class="progress"><div class="progress-bar" style="width: 90%"></div></div>
+  <div class="container">
+    <div class="side-link">
+      <div>Мой TikTok</div>
+      <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">@pauelky</a>
     </div>
-    <div class="skill">
-      <div class="skill-name">Telegram API</div>
-      <div class="progress"><div class="progress-bar" style="width: 85%"></div></div>
-    </div>
-    <div class="skill">
-      <div class="skill-name">Видеомонтаж</div>
-      <div class="progress"><div class="progress-bar" style="width: 80%"></div></div>
+
+    <section id="about" class="about-section">
+      <h2>Про меня</h2>
+      <p>
+        Привет! Меня зовут Павел, и я — настоящий фанат техники. Всё, что связано с механизмами и гаджетами, вызывает у меня неподдельный интерес. Особенно мне близок квадроцикл — с ним я уже много лет, и каждое путешествие на нём для меня — настоящее приключение, полное адреналина и драйва. Я не просто люблю кататься, я изучаю устройство техники, разбираюсь в ремонте и постоянно стремлюсь прокачивать свои навыки. Для меня техника — это не просто хобби, а стиль жизни, который вдохновляет создавать и развиваться. Добро пожаловать в мой мир скорости, технологий и бесконечного увлечения!
+      </p>
+    </section>
+
+    <div class="side-link">
+      <div>Мой Telegram-бот</div>
+      <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Перейти к боту</a>
     </div>
   </div>
-
-  <a href="your-business-card.pdf" download>
-    <button class="download-button">📥 Скачать визитку</button>
-  </a>
-</div>
-
-<footer>© 2025 PavelPA. Все права защищены.</footer>
-
-<script>
-  const text = `Привет! Я Павел, увлекаюсь программированием, видеомонтажом и созданием Telegram-ботов. Хочу развиваться в технологиях и создавать крутые проекты, которые могут помочь людям.`;
-
-  let i = 0;
-  function typing() {
-    if (i < text.length) {
-      document.getElementById("typed-text").innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typing, 50);
-    }
-  }
-  typing();
-
-  // Анимация звезд
-  const canvas = document.getElementById("stars");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const stars = Array(200).fill().map(() => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 1.2,
-    d: Math.random() * 1
-  }));
-
-  function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#fff";
-    stars.forEach(s => {
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    moveStars();
-  }
-
-  function moveStars() {
-    stars.forEach(s => {
-      s.y += s.d;
-      if (s.y > canvas.height) {
-        s.y = 0;
-        s.x = Math.random() * canvas.width;
-      }
-    });
-  }
-
-  setInterval(drawStars, 30);
-</script>
-
 </body>
 </html>
