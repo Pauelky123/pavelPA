@@ -3,115 +3,194 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PavelPA — Telegram-ассистент и Pavel</title>
+  <title>PavelPA — персональный сайт Павла</title>
   <style>
-    /* Базовые стили и чёрно-белая палитра */
+    /* Сброс и базовые стили */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
     body, html {
-      margin: 0; padding: 0; height: 100%;
+      height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #000;
-      color: #eee;
+      color: #fff;
       overflow-x: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      padding: 20px;
     }
 
-    /* Анимированное звездное небо */
-    body::before {
-      content: "";
+    /* Анимированный фон звездного неба на canvas */
+    #stars {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: black url('https://raw.githubusercontent.com/juliangarnier/anime/master/demo/starfield/stars.png') repeat;
-      animation: starMove 120s linear infinite;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: -1;
-      opacity: 0.8;
-    }
-    @keyframes starMove {
-      0% {background-position: 0 0;}
-      100% {background-position: 10000px 0;}
+      background: black;
+      display: block;
     }
 
-    /* Контейнер для всего содержимого */
+    /* Основной контейнер с прозрачным фоном */
     .container {
-      display: flex;
-      max-width: 960px;
+      max-width: 900px;
       width: 100%;
-      background: rgba(0 0 0 / 0.6);
+      background: rgba(0,0,0,0.7);
+      padding: 40px 50px;
       border-radius: 20px;
-      box-shadow: 0 0 40px rgba(255 255 255 / 0.2);
-      padding: 40px 30px;
-      gap: 30px;
-      align-items: center;
-      justify-content: space-between;
-      backdrop-filter: blur(10px);
+      box-shadow: 0 0 40px rgba(255 255 255 / 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      text-align: center;
     }
 
-    /* Блоки слева и справа для ссылок */
-    .side-link {
-      flex: 1;
-      max-width: 150px;
-      text-align: center;
-      font-size: 16px;
+    /* Заголовок */
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 10px #fff;
     }
-    .side-link a {
-      display: inline-block;
-      margin-top: 10px;
-      color: #eee;
+
+    /* Раздел "Про меня" */
+    .about {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      font-weight: 400;
+      color: #ddd;
+      max-width: 700px;
+      margin: 0 auto;
+      border-left: 4px solid #fff;
+      padding-left: 20px;
+      font-style: italic;
+      user-select: text;
+    }
+
+    /* Блок с кнопками ссылок */
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 28px;
+      border: 2px solid #fff;
+      border-radius: 12px;
+      color: #fff;
       text-decoration: none;
       font-weight: 600;
-      padding: 10px 14px;
-      border: 1.5px solid #eee;
-      border-radius: 10px;
+      font-size: 1.1rem;
       transition: all 0.3s ease;
+      user-select: none;
+      display: inline-block;
+      min-width: 180px;
     }
-    .side-link a:hover {
-      background: #eee;
+    .btn:hover {
+      background: #fff;
       color: #000;
-      box-shadow: 0 0 8px #eee;
+      box-shadow: 0 0 15px #fff;
+      transform: scale(1.05);
     }
 
-    /* Центр — раздел Про меня */
-    .about-section {
-      flex: 3;
-      background: rgba(255 255 255 / 0.07);
-      padding: 25px 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(255 255 255 / 0.1);
-      color: #eee;
-      line-height: 1.6;
-      font-size: 18px;
-      text-align: center;
-      border: 1.5px solid rgba(255 255 255 / 0.15);
-      backdrop-filter: blur(8px);
-    }
-    .about-section h2 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      color: #fff;
-      text-shadow: 0 0 12px rgba(255 255 255 / 0.6);
+    /* Адаптив */
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .about {
+        font-size: 1rem;
+        border-left: 3px solid #fff;
+        padding-left: 15px;
+      }
+      .btn {
+        min-width: 140px;
+        font-size: 1rem;
+        padding: 12px 24px;
+      }
+      .links {
+        gap: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="side-link">
-      <div>Мой TikTok</div>
-      <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">@pauelky</a>
-    </div>
 
-    <section id="about" class="about-section">
-      <h2>Про меня</h2>
-      <p>
-        Привет! Меня зовут Павел, и я — настоящий фанат техники. Всё, что связано с механизмами и гаджетами, вызывает у меня неподдельный интерес. Особенно мне близок квадроцикл — с ним я уже много лет, и каждое путешествие на нём для меня — настоящее приключение, полное адреналина и драйва. Я не просто люблю кататься, я изучаю устройство техники, разбираюсь в ремонте и постоянно стремлюсь прокачивать свои навыки. Для меня техника — это не просто хобби, а стиль жизни, который вдохновляет создавать и развиваться. Добро пожаловать в мой мир скорости, технологий и бесконечного увлечения!
-      </p>
-    </section>
+<canvas id="stars"></canvas>
 
-    <div class="side-link">
-      <div>Мой Telegram-бот</div>
-      <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Перейти к боту</a>
-    </div>
+<div class="container">
+  <h1>PavelPA</h1>
+
+  <section class="about">
+    Привет! Я Павел — страстный любитель техники и квадроциклов. Каждый выезд — это вызов и удовольствие. Я увлечён ремонтом и изучением сложных механизмов, ведь техника — это моя жизнь и вдохновение.
+  </section>
+
+  <div class="links">
+    <a class="btn" href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok @pauelky</a>
+    <a class="btn" href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Telegram-бот PavelPA</a>
   </div>
+</div>
+
+<script>
+  // Анимация звездного неба на canvas
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let stars = [];
+
+  function Star() {
+    this.x = Math.random() * width;
+    this.y = Math.random() * height;
+    this.radius = Math.random() * 1.2;
+    this.alpha = Math.random();
+    this.alphaChange = Math.random() * 0.02 + 0.005;
+  }
+
+  Star.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+    ctx.fill();
+  };
+
+  Star.prototype.update = function() {
+    this.alpha += this.alphaChange;
+    if (this.alpha <= 0 || this.alpha >= 1) this.alphaChange = -this.alphaChange;
+    this.draw();
+  };
+
+  function init() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    stars = [];
+    for(let i = 0; i < 200; i++) {
+      stars.push(new Star());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    stars.forEach(star => star.update());
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    init();
+  });
+
+  init();
+  animate();
+</script>
+
 </body>
 </html>
