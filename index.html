@@ -3,166 +3,172 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PavelPA - Стильный сайт</title>
+<title>PavelPA — Личный сайт</title>
 <style>
-  /* Черно-белая палитра */
+  /* Общие стили */
   body, html {
     margin: 0; padding: 0; height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: black;
     color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow-x: hidden;
   }
 
-  /* Анимированный фон с мерцающими звёздами */
+  /* Звездное небо */
   #stars {
     position: fixed;
-    top: 0; left: 0;
     width: 100%; height: 100%;
     background: black;
-    z-index: 1;
-    overflow: hidden;
+    z-index: -1;
   }
   .star {
     position: absolute;
     background: white;
     border-radius: 50%;
     opacity: 0.8;
-    animation: twinkle 2s infinite alternate;
+    animation: twinkle 2s infinite ease-in-out;
   }
   @keyframes twinkle {
-    from { opacity: 0.2; }
-    to { opacity: 0.8; }
-  }
-  /* Звёзды медленно двигаются */
-  .star.move {
-    animation-name: twinkle, moveStar;
-    animation-duration: 2s, 60s;
-    animation-iteration-count: infinite, infinite;
-    animation-timing-function: ease-in-out, linear;
-  }
-  @keyframes moveStar {
-    from { transform: translate(0, 0); }
-    to { transform: translate(20px, 20px); }
+    0%, 100% {opacity: 0.8;}
+    50% {opacity: 0.2;}
   }
 
-  /* Контейнер для всей страницы */
-  .page-container {
-    position: relative;
-    z-index: 2;
-    max-width: 900px;
-    width: 90%;
+  /* Контейнер для содержимого */
+  .container {
     display: flex;
-    justify-content: space-between;
+    height: 100vh;
     align-items: center;
+    justify-content: center;
     gap: 40px;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
-  /* Стили для колонок */
+  /* Соцсети слева и справа */
   .side-link {
     flex: 1;
-    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.2rem;
     text-align: center;
+    opacity: 0;
+    animation: fadeInScale 1s forwards ease-out;
+  }
+  .side-link.left {
+    animation-delay: 0.3s;
+  }
+  .side-link.right {
+    animation-delay: 0.6s;
   }
   .side-link a {
-    display: inline-block;
-    padding: 12px 20px;
-    background: white;
-    color: black;
-    border-radius: 25px;
-    font-weight: 600;
+    color: #eee;
     text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 10px 0;
+    border: 2px solid #eee;
+    padding: 12px 24px;
+    border-radius: 8px;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
   }
   .side-link a:hover {
-    background: #555;
-    color: white;
+    background-color: white;
+    color: black;
+    transform: scale(1.1);
   }
 
-  /* Центрированный блок обо мне */
+  /* Центр - Обо мне */
   .about-me {
     flex: 2;
-    background: rgba(255 255 255 / 0.1);
-    border-radius: 12px;
-    padding: 30px 40px;
-    font-weight: 300;
+    max-width: 600px;
     font-size: 1.1rem;
     line-height: 1.5;
     text-align: center;
-    user-select: none;
-    box-shadow: 0 0 15px rgba(255 255 255 / 0.15);
-    min-height: 130px;
+    border: 2px solid #eee;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    min-height: 200px;
+    color: white;
     white-space: pre-wrap;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+    letter-spacing: 0.05em;
   }
 
-  /* Адаптив */
-  @media (max-width: 700px) {
-    .page-container {
-      flex-direction: column;
-      gap: 20px;
+  @keyframes fadeInScale {
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
-    .side-link {
-      max-width: 100%;
-    }
-    .about-me {
-      padding: 20px;
+    from {
+      opacity: 0;
+      transform: scale(0.95);
     }
   }
+
+  /* Курсор для typing effect */
+  #about-text::after {
+    content: '|';
+    animation: blink 1s infinite step-start;
+    margin-left: 2px;
+  }
+  @keyframes blink {
+    0%, 50% {opacity: 1;}
+    51%, 100% {opacity: 0;}
+  }
+
 </style>
 </head>
 <body>
 
 <div id="stars"></div>
 
-<div class="page-container">
-  <div class="side-link">
+<div class="container">
+  <div class="side-link left">
+    <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Telegram бот</a>
+  </div>
+
+  <div class="about-me">
+    <div id="about-text"></div>
+  </div>
+
+  <div class="side-link right">
     <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok: @pauelky</a>
-  </div>
-
-  <div class="about-me" id="aboutMe">
-    <!-- Текст будет печататься сюда -->
-  </div>
-
-  <div class="side-link">
-    <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Запустить бота в Telegram</a>
   </div>
 </div>
 
 <script>
-// Генерация звезд на фоне с плавным движением и мерцанием
-const starsContainer = document.getElementById('stars');
-const starCount = 100;
+  // Создаем звезды
+  const starsContainer = document.getElementById('stars');
+  const starCount = 100;
 
-for(let i = 0; i < starCount; i++) {
-  const star = document.createElement('div');
-  star.classList.add('star', 'move');
-  const size = Math.random() * 2 + 1;
-  star.style.width = `${size}px`;
-  star.style.height = `${size}px`;
-  star.style.top = `${Math.random() * 100}%`;
-  star.style.left = `${Math.random() * 100}%`;
-  star.style.animationDuration = `${Math.random() * 3 + 1}s, ${60 + Math.random() * 40}s`;
-  starsContainer.appendChild(star);
-}
-
-// Текст для блока "Обо мне"
-const aboutText = `Привет! Меня зовут Павел. Я создаю умные Telegram-боты, которые помогают людям в повседневной жизни. Люблю программирование, технологии и постоянно развиваюсь. Моя цель — сделать удобные инструменты, которые действительно работают. Спасибо, что заглянули!`;
-
-// Эффект печати текста по одной букве
-const aboutEl = document.getElementById('aboutMe');
-let index = 0;
-
-function typeWriter() {
-  if (index < aboutText.length) {
-    aboutEl.textContent += aboutText.charAt(index);
-    index++;
-    setTimeout(typeWriter, 50); // скорость печати — 50 мс на букву
+  for(let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+    star.style.top = (Math.random() * 100) + 'vh';
+    star.style.left = (Math.random() * 100) + 'vw';
+    star.style.animationDuration = (Math.random() * 3 + 1) + 's';
+    starsContainer.appendChild(star);
   }
-}
-typeWriter();
+
+  // Текст для typing effect
+  const text = `Привет! Меня зовут Павел, я увлекаюсь технологиями, программированием и созданием полезных Telegram-ботов. Люблю делиться знаниями и вдохновлять других. В свободное время занимаюсь спортом и развиваюсь в цифровом мире. Добро пожаловать на мой сайт!`;
+
+  const aboutText = document.getElementById('about-text');
+  let index = 0;
+
+  function type() {
+    if (index < text.length) {
+      aboutText.textContent += text.charAt(index);
+      index++;
+      setTimeout(type, 40);
+    } else {
+      aboutText.classList.remove('typing');
+    }
+  }
+  type();
 </script>
 
 </body>
