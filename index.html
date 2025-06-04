@@ -1,60 +1,84 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PavelPA - Главная</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    background: black;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x: hidden;
-  }
-  #stars {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
-  }
-  .container {
-    max-width: 700px;
-    margin: 150px auto;
-    text-align: center;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-  }
-  h1 {
-    font-size: 48px;
-    margin-bottom: 40px;
-  }
-  .nav-links a {
-    display: inline-block;
-    margin: 0 20px;
-    padding: 15px 30px;
-    font-size: 22px;
-    color: white;
-    border: 2px solid white;
-    border-radius: 15px;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-  }
-  .nav-links a:hover {
-    background-color: white;
-    color: black;
-    transform: scale(1.1);
-  }
-  @keyframes fadeIn {
-    to {opacity:1;}
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PavelPA — Главная</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      color: #eaeaea;
+      font-family: 'Manrope', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+    #stars {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+    .container {
+      max-width: 800px;
+      padding: 40px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1.5s ease forwards;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 30px;
+      background: linear-gradient(90deg, #58a6ff, #9cffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      padding: 14px 28px;
+      font-size: 18px;
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid #58a6ff;
+      border-radius: 14px;
+      background: rgba(88, 166, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+    .nav-links a:hover {
+      background: #58a6ff;
+      color: #000;
+      box-shadow: 0 0 15px #58a6ff80;
+      transform: translateY(-2px);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
 
 <canvas id="stars"></canvas>
 
 <div class="container">
-  <h1>Добро пожаловать на сайт PavelPA!</h1>
+  <h1>Привет! Я — PavelPA</h1>
+  <p style="margin-bottom: 30px; font-size: 18px; color: #aaa">Умный Telegram-ассистент с голосом, генерацией и интеллектом</p>
   <div class="nav-links">
     <a href="about.html">Обо мне</a>
     <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok</a>
@@ -75,7 +99,7 @@ function init() {
   canvas.height = h;
 
   stars = [];
-  for(let i=0; i<200; i++) {
+  for (let i = 0; i < 200; i++) {
     stars.push({
       x: Math.random() * w,
       y: Math.random() * h,
@@ -87,7 +111,7 @@ function init() {
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
-  for(let i=0; i<stars.length; i++) {
+  for (let i = 0; i < stars.length; i++) {
     let s = stars[i];
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
