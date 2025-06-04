@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PavelPA — Твой умный Telegram-ассистент</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f8ff;
+    color: #1a1a2e;
+    overflow-x: hidden;
+  }
+  header {
+    background-color: #324aeb;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    animation: fadeInScale 1s ease forwards;
+    transform-origin: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.3s;
+  }
+  header p {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.6s;
+  }
+  main {
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    text-align: center;
+  }
+  .btn-download {
+    background-color: #324aeb;
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: inline-block;
+    margin: 2rem 0;
+    box-shadow: 0 4px 10px rgb(50 74 235 / 0.4);
+    transition: background-color 0.3s ease;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.9s;
+  }
+  .btn-download:hover {
+    background-color: #243bb5;
+    animation: pulse 1.5s infinite;
+  }
+  section.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #444;
+    margin-top: 1.5rem;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 1.2s;
+  }
+  footer {
+    margin-top: 4rem;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+  }
+  @media (max-width: 480px) {
+    header h1 {
+      font-size: 1.8rem;
+    }
+    .btn-download {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  /* Анимации */
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(50, 74, 235, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(50, 74, 235, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(50, 74, 235, 0);
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>PavelPA</h1>
+  <p>Твой умный помощник в Telegram</p>
+</header>
+<main>
+  <a href="https://t.me/username_pasha_Bot" target="_blank" class="btn-download" rel="noopener noreferrer">
+    Скачать бота в Telegram
+  </a>
+  <section class="description">
+    <p>
+      PavelPA — это удобный и дружелюбный Telegram-ассистент, который отвечает на вопросы, помогает с заметками, напоминаниями, случайными цитатами и голосовыми сообщениями.  
+      Просто напиши ему и получай помощь в любое время!
+    </p>
+  </section>
+</main>
+<footer>
+  &copy; 2025 PavelPA — Все права защищены
+</footer>
+</body>
+</html>
