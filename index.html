@@ -1,195 +1,108 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PavelPA — персональный сайт Павла</title>
-  <style>
-    /* Сброс и базовые стили */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    /* Анимированный фон звездного неба на canvas */
-    #stars {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      background: black;
-      display: block;
-    }
-
-    /* Основной контейнер с прозрачным фоном */
-    .container {
-      max-width: 900px;
-      width: 100%;
-      background: rgba(0,0,0,0.7);
-      padding: 40px 50px;
-      border-radius: 20px;
-      box-shadow: 0 0 40px rgba(255 255 255 / 0.15);
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      text-align: center;
-    }
-
-    /* Заголовок */
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: 4px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      color: #fff;
-      text-shadow: 0 0 10px #fff;
-    }
-
-    /* Раздел "Про меня" */
-    .about {
-      font-size: 1.25rem;
-      line-height: 1.8;
-      font-weight: 400;
-      color: #ddd;
-      max-width: 700px;
-      margin: 0 auto;
-      border-left: 4px solid #fff;
-      padding-left: 20px;
-      font-style: italic;
-      user-select: text;
-    }
-
-    /* Блок с кнопками ссылок */
-    .links {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 14px 28px;
-      border: 2px solid #fff;
-      border-radius: 12px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      user-select: none;
-      display: inline-block;
-      min-width: 180px;
-    }
-    .btn:hover {
-      background: #fff;
-      color: #000;
-      box-shadow: 0 0 15px #fff;
-      transform: scale(1.05);
-    }
-
-    /* Адаптив */
-    @media (max-width: 600px) {
-      .container {
-        padding: 30px 20px;
-      }
-      h1 {
-        font-size: 2.2rem;
-      }
-      .about {
-        font-size: 1rem;
-        border-left: 3px solid #fff;
-        padding-left: 15px;
-      }
-      .btn {
-        min-width: 140px;
-        font-size: 1rem;
-        padding: 12px 24px;
-      }
-      .links {
-        gap: 20px;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PavelPA - Главная</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: black;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+  }
+  #stars {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+  }
+  .container {
+    max-width: 700px;
+    margin: 150px auto;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+  }
+  h1 {
+    font-size: 48px;
+    margin-bottom: 40px;
+  }
+  .nav-links a {
+    display: inline-block;
+    margin: 0 20px;
+    padding: 15px 30px;
+    font-size: 22px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  }
+  .nav-links a:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.1);
+  }
+  @keyframes fadeIn {
+    to {opacity:1;}
+  }
+</style>
 </head>
 <body>
 
 <canvas id="stars"></canvas>
 
 <div class="container">
-  <h1>PavelPA</h1>
-
-  <section class="about">
-    Привет! Я Павел — страстный любитель техники и квадроциклов. Каждый выезд — это вызов и удовольствие. Я увлечён ремонтом и изучением сложных механизмов, ведь техника — это моя жизнь и вдохновение.
-  </section>
-
-  <div class="links">
-    <a class="btn" href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok @pauelky</a>
-    <a class="btn" href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Telegram-бот PavelPA</a>
+  <h1>Добро пожаловать на сайт PavelPA!</h1>
+  <div class="nav-links">
+    <a href="about.html">Обо мне</a>
+    <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok</a>
+    <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Telegram-бот</a>
   </div>
 </div>
 
 <script>
-  // Анимация звездного неба на canvas
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  let stars = [];
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let w, h;
+let stars = [];
 
-  function Star() {
-    this.x = Math.random() * width;
-    this.y = Math.random() * height;
-    this.radius = Math.random() * 1.2;
-    this.alpha = Math.random();
-    this.alphaChange = Math.random() * 0.02 + 0.005;
+function init() {
+  w = window.innerWidth;
+  h = window.innerHeight;
+  canvas.width = w;
+  canvas.height = h;
+
+  stars = [];
+  for(let i=0; i<200; i++) {
+    stars.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      radius: Math.random() * 1.2,
+      alpha: Math.random()
+    });
   }
+}
 
-  Star.prototype.draw = function() {
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+  for(let i=0; i<stars.length; i++) {
+    let s = stars[i];
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+    ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
     ctx.fill();
-  };
-
-  Star.prototype.update = function() {
-    this.alpha += this.alphaChange;
-    if (this.alpha <= 0 || this.alpha >= 1) this.alphaChange = -this.alphaChange;
-    this.draw();
-  };
-
-  function init() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    stars = [];
-    for(let i = 0; i < 200; i++) {
-      stars.push(new Star());
-    }
+    s.alpha += (Math.random() - 0.5) * 0.05;
+    if (s.alpha < 0) s.alpha = 0;
+    if (s.alpha > 1) s.alpha = 1;
   }
+  requestAnimationFrame(draw);
+}
 
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    stars.forEach(star => star.update());
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', () => {
-    init();
-  });
-
-  init();
-  animate();
+window.addEventListener('resize', init);
+init();
+draw();
 </script>
 
 </body>
