@@ -17,12 +17,14 @@
     justify-content: center;
   }
 
+  /* Анимированный фон с мерцающими звёздами */
   #stars {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: black;
     z-index: 1;
+    overflow: hidden;
   }
   .star {
     position: absolute;
@@ -34,6 +36,17 @@
   @keyframes twinkle {
     from { opacity: 0.2; }
     to { opacity: 0.8; }
+  }
+  /* Звёзды медленно двигаются */
+  .star.move {
+    animation-name: twinkle, moveStar;
+    animation-duration: 2s, 60s;
+    animation-iteration-count: infinite, infinite;
+    animation-timing-function: ease-in-out, linear;
+  }
+  @keyframes moveStar {
+    from { transform: translate(0, 0); }
+    to { transform: translate(20px, 20px); }
   }
 
   /* Контейнер для всей страницы */
@@ -81,6 +94,8 @@
     text-align: center;
     user-select: none;
     box-shadow: 0 0 15px rgba(255 255 255 / 0.15);
+    min-height: 130px;
+    white-space: pre-wrap;
   }
 
   /* Адаптив */
@@ -107,8 +122,8 @@
     <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok: @pauelky</a>
   </div>
 
-  <div class="about-me">
-    Привет! Меня зовут Павел. Я создаю умные Telegram-боты, которые помогают людям в повседневной жизни. Люблю программирование, технологии и постоянно развиваюсь. Моя цель — сделать удобные инструменты, которые действительно работают. Спасибо, что заглянули!
+  <div class="about-me" id="aboutMe">
+    <!-- Текст будет печататься сюда -->
   </div>
 
   <div class="side-link">
@@ -117,21 +132,37 @@
 </div>
 
 <script>
-// Генерация звезд на фоне
+// Генерация звезд на фоне с плавным движением и мерцанием
 const starsContainer = document.getElementById('stars');
 const starCount = 100;
 
 for(let i = 0; i < starCount; i++) {
   const star = document.createElement('div');
-  star.classList.add('star');
+  star.classList.add('star', 'move');
   const size = Math.random() * 2 + 1;
   star.style.width = `${size}px`;
   star.style.height = `${size}px`;
   star.style.top = `${Math.random() * 100}%`;
   star.style.left = `${Math.random() * 100}%`;
-  star.style.animationDuration = `${Math.random() * 3 + 1}s`;
+  star.style.animationDuration = `${Math.random() * 3 + 1}s, ${60 + Math.random() * 40}s`;
   starsContainer.appendChild(star);
 }
+
+// Текст для блока "Обо мне"
+const aboutText = `Привет! Меня зовут Павел. Я создаю умные Telegram-боты, которые помогают людям в повседневной жизни. Люблю программирование, технологии и постоянно развиваюсь. Моя цель — сделать удобные инструменты, которые действительно работают. Спасибо, что заглянули!`;
+
+// Эффект печати текста по одной букве
+const aboutEl = document.getElementById('aboutMe');
+let index = 0;
+
+function typeWriter() {
+  if (index < aboutText.length) {
+    aboutEl.textContent += aboutText.charAt(index);
+    index++;
+    setTimeout(typeWriter, 50); // скорость печати — 50 мс на букву
+  }
+}
+typeWriter();
 </script>
 
 </body>
