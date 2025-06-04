@@ -5,35 +5,103 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PavelPA - Telegram Assistant</title>
 <style>
+  /* Основные стили */
   body {
-    margin: 0; 
+    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: black url('https://cdn.pixabay.com/photo/2016/11/29/09/32/stars-1867617_1280.jpg') no-repeat center center fixed;
     background-size: cover;
     color: white;
-  }
-  #chat-container {
-    max-width: 500px;
-    margin: 50px auto;
-    background: rgba(0,0,0,0.7);
-    border-radius: 12px;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    height: 400px;
+    min-height: 100vh;
+  }
+  header, footer {
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(0,0,0,0.7);
+    border-bottom: 1px solid #444;
+  }
+  footer {
+    border-top: 1px solid #444;
+    margin-top: auto;
+  }
+  main {
+    flex: 1;
+    max-width: 700px;
+    margin: 30px auto;
+    background: rgba(0,0,0,0.75);
+    border-radius: 12px;
+    padding: 25px 30px;
+  }
+
+  h1 {
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #666;
+    padding-bottom: 5px;
+  }
+  p {
+    line-height: 1.4;
+  }
+  a {
+    color: #ddd;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover {
+    color: #aaa;
+  }
+
+  /* Кнопка Telegram */
+  .btn-tg {
+    display: inline-block;
+    margin: 15px 0 25px;
+    padding: 12px 25px;
+    background: #000;
+    border: 2px solid white;
+    border-radius: 30px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  .btn-tg:hover {
+    background: white;
+    color: black;
+    border-color: white;
+  }
+
+  /* Чат */
+  #chat-container {
+    max-width: 100%;
+    height: 380px;
+    background: rgba(255 255 255 / 0.07);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
   }
   #chat-messages {
     flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     padding-right: 10px;
   }
   .message {
-    margin: 5px 0;
-    padding: 8px 12px;
-    border-radius: 20px;
+    margin: 6px 0;
+    padding: 10px 14px;
+    border-radius: 22px;
     max-width: 70%;
     clear: both;
+    font-size: 14px;
+    line-height: 1.3;
+    user-select: text;
   }
   .user-message {
     background: #2f80ed;
@@ -43,47 +111,93 @@
   .bot-message {
     background: #444;
     align-self: flex-start;
+    color: #eee;
   }
   #chat-input {
     display: flex;
   }
   #chat-input input {
     flex-grow: 1;
-    padding: 10px;
-    border-radius: 20px;
+    padding: 10px 14px;
+    border-radius: 22px;
     border: none;
     outline: none;
+    font-size: 15px;
+    color: #fff;
+    background: rgba(255 255 255 / 0.1);
+  }
+  #chat-input input::placeholder {
+    color: #bbb;
   }
   #chat-input button {
     margin-left: 10px;
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 10px 22px;
+    border-radius: 22px;
     border: none;
     background: #2f80ed;
     color: white;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 700;
+    transition: background 0.3s ease;
   }
   #chat-input button:hover {
     background: #1c5bbf;
+  }
+
+  /* Ссылки соцсетей */
+  .social-links a {
+    margin-right: 15px;
+    font-size: 18px;
+    color: white;
+  }
+  .social-links a:hover {
+    color: #2f80ed;
+  }
+
+  @media(max-width: 480px) {
+    main {
+      margin: 15px 10px;
+      padding: 20px 15px;
+    }
+    #chat-container {
+      height: 320px;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Основное содержимое сайта -->
-<div style="text-align:center; margin-top: 30px;">
+<header>
   <h1>PavelPA — твой Telegram-ассистент</h1>
-  <p>Задавай вопросы прямо здесь:</p>
-</div>
+  <a href="https://t.me/username_pasha_Bot" target="_blank" class="btn-tg" rel="noopener noreferrer">Перейти к боту в Telegram</a>
+</header>
 
-<div id="chat-container">
-  <div id="chat-messages"></div>
-  <div id="chat-input">
-    <input type="text" id="user-input" placeholder="Напиши вопрос..." autocomplete="off" />
-    <button onclick="sendMessage()">Отправить</button>
-  </div>
-</div>
+<main>
+  <section>
+    <h2>Живой чат</h2>
+    <p>Задавай вопросы прямо здесь — бот ответит автоматически:</p>
+    <div id="chat-container">
+      <div id="chat-messages"></div>
+      <div id="chat-input">
+        <input type="text" id="user-input" placeholder="Напиши вопрос..." autocomplete="off" />
+        <button onclick="sendMessage()">Отправить</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Обо мне</h2>
+    <p>Привет! Я Павел, создатель этого помощника PavelPA. Здесь ты можешь пообщаться с ботом, задать вопросы и получать помощь прямо в Telegram.</p>
+    <p>Также подписывайся на мои соцсети:</p>
+    <div class="social-links">
+      <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer" title="TikTok">@pauelky</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 PavelPA. Все права защищены.
+</footer>
 
 <script>
   const chatMessages = document.getElementById('chat-messages');
@@ -112,7 +226,6 @@
     appendMessage(text, 'user-message');
     userInput.value = '';
     
-    // Имитация ответа бота с задержкой
     setTimeout(() => {
       const reply = botReplies[Math.floor(Math.random() * botReplies.length)];
       appendMessage(reply, 'bot-message');
