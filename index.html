@@ -1,174 +1,183 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PavelPA — Личный сайт</title>
-<style>
-  /* Общие стили */
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: black;
-    color: white;
-    overflow-x: hidden;
-  }
-
-  /* Звездное небо */
-  #stars {
-    position: fixed;
-    width: 100%; height: 100%;
-    background: black;
-    z-index: -1;
-  }
-  .star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: twinkle 2s infinite ease-in-out;
-  }
-  @keyframes twinkle {
-    0%, 100% {opacity: 0.8;}
-    50% {opacity: 0.2;}
-  }
-
-  /* Контейнер для содержимого */
-  .container {
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  /* Соцсети слева и справа */
-  .side-link {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 1.2rem;
-    text-align: center;
-    opacity: 0;
-    animation: fadeInScale 1s forwards ease-out;
-  }
-  .side-link.left {
-    animation-delay: 0.3s;
-  }
-  .side-link.right {
-    animation-delay: 0.6s;
-  }
-  .side-link a {
-    color: #eee;
-    text-decoration: none;
-    margin: 10px 0;
-    border: 2px solid #eee;
-    padding: 12px 24px;
-    border-radius: 8px;
-    display: inline-block;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-  }
-  .side-link a:hover {
-    background-color: white;
-    color: black;
-    transform: scale(1.1);
-  }
-
-  /* Центр - Обо мне */
-  .about-me {
-    flex: 2;
-    max-width: 600px;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    text-align: center;
-    border: 2px solid #eee;
-    padding: 20px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.05);
-    min-height: 200px;
-    color: white;
-    white-space: pre-wrap;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-  }
-
-  @keyframes fadeInScale {
-    to {
-      opacity: 1;
-      transform: scale(1);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PavelPA | Личный сайт</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: black;
+      color: white;
+      overflow-x: hidden;
     }
-    from {
-      opacity: 0;
-      transform: scale(0.95);
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: -1;
     }
-  }
-
-  /* Курсор для typing effect */
-  #about-text::after {
-    content: '|';
-    animation: blink 1s infinite step-start;
-    margin-left: 2px;
-  }
-  @keyframes blink {
-    0%, 50% {opacity: 1;}
-    51%, 100% {opacity: 0;}
-  }
-
-</style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    #typed-text {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      white-space: pre-wrap;
+      max-width: 800px;
+      text-align: center;
+      min-height: 100px;
+    }
+    .social-links {
+      display: flex;
+      justify-content: space-between;
+      width: 300px;
+      margin: 20px 0;
+    }
+    .social-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+    .social-links a:hover {
+      color: #00ffcc;
+    }
+    .skills {
+      margin: 40px 0;
+      width: 100%;
+      max-width: 500px;
+    }
+    .skill {
+      margin: 10px 0;
+    }
+    .skill-name {
+      margin-bottom: 5px;
+    }
+    .progress {
+      background: #333;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 15px;
+      background: #00ffcc;
+      width: 0;
+      transition: width 2s ease-in-out;
+    }
+    .download-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .download-button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+  </style>
 </head>
 <body>
 
-<div id="stars"></div>
+<canvas id="stars"></canvas>
 
 <div class="container">
-  <div class="side-link left">
-    <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Telegram бот</a>
+  <h1>PavelPA</h1>
+  <div id="typed-text"></div>
+
+  <div class="social-links">
+    <a href="https://t.me/username_pasha_Bot" target="_blank">Telegram</a>
+    <a href="https://www.tiktok.com/@pauelky" target="_blank">TikTok</a>
   </div>
 
-  <div class="about-me">
-    <div id="about-text"></div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill-name">Python</div>
+      <div class="progress"><div class="progress-bar" style="width: 90%"></div></div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">Telegram API</div>
+      <div class="progress"><div class="progress-bar" style="width: 85%"></div></div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">Видеомонтаж</div>
+      <div class="progress"><div class="progress-bar" style="width: 80%"></div></div>
+    </div>
   </div>
 
-  <div class="side-link right">
-    <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok: @pauelky</a>
-  </div>
+  <a href="your-business-card.pdf" download>
+    <button class="download-button">📥 Скачать визитку</button>
+  </a>
 </div>
 
+<footer>© 2025 PavelPA. Все права защищены.</footer>
+
 <script>
-  // Создаем звезды
-  const starsContainer = document.getElementById('stars');
-  const starCount = 100;
+  const text = `Привет! Я Павел, увлекаюсь программированием, видеомонтажом и созданием Telegram-ботов. Хочу развиваться в технологиях и создавать крутые проекты, которые могут помочь людям.`;
 
-  for(let i = 0; i < starCount; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
-    star.style.top = (Math.random() * 100) + 'vh';
-    star.style.left = (Math.random() * 100) + 'vw';
-    star.style.animationDuration = (Math.random() * 3 + 1) + 's';
-    starsContainer.appendChild(star);
-  }
-
-  // Текст для typing effect
-  const text = `Привет! Меня зовут Павел, я увлекаюсь технологиями, программированием и созданием полезных Telegram-ботов. Люблю делиться знаниями и вдохновлять других. В свободное время занимаюсь спортом и развиваюсь в цифровом мире. Добро пожаловать на мой сайт!`;
-
-  const aboutText = document.getElementById('about-text');
-  let index = 0;
-
-  function type() {
-    if (index < text.length) {
-      aboutText.textContent += text.charAt(index);
-      index++;
-      setTimeout(type, 40);
-    } else {
-      aboutText.classList.remove('typing');
+  let i = 0;
+  function typing() {
+    if (i < text.length) {
+      document.getElementById("typed-text").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 50);
     }
   }
-  type();
+  typing();
+
+  // Анимация звезд
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const stars = Array(200).fill().map(() => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.2,
+    d: Math.random() * 1
+  }));
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#fff";
+    stars.forEach(s => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    moveStars();
+  }
+
+  function moveStars() {
+    stars.forEach(s => {
+      s.y += s.d;
+      if (s.y > canvas.height) {
+        s.y = 0;
+        s.x = Math.random() * canvas.width;
+      }
+    });
+  }
+
+  setInterval(drawStars, 30);
 </script>
 
 </body>
