@@ -12,39 +12,11 @@
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  h1, h2 {
-    font-weight: 300;
-    text-align: center;
-  }
-  .container {
-    position: relative;
-    z-index: 2;
-    padding: 50px 20px;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  /* Кнопка */
-  .btn {
-    display: block;
-    margin: 30px auto;
-    padding: 12px 24px;
-    background: white;
-    color: black;
-    border: none;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    width: 220px;
-    text-align: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .btn:hover {
-    background: #555;
-    color: white;
-  }
-  /* Анимация звездного неба */
+
   #stars {
     position: fixed;
     top: 0; left: 0;
@@ -63,20 +35,85 @@
     from { opacity: 0.2; }
     to { opacity: 0.8; }
   }
+
+  /* Контейнер для всей страницы */
+  .page-container {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* Стили для колонок */
+  .side-link {
+    flex: 1;
+    max-width: 180px;
+    text-align: center;
+  }
+  .side-link a {
+    display: inline-block;
+    padding: 12px 20px;
+    background: white;
+    color: black;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .side-link a:hover {
+    background: #555;
+    color: white;
+  }
+
+  /* Центрированный блок обо мне */
+  .about-me {
+    flex: 2;
+    background: rgba(255 255 255 / 0.1);
+    border-radius: 12px;
+    padding: 30px 40px;
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: center;
+    user-select: none;
+    box-shadow: 0 0 15px rgba(255 255 255 / 0.15);
+  }
+
+  /* Адаптив */
+  @media (max-width: 700px) {
+    .page-container {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .side-link {
+      max-width: 100%;
+    }
+    .about-me {
+      padding: 20px;
+    }
+  }
 </style>
 </head>
 <body>
 
 <div id="stars"></div>
 
-<div class="container">
-  <h1>PavelPA</h1>
-  <h2>Telegram-ассистент Pavel</h2>
+<div class="page-container">
+  <div class="side-link">
+    <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok: @pauelky</a>
+  </div>
 
-  <a href="https://t.me/username_pasha_Bot" target="_blank" class="btn">Запустить бота в Telegram</a>
+  <div class="about-me">
+    Привет! Меня зовут Павел. Я создаю умные Telegram-боты, которые помогают людям в повседневной жизни. Люблю программирование, технологии и постоянно развиваюсь. Моя цель — сделать удобные инструменты, которые действительно работают. Спасибо, что заглянули!
+  </div>
 
-  <h3>Социальные сети</h3>
-  <p><a href="https://www.tiktok.com/@pauelky" target="_blank" style="color:#ccc; text-decoration:none;">TikTok: @pauelky</a></p>
+  <div class="side-link">
+    <a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener noreferrer">Запустить бота в Telegram</a>
+  </div>
 </div>
 
 <script>
