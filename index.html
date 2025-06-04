@@ -3,94 +3,201 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PavelPA - Telegram Assistant</title>
+  <title>PavelPA — Стильный Telegram Assistant</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #e0e0e0;
+      background: #0d0b08;
+      font-family: 'Montserrat', sans-serif;
+      color: #f0e6d2;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      position: relative;
     }
+
+    /* Частицы */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     header {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(90deg, #000000dd 0%, #3e2a07cc 100%);
       padding: 40px 20px;
       text-align: center;
-      background: rgba(0,0,0,0.3);
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.25);
+      border-bottom: 2px solid #b68e18;
     }
+
     header h1 {
-      font-size: 3rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3.8rem;
       margin: 0;
-      color: #00ffe7;
-      text-shadow: 0 0 10px #00ffe7;
+      color: #d4af37;
+      text-shadow:
+        0 0 5px #d4af37,
+        0 0 10px #d4af37,
+        0 0 20px #ffd700;
+      letter-spacing: 0.1em;
     }
+
     nav {
+      margin-top: 25px;
       display: flex;
       justify-content: center;
-      gap: 30px;
-      margin: 20px 0;
+      gap: 35px;
     }
+
     nav a {
+      color: #d4af37;
       text-decoration: none;
-      color: #00ffe7;
       font-weight: 600;
-      font-size: 1.1rem;
-      padding: 10px 20px;
+      font-size: 1.25rem;
+      padding: 12px 28px;
       border: 2px solid transparent;
-      border-radius: 25px;
-      transition: all 0.3s ease;
+      border-radius: 30px;
+      transition: all 0.35s ease;
+      background: rgba(212, 175, 55, 0.1);
+      box-shadow:
+        0 0 5px rgba(212, 175, 55, 0.3);
     }
+
     nav a:hover {
-      background: #00ffe7;
-      color: #0f2027;
-      border-color: #00ffe7;
-      box-shadow: 0 0 10px #00ffe7;
+      background: #d4af37;
+      color: #0d0b08;
+      box-shadow:
+        0 0 10px #d4af37,
+        0 0 20px #ffd700;
+      border-color: #ffd700;
+      transform: scale(1.05);
     }
+
     main {
+      position: relative;
+      z-index: 10;
       flex-grow: 1;
-      padding: 20px;
       max-width: 900px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,255,231,0.2);
+      margin: 50px auto 80px;
+      padding: 30px 40px;
+      background: #1c1808cc;
+      border-radius: 20px;
+      box-shadow:
+        0 8px 30px rgba(212, 175, 55, 0.3);
+      backdrop-filter: blur(8px);
+      color: #fff7d1;
+      font-size: 1.1rem;
+      line-height: 1.7;
     }
-    section {
-      margin-bottom: 40px;
-    }
-    section h2 {
-      border-bottom: 2px solid #00ffe7;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      font-size: 2rem;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.3);
-      color: #00ffe7;
+
+    main h2 {
+      font-family: 'Playfair Display', serif;
       font-weight: 700;
-      font-size: 1.2rem;
-      animation: fadeInUp 2s ease forwards;
-      opacity: 0;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: #d4af37;
+      text-shadow:
+        0 0 8px #ffd700;
     }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 25px 15px;
+      background: linear-gradient(90deg, #000000dd 0%, #3e2a07cc 100%);
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #d4af37;
+      border-top: 2px solid #b68e18;
+      box-shadow:
+        0 -4px 15px rgba(255, 215, 0, 0.25);
+      animation: fadeInUp 1.8s ease forwards;
+      opacity: 0;
+      letter-spacing: 0.05em;
+      min-height: 45px;
+    }
+
     /* Анимация появления */
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(25px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    a {
+      transition: color 0.3s ease;
+    }
+
+    a:focus, a:active {
+      outline: none;
+    }
+
+    /* Ссылки в тексте */
+    main a {
+      color: #ffd700;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+    main a:hover {
+      color: #fff;
+      text-decoration: none;
+      text-shadow: 0 0 8px #ffd700;
+    }
+
+    /* Адаптив */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.8rem;
+      }
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav a {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+      }
+      main {
+        margin: 30px 20px 60px;
+        padding: 25px 20px;
+        font-size: 1rem;
+      }
+      main h2 {
+        font-size: 2.2rem;
+      }
+      footer {
+        font-size: 1.1rem;
+        padding: 20px 10px;
+      }
+    }
   </style>
 </head>
 <body>
+  <canvas id="particles"></canvas>
+
   <header>
     <h1>PavelPA</h1>
     <nav>
@@ -99,14 +206,87 @@
       <a href="#about">Обо мне</a>
     </nav>
   </header>
+
   <main>
     <section id="about">
       <h2>Обо мне</h2>
-      <p>Привет! Я — Pavel, разработчик этого Telegram-ассистента и твой помощник в Telegram. Здесь ты можешь задать вопрос, получить цитату или оставить заметки. Спасибо, что посетил мой сайт!</p>
+      <p>Привет! Меня зовут Pavel. Я создал этого Telegram-ассистента, чтобы помочь тебе быстро получать ответы и полезную информацию. Этот сайт — моя визитка и портал для связи. Спасибо, что заглянул!</p>
+      <p>Мои соцсети помогут тебе быть в курсе новостей и обновлений:</p>
+      <ul>
+        <li><a href="https://t.me/username_pasha_Bot" target="_blank" rel="noopener">Telegram Бот</a></li>
+        <li><a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener">TikTok @pauelky</a></li>
+      </ul>
     </section>
   </main>
+
   <footer>
-    Подписывайся на мои соцсети!
+    <!-- Надпись удалена по просьбе -->
   </footer>
+
+  <script>
+    // Частицы — золотые плавающие точки
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+
+    // Настройка размера канваса
+    function initCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    initCanvas();
+    window.addEventListener('resize', () => {
+      initCanvas();
+      initParticles();
+    });
+
+    // Класс частицы
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedY = Math.random() * 0.5 + 0.1;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        if (this.y < 0) this.y = canvas.height;
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+      }
+      draw() {
+        ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+        ctx.shadowColor = 'rgba(255, 215, 0, 0.9)';
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Инициализация массива частиц
+    function initParticles() {
+      particlesArray = [];
+      const numberOfParticles = Math.floor(window.innerWidth / 10);
+      for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+    initParticles();
+
+    // Анимация
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particlesArray.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
