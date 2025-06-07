@@ -2,12 +2,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PavelPA — Главная</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     body, html {
       height: 100%;
@@ -18,8 +20,6 @@
       align-items: center;
       justify-content: center;
       overflow-x: hidden;
-      flex-direction: column;
-      padding: 20px;
     }
     #stars {
       position: fixed; top: 0; left: 0;
@@ -36,7 +36,6 @@
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
       animation: fadeIn 1.5s ease forwards;
-      margin-bottom: 20px;
     }
     h1 {
       font-size: 48px;
@@ -50,7 +49,6 @@
       justify-content: center;
       gap: 20px;
       flex-wrap: wrap;
-      margin-bottom: 30px;
     }
     .nav-links a {
       padding: 14px 28px;
@@ -68,25 +66,35 @@
       box-shadow: 0 0 15px #58a6ff80;
       transform: translateY(-2px);
     }
-    #voiceBtn {
-      cursor: pointer;
-      padding: 12px 30px;
-      font-size: 20px;
-      border-radius: 18px;
-      border: none;
-      background: #58a6ff;
-      color: #000;
-      font-weight: 700;
-      box-shadow: 0 0 10px #58a6ffaa;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    #voiceBtn:hover {
-      background-color: #9cffff;
-      box-shadow: 0 0 20px #9cffffcc;
-    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ====== Адаптивность для телефонов ====== */
+    @media (max-width: 768px) {
+      .container {
+        max-width: 90%;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 16px;
+        padding: 12px 20px;
+      }
     }
   </style>
 </head>
@@ -96,78 +104,55 @@
 
 <div class="container">
   <h1>Привет! Я — PavelPA</h1>
-  <p style="margin-bottom: 30px; font-size: 18px; color: #aaa;">
-    Умный Telegram-ассистент с голосом, генерацией и интеллектом
-  </p>
+  <p style="margin-bottom: 30px; font-size: 18px; color: #aaa">Умный Telegram-ассистент с голосом, генерацией и интеллектом</p>
   <div class="nav-links">
     <a href="about.html">Обо мне</a>
     <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok</a>
     <a href="https://t.me/PauelkyyBot" target="_blank" rel="noopener noreferrer">Telegram-бот</a>
   </div>
-  <button id="voiceBtn">Голосовое приветствие</button>
 </div>
 
 <script>
-  // Звёздный фон
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-  let w, h;
-  let stars = [];
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let w, h;
+let stars = [];
 
-  function init() {
-    w = window.innerWidth;
-    h = window.innerHeight;
-    canvas.width = w;
-    canvas.height = h;
+function init() {
+  w = window.innerWidth;
+  h = window.innerHeight;
+  canvas.width = w;
+  canvas.height = h;
 
-    stars = [];
-    for (let i = 0; i < 200; i++) {
-      stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        radius: Math.random() * 1.2,
-        alpha: Math.random()
-      });
-    }
+  stars = [];
+  for (let i = 0; i < 200; i++) {
+    stars.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      radius: Math.random() * 1.2,
+      alpha: Math.random()
+    });
   }
+}
 
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    for (let i = 0; i < stars.length; i++) {
-      let s = stars[i];
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
-      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-      ctx.fill();
-      s.alpha += (Math.random() - 0.5) * 0.05;
-      if (s.alpha < 0) s.alpha = 0;
-      if (s.alpha > 1) s.alpha = 1;
-    }
-    requestAnimationFrame(draw);
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+  for (let i = 0; i < stars.length; i++) {
+    let s = stars[i];
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctx.fill();
+    s.alpha += (Math.random() - 0.5) * 0.05;
+    if (s.alpha < 0) s.alpha = 0;
+    if (s.alpha > 1) s.alpha = 1;
   }
+  requestAnimationFrame(draw);
+}
 
-  window.addEventListener('resize', init);
-  init();
-  draw();
-
-  // Голосовое приветствие
-  const voiceBtn = document.getElementById('voiceBtn');
-  voiceBtn.addEventListener('click', () => {
-    const msg = new SpeechSynthesisUtterance();
-    msg.text = "Привет! Добро пожаловать на сайт PavelPA — твоего умного Telegram-ассистента с голосом, генерацией и интеллектом.";
-    msg.lang = 'ru-RU';
-    msg.rate = 1; // скорость речи
-    msg.pitch = 1; // высота голоса
-
-    // Опционально: выбрать голос из доступных
-    const voices = speechSynthesis.getVoices();
-    const russianVoice = voices.find(voice => voice.lang === 'ru-RU' && voice.name.toLowerCase().includes('dmitry'));
-    if (russianVoice) {
-      msg.voice = russianVoice;
-    }
-
-    speechSynthesis.speak(msg);
-  });
+window.addEventListener('resize', init);
+init();
+draw();
 </script>
 
 </body>
