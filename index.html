@@ -49,6 +49,10 @@
       text-align: center;
       position: relative;
       z-index: 1;
+      transition: opacity 0.5s ease;
+    }
+    .container.hide {
+      opacity: 0;
     }
     h1 {
       font-weight: 600;
@@ -57,11 +61,6 @@
       margin-bottom: 24px;
       letter-spacing: 1.5px;
       font-feature-settings: "liga" off;
-      min-height: 3.6rem; /* чтобы высота не прыгала при печати */
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #f0f0f0; /* курсор */
-      animation: blinkCursor 0.75s step-end infinite;
     }
     p.description {
       font-weight: 300;
@@ -72,11 +71,6 @@
       max-width: 90%;
       margin-left: auto;
       margin-right: auto;
-      opacity: 0;
-      transition: opacity 0.7s ease;
-    }
-    .description.visible {
-      opacity: 1;
     }
     .nav-links {
       display: flex;
@@ -116,15 +110,35 @@
         transform: translateY(0);
       }
     }
-    @keyframes blinkCursor {
-      0%, 100% { border-color: #f0f0f0; }
-      50% { border-color: transparent; }
+
+    /* Прелоадер */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #121214;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
     }
+    #preloader .spinner {
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-top: 5px solid #ddd;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       h1 {
         font-size: 2.2rem;
-        min-height: 2.7rem;
       }
       p.description {
         font-size: 1rem;
@@ -142,85 +156,105 @@
 </head>
 <body>
 
+<div id="preloader"><div class="spinner"></div></div>
+
 <canvas id="stars"></canvas>
 
-<div class="container">
-  <h1 id="typed"></h1>
-  <p class="description" id="description">
+<div class="container" id="content">
+  <h1>Привет! Я — PavelPA</h1>
+  <p class="description">
     Умный Telegram-ассистент с голосом, генерацией и интеллектом.<br />
     Помогаю в повседневных задачах и учусь вместе с тобой.
   </p>
   <div class="nav-links">
-    <a href="about.html">Обо мне</a>
+    <a href="about.html" class="smooth-link">Обо мне</a>
     <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok</a>
     <a href="https://t.me/PauelkyyBot" target="_blank" rel="noopener noreferrer">Telegram-бот</a>
   </div>
 </div>
 
 <script>
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-let w, h;
-let stars = [];
+  // Прелоадер
+  window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    preloader.style.opacity = '0';
+    setTimeout(() => {
+      preloader.style.display = 'none';
+    }, 500);
+  });
 
-function init() {
-  w = window.innerWidth;
-  h = window.innerHeight;
-  canvas.width = w;
-  canvas.height = h;
-
-  stars = [];
-  for (let i = 0; i < 180; i++) {
-    stars.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      radius: Math.random() * 1.1 + 0.2,
-      alpha: Math.random() * 0.7 + 0.3,
-      alphaChange: (Math.random() * 0.01) + 0.002
+  // Плавный переход по ссылкам внутри сайта (только для about.html)
+  document.querySelectorAll('a.smooth-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      const content = document.getElementById('content');
+      content.classList.add('hide');
+      setTimeout(() => {
+        window.location.href = href;
+      }, 500); // Время совпадает с CSS transition opacity
     });
+  });
+
+  // Интерактивный фон - звёзды с параллаксом
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  let stars = [];
+
+  function init() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+
+    stars = [];
+    for (let i = 0; i < 180; i++) {
+      stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        baseX: 0,  // добавим базовые координаты
+        baseY: 0,
+        radius: Math.random() * 1.1 + 0.2,
+        alpha: Math.random() * 0.7 + 0.3,
+        alphaChange: (Math.random() * 0.01) + 0.002
+      });
+      stars[i].baseX = stars[i].x;
+      stars[i].baseY = stars[i].y;
+    }
   }
-}
 
-function draw() {
-  ctx.clearRect(0, 0, w, h);
-  for (let s of stars) {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-    ctx.shadowColor = 'rgba(255, 255, 255, 0.2)';
-    ctx.shadowBlur = 3;
-    ctx.fill();
-    s.alpha += s.alphaChange;
-    if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange = -s.alphaChange;
+  // Отслеживаем движение мыши для параллакса
+  let mouseX = w / 2;
+  let mouseY = h / 2;
+
+  window.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let s of stars) {
+      // Сдвигаем звёзды в зависимости от положения мыши (параллакс)
+      const moveX = (mouseX - w/2) * 0.02 * (s.radius); // коэффициент смещения зависит от радиуса звезды
+      const moveY = (mouseY - h/2) * 0.02 * (s.radius);
+
+      ctx.beginPath();
+      ctx.arc(s.baseX + moveX, s.baseY + moveY, s.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+      ctx.shadowColor = 'rgba(255, 255, 255, 0.2)';
+      ctx.shadowBlur = 3;
+      ctx.fill();
+      s.alpha += s.alphaChange;
+      if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange = -s.alphaChange;
+    }
+    requestAnimationFrame(draw);
   }
-  requestAnimationFrame(draw);
-}
 
-window.addEventListener('resize', init);
-init();
-draw();
-
-// Эффект печати для заголовка
-const text = "Привет! Я — PavelPA";
-const typedElement = document.getElementById('typed');
-const description = document.getElementById('description');
-
-let index = 0;
-
-function type() {
-  if (index < text.length) {
-    typedElement.textContent += text.charAt(index);
-    index++;
-    setTimeout(type, 100); // задержка между символами (100ms)
-  } else {
-    // когда напечатали, убираем курсор
-    typedElement.style.borderRight = 'none';
-    // показываем описание
-    description.classList.add('visible');
-  }
-}
-
-type();
+  window.addEventListener('resize', init);
+  init();
+  draw();
 </script>
 
 </body>
