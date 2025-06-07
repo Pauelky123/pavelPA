@@ -3,159 +3,204 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PavelPA - Обо мне</title>
+<title>Обо мне - PavelPA</title>
 <style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    background: black;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x: hidden;
+  /* Базовые стили */
+  body {
+    margin: 0; padding: 20px;
+    background: #121212;
+    color: #ddd;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    line-height: 1.5;
   }
-  #stars {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
+  h1, h2, h3 {
+    color: #f0f0f0;
+    margin-bottom: 16px;
   }
-  .container {
-    max-width: 900px;
-    margin: 100px auto;
-    padding: 20px 40px;
-    border: 2px solid white;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.05);
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
+  p {
+    color: #bbb;
+    margin-bottom: 12px;
   }
-  h2 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 30px;
-  }
-  #typing-text {
-    font-size: 20px;
-    line-height: 1.7;
-    white-space: pre-wrap;
-  }
-  nav {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  nav a {
-    margin: 0 15px;
+  a {
+    color: #4fc3f7;
     text-decoration: none;
-    color: white;
-    font-weight: bold;
-    border: 2px solid white;
-    padding: 10px 20px;
-    border-radius: 12px;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
   }
-  nav a:hover {
-    background-color: white;
-    color: black;
-    transform: scale(1.1);
-  }
-  @keyframes fadeIn {
-    to {opacity:1;}
+  a:hover {
+    text-decoration: underline;
   }
 
-  /* Адаптив для планшетов и телефонов */
-  @media (max-width: 768px) {
-    .container {
-      margin: 50px 20px;
-      padding: 15px 20px;
-      max-width: 95%;
+  /* Кнопка */
+  #toggle-books-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 20px 0;
+    font-size: 1rem;
+    color: #121212;
+    background-color: #4fc3f7;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #toggle-books-btn:hover {
+    background-color: #3a9bdc;
+  }
+
+  /* Контейнер книг */
+  #books-list {
+    max-width: 700px;
+    margin: 0 auto 40px;
+  }
+  article.book-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+    background: #1f1f1f;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
+  }
+  article.book-item img {
+    border-radius: 6px;
+    flex-shrink: 0;
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+  }
+  article.book-item div {
+    flex: 1;
+  }
+  article.book-item h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+    color: #e0e0e0;
+  }
+  article.book-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #bbb;
+  }
+
+  /* Адаптивность */
+  @media (max-width: 480px) {
+    body {
+      padding: 12px 16px;
     }
-    h2 {
-      font-size: 28px;
+    article.book-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
-    #typing-text {
-      font-size: 16px;
+    article.book-item img {
+      margin-bottom: 12px;
     }
-    nav a {
-      margin: 8px 10px;
-      padding: 8px 14px;
-      font-size: 14px;
+    article.book-item div {
+      flex: none;
     }
   }
 </style>
 </head>
 <body>
 
-<canvas id="stars"></canvas>
+<h1>Обо мне</h1>
 
-<nav>
-  <a href="index.html">Главная</a>
-  <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok</a>
-  <a href="https://t.me/PauelkyyBot" target="_blank" rel="noopener noreferrer">Telegram-бот</a>
-</nav>
+<p>Привет! Меня зовут Павел, и я увлекаюсь саморазвитием и бизнес-литературой. Ниже — книги, которые я прочитал и могу рекомендовать для вдохновения и полезных знаний.</p>
 
-<div class="container">
-  <h2>Обо мне</h2>
-  <p id="typing-text"></p>
-</div>
+<button id="toggle-books-btn" aria-expanded="false" aria-controls="books-list">
+  Книги, которые я прочитал и советую к прочтению
+</button>
+
+<section id="books-list" hidden>
+  <article class="book-item">
+    <img src="https://covers.openlibrary.org/b/id/8231856-L.jpg" alt="Обложка книги Самый богатый человек в Вавилоне" />
+    <div>
+      <h3>«Самый богатый человек в Вавилоне» — Джордж Клейсон</h3>
+      <p>Классика финансовой мудрости — простые принципы накопления богатства, проверенные временем.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://m.media-amazon.com/images/I/41qTpGe3pKL._SX331_BO1,204,203,200_.jpg" alt="Обложка книги Думай как миллионер" />
+    <div>
+      <h3>«Думай как миллионер» — Харв Экер</h3>
+      <p>Образ мышления и привычки, которые помогают людям добиваться финансового успеха.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/41Ulu6hR5bL._SX327_BO1,204,203,200_.jpg" alt="Обложка книги Тонкое искусство пофигизма" />
+    <div>
+      <h3>«Тонкое искусство пофигизма» — Марк Мэнсон</h3>
+      <p>Необычный взгляд на личностный рост и умение правильно расставлять приоритеты.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://upload.wikimedia.org/wikipedia/ru/0/0a/%D0%9B%D0%B0%D1%80%D1%80%D0%B8_%D0%9A%D0%B8%D0%BD%D0%B3_-_%D0%9A%D0%B0%D0%BA_%D1%80%D0%B0%D0%B7%D0%B3%D0%BE%D0%B2%D0%B0%D1%80%D0%B8%D1%82%D1%8C%D1%81%D1%8F_%D1%81_%D0%BA%D0%B5%D0%BC_%D1%83%D0%B3%D0%BE%D0%B4%D0%BD%D0%BE_%D0%BA%D0%BE%D0%B3%D0%BE%D0%B4%D0%BE.jpg" alt="Обложка книги Как разговаривать с кем угодно, когда угодно" />
+    <div>
+      <h3>«Как разговаривать с кем угодно, когда угодно» — Ларри Кинг</h3>
+      <p>Практические советы по ведению лёгких и эффективных разговоров в любой ситуации.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/c/c5/Дейл_Карнеги_2.jpg/220px-Дейл_Карнеги_2.jpg" alt="Обложка книги Правила жизни успешных людей" />
+    <div>
+      <h3>«Правила жизни успешных людей» — Дейл Карнеги</h3>
+      <p>Основы построения успешной жизни и гармоничных отношений с людьми.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/9/9c/%D0%9A%D0%B0%D0%BA_%D0%B7%D0%B0%D0%B2%D0%BE%D0%B5%D0%B2%D1%8B%D0%B2%D0%B0%D1%82%D1%8C_%D0%B4%D1%80%D1%83%D0%B7%D0%B5%D0%B9_%D0%B8_%D0%BE%D0%BA%D0%B0%D0%B7%D1%8B%D0%B2%D0%B0%D1%82%D1%8C_%D0%B2%D0%BB%D0%B8%D1%8F%D0%BD%D0%B8%D0%B5_%D0%BD%D0%B0_%D0%BB%D1%8E%D0%B4%D0%B5%D0%B9.jpg/220px-%D0%9A%D0%B0%D0%BA_%D0%B7%D0%B0%D0%B2%D0%BE%D0%B5%D0%B2%D1%8B%D0%B2%D0%B0%D1%82%D1%8C_%D0%B4%D1%80%D1%83%D0%B7%D0%B5%D0%B9_%D0%B8_%D0%BE%D0%BA%D0%B0%D0%B7%D1%8B%D0%B2%D0%B0%D1%82%D1%8C_%D0%B2%D0%BB%D0%B8%D1%8F%D0%BD%D0%B8%D0%B5_%D0%BD%D0%B0_%D0%BB%D1%8E%D0%B4%D0%B5%D0%B9.jpg" alt="Обложка книги Как завоевывать друзей и оказывать влияние на людей" />
+    <div>
+      <h3>«Как завоевывать друзей и оказывать влияние на людей» — Дейл Карнеги</h3>
+      <p>Вечная классика о навыках общения и влияния на окружающих.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://cdn1.ozone.ru/s3/multimedia-d/6000590053.jpg" alt="Обложка книги Бизнес без MBA" />
+    <div>
+      <h3>«Бизнес без MBA» — Олег Тиньков</h3>
+      <p>История предпринимателя с практическими уроками для тех, кто хочет начать бизнес.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/51TxEB+OMNL._SX331_BO1,204,203,200_.jpg" alt="Обложка книги Правило номер 1 никогда не быть номер 2" />
+    <div>
+      <h3>«Правило номер 1: никогда не быть номер 2» — Дэн Мильштейн</h3>
+      <p>О том, как стать лидером в своей области и не останавливаться на достигнутом.</p>
+    </div>
+  </article>
+
+  <article class="book-item">
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/48_Laws_of_Power.jpg/220px-48_Laws_of_Power.jpg" alt="Обложка книги 48 законов власти" />
+    <div>
+      <h3>«48 законов власти» — Роберт Грин</h3>
+      <p>Анализ стратегий власти и влияния на людей, которые используются в истории и бизнесе.</p>
+    </div>
+  </article>
+</section>
 
 <script>
-const aboutText = `Меня зовут Павел, мне 14 лет. Я активно развиваюсь в спорте и технологиях, уделяю внимание как физическому, так и ментальному росту. Занимаюсь боксом — работаю над выносливостью, дисциплиной и силой, поскольку верю, что спорт учит не только телу, но и характеру.
-Параллельно я увлечён программированием и создаю собственного Telegram-ассистента PavelPA с функциями голосовых ответов, напоминаний и генерации изображений. Этот проект помогает мне изучать современные технологии и искусственный интеллект на практике.
-С детства я фанат техники и мечтал о квадроцикле Yamaha YFZ 450 — моей мечте уже более 10 лет, и совсем недавно она сбылась. Этот квадроцикл для меня не просто средство передвижения — это символ упорства и награда за труд.
-Мне интересно открывать новое, ставить амбициозные цели и постепенно превращать мечты в реальность. Я уверен, что именно сочетание дисциплины, технологий и страсти к развитию поможет мне добиться успеха в будущем.
-Подписывайтесь на мои соцсети,спасибо.`;
-
-const typingElement = document.getElementById('typing-text');
-let index = 0;
-
-function type() {
-  if (index < aboutText.length) {
-    typingElement.textContent += aboutText.charAt(index);
-    index++;
-    setTimeout(type, 50);
-  }
-}
-
-type();
-
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-let w, h;
-let stars = [];
-
-function init() {
-  w = window.innerWidth;
-  h = window.innerHeight;                            
-  canvas.width = w;
-  canvas.height = h;
-
-  stars = [];
-  for(let i=0; i<200; i++) {
-    stars.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      radius: Math.random() * 1.2,
-      alpha: Math.random()
-    });
-  }
-}
-
-function draw() {
-  ctx.clearRect(0, 0, w, h);
-  for(let i=0; i<stars.length; i++) {
-    let s = stars[i];
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-    ctx.fill();
-    s.alpha += (Math.random() - 0.5) * 0.05;
-    if (s.alpha < 0) s.alpha = 0;
-    if (s.alpha > 1) s.alpha = 1;
-  }
-  requestAnimationFrame(draw);
-}
-
-window.addEventListener('resize', init);
-init();
-draw();
+  const btn = document.getElementById('toggle-books-btn');
+  const booksList = document.getElementById('books-list');
+  btn.addEventListener('click', () => {
+    const isHidden = booksList.hasAttribute('hidden');
+    if (isHidden) {
+      booksList.removeAttribute('hidden');
+      btn.setAttribute('aria-expanded', 'true');
+      btn.textContent = 'Скрыть список книг';
+    } else {
+      booksList.setAttribute('hidden', '');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.textContent = 'Книги, которые я прочитал и советую к прочтению';
+    }
+  });
 </script>
 
 </body>
