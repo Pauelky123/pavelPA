@@ -2,10 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PavelPA — Главная</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600&display=swap" rel="stylesheet" />
   <style>
+    /* Reset */
     * {
       margin: 0;
       padding: 0;
@@ -13,95 +14,128 @@
     }
     body, html {
       height: 100%;
-      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-      color: #eaeaea;
       font-family: 'Manrope', sans-serif;
+      background:
+        url('https://www.transparenttextures.com/patterns/asfalt-light.png') repeat;
+      background-color: #121214;
+      color: #ddd;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      padding: 20px;
       overflow-x: hidden;
+      position: relative;
+      z-index: 0;
     }
     #stars {
-      position: fixed; top: 0; left: 0;
+      position: fixed;
+      top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: -1;
+      background: radial-gradient(circle at center, #1e1e1e 0%, #121214 80%);
+      pointer-events: none;
     }
     .container {
-      max-width: 800px;
-      padding: 40px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+      max-width: 700px;
+      width: 100%;
+      background: rgba(30, 30, 30, 0.85);
+      border-radius: 16px;
+      padding: 50px 40px;
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(10px);
-      animation: fadeIn 1.5s ease forwards;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeSlideIn 1s ease forwards;
+      text-align: center;
+      position: relative;
+      z-index: 1;
     }
     h1 {
-      font-size: 48px;
-      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 3rem;
+      color: #f0f0f0;
+      margin-bottom: 24px;
+      letter-spacing: 1.5px;
+      font-feature-settings: "liga" off;
+      min-height: 3.6rem; /* чтобы высота не прыгала при печати */
       white-space: nowrap;
-      border-right: 4px solid #58a6ff; /* курсор */
       overflow: hidden;
-      width: 0;
-      animation:
-        typing 3.5s steps(20, end) forwards,
-        blink-caret 0.75s step-end infinite;
-      color: #58a6ff;
+      border-right: 3px solid #f0f0f0; /* курсор */
+      animation: blinkCursor 0.75s step-end infinite;
+    }
+    p.description {
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: #bbb;
+      margin-bottom: 40px;
+      line-height: 1.5;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .description.visible {
+      opacity: 1;
     }
     .nav-links {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 28px;
       flex-wrap: wrap;
     }
     .nav-links a {
-      padding: 14px 28px;
-      font-size: 18px;
-      color: #fff;
+      color: #ddd;
       text-decoration: none;
-      border: 1px solid #58a6ff;
-      border-radius: 14px;
-      background: rgba(88, 166, 255, 0.05);
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 12px 30px;
+      border-radius: 10px;
+      border: 1.5px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      user-select: none;
     }
-    .nav-links a:hover {
-      background: #58a6ff;
-      color: #000;
-      box-shadow: 0 0 15px #58a6ff80;
-      transform: translateY(-2px);
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #aaa;
+      color: #fff;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+      transform: translateY(-3px);
+      outline: none;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 17ch }
-    }
-    @keyframes blink-caret {
+    @keyframes blinkCursor {
+      0%, 100% { border-color: #f0f0f0; }
       50% { border-color: transparent; }
     }
-
-    /* ====== Адаптивность для телефонов ====== */
-    @media (max-width: 768px) {
-      .container {
-        max-width: 90%;
-        padding: 20px;
-      }
+    /* Responsive */
+    @media (max-width: 600px) {
       h1 {
-        font-size: 32px;
+        font-size: 2.2rem;
+        min-height: 2.7rem;
       }
-      p {
-        font-size: 16px;
+      p.description {
+        font-size: 1rem;
       }
       .nav-links {
         flex-direction: column;
-        gap: 12px;
+        gap: 18px;
       }
       .nav-links a {
-        font-size: 16px;
-        padding: 12px 20px;
+        font-size: 1rem;
+        padding: 10px 24px;
       }
     }
   </style>
@@ -111,8 +145,11 @@
 <canvas id="stars"></canvas>
 
 <div class="container">
-  <h1>Привет! Я — PavelPA</h1>
-  <p style="margin-bottom: 30px; font-size: 18px; color: #aaa">Умный Telegram-ассистент с голосом, генерацией и интеллектом</p>
+  <h1 id="typed"></h1>
+  <p class="description" id="description">
+    Умный Telegram-ассистент с голосом, генерацией и интеллектом.<br />
+    Помогаю в повседневных задачах и учусь вместе с тобой.
+  </p>
   <div class="nav-links">
     <a href="about.html">Обо мне</a>
     <a href="https://www.tiktok.com/@pauelky" target="_blank" rel="noopener noreferrer">TikTok</a>
@@ -133,27 +170,28 @@ function init() {
   canvas.height = h;
 
   stars = [];
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 180; i++) {
     stars.push({
       x: Math.random() * w,
       y: Math.random() * h,
-      radius: Math.random() * 1.2,
-      alpha: Math.random()
+      radius: Math.random() * 1.1 + 0.2,
+      alpha: Math.random() * 0.7 + 0.3,
+      alphaChange: (Math.random() * 0.01) + 0.002
     });
   }
 }
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
-  for (let i = 0; i < stars.length; i++) {
-    let s = stars[i];
+  for (let s of stars) {
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
     ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctx.shadowColor = 'rgba(255, 255, 255, 0.2)';
+    ctx.shadowBlur = 3;
     ctx.fill();
-    s.alpha += (Math.random() - 0.5) * 0.05;
-    if (s.alpha < 0) s.alpha = 0;
-    if (s.alpha > 1) s.alpha = 1;
+    s.alpha += s.alphaChange;
+    if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange = -s.alphaChange;
   }
   requestAnimationFrame(draw);
 }
@@ -161,6 +199,28 @@ function draw() {
 window.addEventListener('resize', init);
 init();
 draw();
+
+// Эффект печати для заголовка
+const text = "Привет! Я — PavelPA";
+const typedElement = document.getElementById('typed');
+const description = document.getElementById('description');
+
+let index = 0;
+
+function type() {
+  if (index < text.length) {
+    typedElement.textContent += text.charAt(index);
+    index++;
+    setTimeout(type, 100); // задержка между символами (100ms)
+  } else {
+    // когда напечатали, убираем курсор
+    typedElement.style.borderRight = 'none';
+    // показываем описание
+    description.classList.add('visible');
+  }
+}
+
+type();
 </script>
 
 </body>
