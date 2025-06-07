@@ -1,81 +1,115 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Обо мне - PavelPA</title>
-<style>
-  body {
-    margin: 0; padding: 20px;
-    background: #121212;
-    color: #ddd;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    line-height: 1.5;
-  }
-  h1, h3 {
-    color: #f0f0f0;
-    margin-bottom: 16px;
-  }
-  p {
-    color: #bbb;
-    margin-bottom: 12px;
-  }
-  button {
-    display: inline-block;
-    padding: 12px 24px;
-    margin: 20px 0;
-    font-size: 1rem;
-    color: #121212;
-    background-color: #4fc3f7;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background-color: #3a9bdc;
-  }
-  #books-list {
-    max-width: 700px;
-    margin: 0 auto 40px;
-  }
-  article.book-item {
-    margin-bottom: 24px;
-    background: #1f1f1f;
-    border-radius: 10px;
-    padding: 12px 20px;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
-  }
-  article.book-item h3 {
-    margin: 0 0 6px 0;
-    font-size: 1.1rem;
-    color: #e0e0e0;
-  }
-  article.book-item p {
-    margin: 0;
-    font-size: 0.95rem;
-    color: #bbb;
-  }
-  @media (max-width: 480px) {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Обо мне - PavelPA</title>
+  <style>
     body {
-      padding: 12px 16px;
+      margin: 0;
+      padding: 20px;
+      background: #121212;
+      color: #ddd;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      line-height: 1.5;
     }
+
+    h1, h3 {
+      color: #f0f0f0;
+      margin-bottom: 16px;
+    }
+
+    .typing-text {
+      border-right: 2px solid #4fc3f7;
+      white-space: pre-wrap;
+      overflow: hidden;
+      font-size: 1rem;
+      max-width: 100%;
+      animation: typing 9s steps(200, end), blink 0.8s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    button {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 20px 0;
+      font-size: 1rem;
+      color: #121212;
+      background-color: #4fc3f7;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #3a9bdc;
+    }
+
     #books-list {
-      padding: 0 8px;
+      max-width: 700px;
+      margin: 0 auto 40px;
     }
-  }
-</style>
+
+    article.book-item {
+      margin-bottom: 24px;
+      background: #1f1f1f;
+      border-radius: 10px;
+      padding: 12px 20px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
+    }
+
+    article.book-item h3 {
+      margin: 0 0 6px 0;
+      font-size: 1.1rem;
+      color: #e0e0e0;
+    }
+
+    article.book-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px 16px;
+      }
+
+      #books-list {
+        padding: 0 8px;
+      }
+
+      .typing-text {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <h1>Обо мне</h1>
 
-<p>Меня зовут Павел, мне 14 лет. Я активно развиваюсь в спорте и технологиях, уделяю внимание как физическому, так и ментальному росту. Занимаюсь боксом — работаю над выносливостью, дисциплиной и силой, поскольку верю, что спорт учит не только телу, но и характеру.<br><br>
-Параллельно я увлечён программированием и создаю собственного Telegram-ассистента PavelPA с функциями голосовых ответов, напоминаний и генерации изображений. Этот проект помогает мне изучать современные технологии и искусственный интеллект на практике.<br><br>
-С детства я фанат техники и мечтал о квадроцикле Yamaha YFZ 450 — моей мечте уже более 10 лет, и совсем недавно она сбылась. Этот квадроцикл для меня не просто средство передвижения — это символ упорства и награда за труд.<br><br>
-Мне интересно открывать новое, ставить амбициозные цели и постепенно превращать мечты в реальность. Я уверен, что именно сочетание дисциплины, технологий и страсти к развитию поможет мне добиться успеха в будущем.<br><br>
-Подписывайтесь на мои соцсети, Спасибо.</p>
+<p class="typing-text">
+Меня зовут Павел, мне 14 лет. Я активно развиваюсь в спорте и технологиях, уделяю внимание как физическому, так и ментальному росту. Занимаюсь боксом — работаю над выносливостью, дисциплиной и силой, поскольку верю, что спорт учит не только телу, но и характеру.
+
+Параллельно я увлечён программированием и создаю собственного Telegram-ассистента PavelPA с функциями голосовых ответов, напоминаний и генерации изображений. Этот проект помогает мне изучать современные технологии и искусственный интеллект на практике.
+
+С детства я фанат техники и мечтал о квадроцикле Yamaha YFZ 450 — моей мечте уже более 10 лет, и совсем недавно она сбылась. Этот квадроцикл для меня не просто средство передвижения — это символ упорства и награда за труд.
+
+Мне интересно открывать новое, ставить амбициозные цели и постепенно превращать мечты в реальность. Я уверен, что именно сочетание дисциплины, технологий и страсти к развитию поможет мне добиться успеха в будущем.
+
+Подписывайтесь на мои соцсети, Спасибо.
+</p>
 
 <button id="toggle-books-btn" aria-expanded="false" aria-controls="books-list">
   Книги, которые я прочитал и советую к прочтению
@@ -86,42 +120,34 @@
     <h3>«Самый богатый человек в Вавилоне» — Джордж Клейсон</h3>
     <p>Классика финансовой мудрости — простые принципы накопления богатства, проверенные временем.</p>
   </article>
-
   <article class="book-item">
     <h3>«Думай как миллионер» — Харв Экер</h3>
     <p>Образ мышления и привычки, которые помогают людям добиваться финансового успеха.</p>
   </article>
-
   <article class="book-item">
     <h3>«Тонкое искусство пофигизма» — Марк Мэнсон</h3>
     <p>Необычный взгляд на личностный рост и умение правильно расставлять приоритеты.</p>
   </article>
-
   <article class="book-item">
     <h3>«Как разговаривать с кем угодно, когда угодно» — Ларри Кинг</h3>
     <p>Практические советы по ведению лёгких и эффективных разговоров в любой ситуации.</p>
   </article>
-
   <article class="book-item">
     <h3>«Правила жизни успешных людей» — Дейл Карнеги</h3>
     <p>Основы построения успешной жизни и гармоничных отношений с людьми.</p>
   </article>
-
   <article class="book-item">
     <h3>«Как завоевывать друзей и оказывать влияние на людей» — Дейл Карнеги</h3>
     <p>Вечная классика о навыках общения и влияния на окружающих.</p>
   </article>
-
   <article class="book-item">
     <h3>«Бизнес без MBA» — Олег Тиньков</h3>
     <p>История предпринимателя с практическими уроками для тех, кто хочет начать бизнес.</p>
   </article>
-
   <article class="book-item">
     <h3>«Правило номер 1: никогда не быть номер 2» — Дэн Мильштейн</h3>
     <p>О том, как стать лидером в своей области и не останавливаться на достигнутом.</p>
   </article>
-
   <article class="book-item">
     <h3>«48 законов власти» — Роберт Грин</h3>
     <p>Анализ стратегий власти и влияния на людей, которые используются в истории и бизнесе.</p>
@@ -131,6 +157,7 @@
 <script>
   const btn = document.getElementById('toggle-books-btn');
   const booksList = document.getElementById('books-list');
+
   btn.addEventListener('click', () => {
     const isHidden = booksList.hasAttribute('hidden');
     if (isHidden) {
