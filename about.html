@@ -7,34 +7,39 @@
 <style>
 body {
   margin: 0;
-  padding: 30px;
+  padding: 20px;
   background: #121212;
   color: #ddd;
   font-family: 'Manrope', sans-serif;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 h1 {
   color: #ffcc00;
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   margin-bottom: 20px;
   text-align: center;
 }
 
 #wave-text {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   max-width: 800px;
   margin: 0 auto 40px;
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#wave-text p {
+  display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.2rem;
+  gap: 0.1rem;
 }
 
 #wave-text span {
   display: inline-block;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(15px);
   animation: wave 0.6s forwards;
 }
 
@@ -78,14 +83,14 @@ article.book-item p { color: #bbb; }
 
 @media (max-width: 480px) {
   body { padding: 16px; }
-  #wave-text { font-size: 1rem; }
+  #wave-text { font-size: 1rem; gap: 12px; }
 }
 </style>
 </head>
 <body>
 
 <h1>Обо мне</h1>
-<p id="wave-text"></p>
+<div id="wave-text"></div>
 
 <button id="toggle-books-btn" aria-expanded="false" aria-controls="books-list">
   Книги, которые я прочитал и советую к прочтению
@@ -100,18 +105,25 @@ article.book-item p { color: #bbb; }
 </section>
 
 <script>
-const text = `Меня зовут Павел, мне 14 лет. За последние месяцы я проделал огромную работу и не сдавался ни на шаг. 
-Я активно развиваюсь в спорте — бокс помогает мне выстраивать дисциплину, силу и выносливость. 
-Я обожаю квадроциклы: Yamaha YFZ 450 стал символом упорства, свободы и адреналина. Каждый выезд, трюки и тренировки — это опыт, который делает меня сильнее. 
-Параллельно я создаю Telegram-ассистента PavelPA с голосовыми ответами, напоминаниями и генерацией изображений, изучая технологии и ИИ на практике. 
-Я уверен, что дисциплина, труд и страсть к развитию помогают достигать амбициозных целей и превращать мечты в реальность.`;
+const paragraphs = [
+  "Привет! Меня зовут Павел, мне 14 лет. За последние месяцы я проделал огромную работу и не сдавался ни на шаг.",
+  "Я активно развиваюсь в спорте — бокс помогает мне выстраивать дисциплину, силу и выносливость.",
+  "Моя страсть — квадроциклы: Yamaha YFZ 450 стал символом упорства, свободы и адреналина. Каждый выезд, трюки и тренировки делают меня сильнее.",
+  "Параллельно я создаю Telegram-ассистента PavelPA с голосовыми ответами, напоминаниями и генерацией изображений. Этот проект помогает изучать технологии и ИИ на практике.",
+  "Я уверен, что дисциплина, труд и страсть к развитию помогают достигать амбициозных целей и превращать мечты в реальность. Следите за моими соцсетями, чтобы не пропустить новые приключения и крутые проекты."
+];
 
 const container = document.getElementById('wave-text');
-text.split('').forEach((char, i) => {
-  const span = document.createElement('span');
-  span.textContent = char;
-  span.style.animationDelay = `${i * 0.03}s`;
-  container.appendChild(span);
+
+paragraphs.forEach((para, pIndex) => {
+  const p = document.createElement('p');
+  para.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.style.animationDelay = `${(i + pIndex*para.length) * 0.03}s`;
+    p.appendChild(span);
+  });
+  container.appendChild(p);
 });
 
 const btn = document.getElementById('toggle-books-btn');
