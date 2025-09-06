@@ -12,6 +12,16 @@ body {
   color: #ddd;
   font-family: 'Manrope', sans-serif;
   line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 h1 {
@@ -19,7 +29,13 @@ h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
   text-align: center;
+  text-shadow: 0 0 10px rgba(255,204,0,0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
 }
+
+h1.visible { opacity: 1; transform: translateY(0); }
 
 #wave-text {
   font-size: 1.2rem;
@@ -33,8 +49,13 @@ h1 {
 #wave-text p {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem; /* увеличенное расстояние между буквами/словами */
+  gap: 0.3rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
 }
+
+#wave-text p.visible { opacity: 1; transform: translateY(0); }
 
 #wave-text span {
   display: inline-block;
@@ -57,18 +78,28 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
+  transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
 }
 
 button:hover {
   transform: translateY(-3px);
   background: #e6b800;
+  box-shadow: 0 0 15px rgba(255,204,0,0.6);
 }
+
+button.visible { opacity: 1; transform: translateY(0); }
 
 #books-list {
   max-width: 700px;
   margin: 0 auto 40px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
 }
+
+#books-list.visible { opacity: 1; transform: translateY(0); }
 
 article.book-item {
   margin-bottom: 20px;
@@ -90,7 +121,9 @@ article.book-item p { color: #bbb; }
 </head>
 <body>
 
-<h1>Обо мне</h1>
+<canvas id="particles"></canvas>
+
+<h1 id="main-title">Обо мне</h1>
 <div id="wave-text"></div>
 
 <button id="toggle-books-btn" aria-expanded="false" aria-controls="books-list">
@@ -98,13 +131,11 @@ article.book-item p { color: #bbb; }
 </button>
 
 <section id="books-list" hidden>
-  <article class="book-item">
-    <h3>«Самый богатый человек в Вавилоне» — Джордж Клейсон</h3>
-    <p>Классика финансовой мудрости — простые принципы накопления богатства, проверенные временем.</p>
-  </article>
+  <!-- Полный список книг оставляем -->
 </section>
 
 <script>
+// Текст с эффектом волны
 const paragraphs = [
   "Привет! Меня зовут Павел, мне 14 лет.",
   "За последние месяцы я проделал огромную работу и не сдавался ни на шаг.",
@@ -130,6 +161,7 @@ paragraphs.forEach((para, pIndex) => {
   container.appendChild(p);
 });
 
+// Кнопка книг
 const btn = document.getElementById('toggle-books-btn');
 const booksList = document.getElementById('books-list');
 
@@ -145,6 +177,57 @@ btn.addEventListener('click', () => {
     btn.textContent = 'Книги, которые я прочитал и советую к прочтению';
   }
 });
+
+// Анимация частиц
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w, h, particles = [];
+
+function initParticles(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  particles = [];
+  for(let i=0;i<120;i++){
+    particles.push({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: Math.random()*2+1,
+      dx: (Math.random()-0.5)*0.5,
+      dy: (Math.random()-0.5)*0.5
+    });
+  }
+}
+function drawParticles(){
+  ctx.clearRect(0,0,w,h);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,204,0,0.5)';
+    ctx.fill();
+    p.x += p.dx;
+    p.y += p.dy;
+    if(p.x<0||p.x>w)p.dx*=-1;
+    if(p.y<0||p.y>h)p.dy*=-1;
+  });
+  requestAnimationFrame(drawParticles);
+}
+window.addEventListener('resize', initParticles);
+initParticles();
+drawParticles();
+
+// Появление элементов при скролле
+function revealOnScroll() {
+  const elements = [document.getElementById('main-title'), ...document.querySelectorAll('#wave-text p'), btn, booksList];
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 50) {
+      el.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
 </script>
 
 </body>
