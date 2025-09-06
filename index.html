@@ -1,261 +1,127 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PavelPA — Главная</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600&display=swap" rel="stylesheet" />
-  <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body, html {
-      height: 100%;
-      font-family: 'Manrope', sans-serif;
-      background:
-        url('https://www.transparenttextures.com/patterns/asfalt-light.png') repeat;
-      background-color: #121214;
-      color: #ddd;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      overflow-x: hidden;
-      position: relative;
-      z-index: 0;
-    }
-    #stars {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-      background: radial-gradient(circle at center, #1e1e1e 0%, #121214 80%);
-      pointer-events: none;
-    }
-    .container {
-      max-width: 700px;
-      width: 100%;
-      background: rgba(30, 30, 30, 0.85);
-      border-radius: 16px;
-      padding: 50px 40px;
-      box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      animation: fadeSlideIn 1s ease forwards;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      transition: opacity 0.5s ease;
-    }
-    .container.hide {
-      opacity: 0;
-    }
-    h1 {
-      font-weight: 600;
-      font-size: 3rem;
-      color: #f0f0f0;
-      margin-bottom: 24px;
-      letter-spacing: 1.5px;
-      font-feature-settings: "liga" off;
-    }
-    p.description {
-      font-weight: 300;
-      font-size: 1.15rem;
-      color: #bbb;
-      margin-bottom: 40px;
-      line-height: 1.5;
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      color: #ddd;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      padding: 12px 30px;
-      border-radius: 10px;
-      border: 1.5px solid transparent;
-      background: rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      user-select: none;
-    }
-    .nav-links a:hover,
-    .nav-links a:focus {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: #aaa;
-      color: #fff;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
-      transform: translateY(-3px);
-      outline: none;
-    }
-    @keyframes fadeSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PavelPA — Умный Telegram-ассистент</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body, html { height:100%; font-family: 'Manrope', sans-serif; background:url('https://www.transparenttextures.com/patterns/asfalt-light.png') repeat; background-color:#121214; color:#ddd; }
+  #stars { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: radial-gradient(circle at center, #1e1e1e 0%, #121214 80%); pointer-events:none; }
+  #preloader { position: fixed; top:0; left:0; width:100vw; height:100vh; background:#121214; display:flex; justify-content:center; align-items:center; z-index:9999; }
+  #preloader .spinner { border:5px solid rgba(255,255,255,0.2); border-top:5px solid #ddd; border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite; }
+  @keyframes spin { to{ transform:rotate(360deg);} }
+  .container { max-width: 1000px; width: 100%; margin:50px auto; padding:40px; border-radius:16px; background: rgba(30,30,30,0.85); box-shadow:0 8px 24px rgba(0,0,0,0.8); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.1); text-align:center; animation:fadeSlideIn 1s ease forwards; }
+  @keyframes fadeSlideIn { from {opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+  h1 { font-size:3rem; margin-bottom:20px; color:#f0f0f0; }
+  p.description { font-size:1.2rem; color:#bbb; margin-bottom:30px; line-height:1.5; }
+  .nav-links { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:50px; }
+  .nav-links a { color:#ddd; text-decoration:none; font-weight:600; font-size:1.1rem; padding:12px 30px; border-radius:10px; border:1.5px solid transparent; background: rgba(255,255,255,0.05); transition:all 0.3s ease; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
+  .nav-links a:hover { background: rgba(255,255,255,0.15); border-color:#aaa; color:#fff; transform:translateY(-3px); }
+  
+  /* Преимущества */
+  .features { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:30px; margin-bottom:50px; }
+  .feature { background: rgba(255,255,255,0.05); border-radius:15px; padding:20px; transition:transform 0.3s ease; }
+  .feature:hover { transform: translateY(-5px); }
+  .feature h3 { margin-bottom:12px; color:#ffcc00; }
+  .feature p { color:#ddd; }
 
-    /* Прелоадер */
-    #preloader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #121214;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    #preloader .spinner {
-      border: 5px solid rgba(255, 255, 255, 0.2);
-      border-top: 5px solid #ddd;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+  /* Галерея */
+  .gallery { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:20px; margin-bottom:50px; }
+  .gallery img { width:100%; border-radius:15px; border:2px solid #ffcc00; box-shadow:0 6px 15px rgba(0,0,0,0.5); transition: transform 0.3s ease; }
+  .gallery img:hover { transform: scale(1.05); }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      p.description {
-        font-size: 1rem;
-      }
-      .nav-links {
-        flex-direction: column;
-        gap: 18px;
-      }
-      .nav-links a {
-        font-size: 1rem;
-        padding: 10px 24px;
-      }
-    }
-  </style>
+  /* Отзывы */
+  .reviews { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:20px; margin-bottom:50px; }
+  .review { background: rgba(255,255,255,0.05); border-radius:15px; padding:20px; color:#ddd; }
+
+  footer { text-align:center; padding:20px; color:#aaa; font-size:0.9rem; }
+
+  @media (max-width:600px){ h1{ font-size:2.2rem;} p.description{ font-size:1rem;} .nav-links{ flex-direction:column; gap:15px;} .nav-links a{ font-size:1rem; padding:10px 24px;} }
+</style>
 </head>
 <body>
 
 <div id="preloader"><div class="spinner"></div></div>
-
 <canvas id="stars"></canvas>
 
 <div class="container" id="content">
+  <!-- Hero -->
   <h1>Привет! Я — PavelPA</h1>
   <p class="description">
-    Умный Telegram-ассистент с голосом, генерацией и интеллектом.<br />
-    Помогаю в повседневных задачах и учусь вместе с тобой.
+    Умный Telegram-ассистент с голосом, генерацией и интеллектом.<br>
+    Помогаю в повседневных задачах, мотивирую, показываю факты и учусь вместе с тобой.
   </p>
   <div class="nav-links">
     <a href="about.html" class="smooth-link">Обо мне</a>
-    <a href="https://www.tiktok.com/@ebitda001" target="_blank" rel="noopener noreferrer">TikTok</a>
-    <a href="https://t.me/PauelkyyBot" target="_blank" rel="noopener noreferrer">Telegram-бот</a>
+    <a href="https://www.tiktok.com/@ebitda001" target="_blank">TikTok</a>
+    <a href="https://t.me/PauelkyyBot" target="_blank">Telegram-бот</a>
+  </div>
+
+  <!-- Преимущества -->
+  <h2>Преимущества бота</h2>
+  <div class="features">
+    <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты и советы, чтобы оставаться продуктивным и мотивированным.</p></div>
+    <div class="feature"><h3>📚 Факты</h3><p>Интересные и научные факты каждый день — узнавай новое легко и весело.</p></div>
+    <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры, чтобы отдыхать и развивать логику без усилий.</p></div>
+    <div class="feature"><h3>🌤 Погода</h3><p>Простой прогноз погоды, чтобы планировать свой день без сюрпризов.</p></div>
+    <div class="feature"><h3>💬 Ответы</h3><p>Задавай вопросы и получай развернутые ответы от интеллектуального помощника.</p></div>
+  </div>
+
+  <!-- Галерея -->
+  <h2>Галерея бота</h2>
+  <div class="gallery">
+    <img src="https://i.imgur.com/3t6hXxY.png" alt="Скриншот бота 1">
+    <img src="https://i.imgur.com/6L8qFZk.png" alt="Скриншот бота 2">
+    <img src="https://i.imgur.com/4v3q3H9.png" alt="Скриншот бота 3">
+    <img src="https://i.imgur.com/XyU5hUy.png" alt="Скриншот бота 4">
+    <img src="https://i.imgur.com/8K7i7sQ.png" alt="Скриншот бота 5">
+    <img src="https://i.imgur.com/6oGZC6X.png" alt="Скриншот бота 6">
+  </div>
+
+  <!-- Отзывы -->
+  <h2>Отзывы пользователей</h2>
+  <div class="reviews">
+    <div class="review">"Очень удобный бот! Мотивация и факты каждый день поднимают настроение." — <b>Алексей</b></div>
+    <div class="review">"PavelPA помогает организовать день и ответить на все вопросы быстро!" — <b>Марина</b></div>
+    <div class="review">"Интерактивные игры и прогноз погоды — очень круто!" — <b>Иван</b></div>
   </div>
 </div>
+
+<footer>
+  © 2025 PavelPA. Все права защищены. | <a href="https://t.me/pauelkyy">Связь с создателем</a>
+</footer>
 
 <script>
   // Прелоадер
   window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
-    preloader.style.opacity = '0';
-    setTimeout(() => {
-      preloader.style.display = 'none';
-    }, 500);
+    preloader.style.opacity='0';
+    setTimeout(()=>{ preloader.style.display='none'; },500);
   });
 
-  // Плавный переход по ссылкам внутри сайта (только для about.html)
-  document.querySelectorAll('a.smooth-link').forEach(link => {
-    link.addEventListener('click', e => {
+  // Плавный переход для about.html
+  document.querySelectorAll('a.smooth-link').forEach(link=>{
+    link.addEventListener('click', e=>{
       e.preventDefault();
       const href = link.getAttribute('href');
       const content = document.getElementById('content');
       content.classList.add('hide');
-      setTimeout(() => {
-        window.location.href = href;
-      }, 500); // Время совпадает с CSS transition opacity
+      setTimeout(()=>{ window.location.href=href; },500);
     });
   });
 
-  // Интерактивный фон - звёзды с параллаксом
+  // Звёзды с параллаксом
   const canvas = document.getElementById('stars');
   const ctx = canvas.getContext('2d');
-  let w, h;
-  let stars = [];
-
-  function init() {
-    w = window.innerWidth;
-    h = window.innerHeight;
-    canvas.width = w;
-    canvas.height = h;
-
-    stars = [];
-    for (let i = 0; i < 180; i++) {
-      stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        baseX: 0,  // добавим базовые координаты
-        baseY: 0,
-        radius: Math.random() * 1.1 + 0.2,
-        alpha: Math.random() * 0.7 + 0.3,
-        alphaChange: (Math.random() * 0.01) + 0.002
-      });
-      stars[i].baseX = stars[i].x;
-      stars[i].baseY = stars[i].y;
-    }
-  }
-
-  // Отслеживаем движение мыши для параллакса
-  let mouseX = w / 2;
-  let mouseY = h / 2;
-
-  window.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    for (let s of stars) {
-      // Сдвигаем звёзды в зависимости от положения мыши (параллакс)
-      const moveX = (mouseX - w/2) * 0.02 * (s.radius); // коэффициент смещения зависит от радиуса звезды
-      const moveY = (mouseY - h/2) * 0.02 * (s.radius);
-
-      ctx.beginPath();
-      ctx.arc(s.baseX + moveX, s.baseY + moveY, s.radius, 0, 2 * Math.PI);
-      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.2)';
-      ctx.shadowBlur = 3;
-      ctx.fill();
-      s.alpha += s.alphaChange;
-      if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange = -s.alphaChange;
-    }
-    requestAnimationFrame(draw);
-  }
-
+  let w,h,stars=[];
+  function init(){ w=window.innerWidth; h=window.innerHeight; canvas.width=w; canvas.height=h; stars=[]; for(let i=0;i<180;i++){ stars.push({x:Math.random()*w, y:Math.random()*h, baseX:0, baseY:0, radius:Math.random()*1.1+0.2, alpha:Math.random()*0.7+0.3, alphaChange:(Math.random()*0.01)+0.002}); stars[i].baseX=stars[i].x; stars[i].baseY=stars[i].y; } }
+  let mouseX=w/2, mouseY=h/2;
+  window.addEventListener('mousemove', e=>{ mouseX=e.clientX; mouseY=e.clientY; });
+  function draw(){ ctx.clearRect(0,0,w,h); for(let s of stars){ const moveX=(mouseX-w/2)*0.02*(s.radius); const moveY=(mouseY-h/2)*0.02*(s.radius); ctx.beginPath(); ctx.arc(s.baseX+moveX, s.baseY+moveY, s.radius,0,2*Math.PI); ctx.fillStyle=`rgba(255,255,255,${s.alpha})`; ctx.shadowColor='rgba(255,255,255,0.2)'; ctx.shadowBlur=3; ctx.fill(); s.alpha+=s.alphaChange; if(s.alpha<=0.3||s.alpha>=1) s.alphaChange=-s.alphaChange; } requestAnimationFrame(draw);}
   window.addEventListener('resize', init);
-  init();
-  draw();
+  init(); draw();
 </script>
-
 </body>
 </html>
