@@ -46,13 +46,11 @@ h1.visible { opacity: 1; transform: translateY(0); }
   word-wrap: normal;
 }
 
-#wave-text p {
+#wave-text span.word {
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.6s ease;
+  display: inline-block;
+  transform: translateY(8px);
 }
-
-#wave-text p.visible { opacity: 1; transform: translateY(0); }
 
 button {
   display: block;
@@ -189,16 +187,25 @@ const paragraphs = [
 ];
 
 const container = document.getElementById('wave-text');
-paragraphs.forEach(para => {
+
+// Создание параграфов по словам с эффектом появления
+paragraphs.forEach((para) => {
   const p = document.createElement('p');
-  p.textContent = para;
+  const words = para.split(' ');
+  words.forEach((word, idx) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = word + ' ';
+    span.style.transition = `opacity 0.4s ease, transform 0.4s ease`;
+    setTimeout(() => { span.style.opacity = 1; span.style.transform = 'translateY(0)'; }, 100 * idx);
+    p.appendChild(span);
+  });
   container.appendChild(p);
 });
 
 // Кнопка книг
 const btn = document.getElementById('toggle-books-btn');
 const booksList = document.getElementById('books-list');
-
 btn.addEventListener('click', () => {
   const isHidden = booksList.hasAttribute('hidden');
   if (isHidden) {
@@ -221,7 +228,7 @@ function initParticles(){
   w = canvas.width = window.innerWidth;
   h = canvas.height = window.innerHeight;
   particles = [];
-  for(let i=0;i<120;i++){
+  for(let i=0;i<100;i++){
     particles.push({
       x: Math.random()*w,
       y: Math.random()*h,
@@ -235,33 +242,24 @@ function drawParticles(){
   ctx.clearRect(0,0,w,h);
   particles.forEach(p=>{
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle='rgba(255,204,0,0.5)';
+    ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+    ctx.fillStyle='rgba(255,204,0,0.4)';
     ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
-    if(p.x<0||p.x>w)p.dx*=-1;
-    if(p.y<0||p.y>h)p.dy*=-1;
+    p.x += p.dx; p.y += p.dy;
+    if(p.x> w) p.x=0; if(p.x<0) p.x=w;
+    if(p.y> h) p.y=0; if(p.y<0) p.y=h;
   });
   requestAnimationFrame(drawParticles);
 }
 window.addEventListener('resize', initParticles);
-initParticles();
-drawParticles();
+initParticles(); drawParticles();
 
-// Появление элементов при скролле
-function revealOnScroll() {
-  const elements = [document.getElementById('main-title'), ...document.querySelectorAll('#wave-text p'), btn, booksList];
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if(rect.top < window.innerHeight - 50) {
-      el.classList.add('visible');
-    }
-  });
-}
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
+// Плавное появление заголовка и кнопки
+window.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('main-title').classList.add('visible');
+  setTimeout(()=> btn.classList.add('visible'), 1200);
+  setTimeout(()=> booksList.classList.add('visible'), 1500);
+});
 </script>
-
 </body>
 </html>
