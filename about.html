@@ -43,10 +43,10 @@ h1.visible { opacity: 1; transform: translateY(0); }
   display: flex;
   flex-direction: column;
   gap: 20px;
-  word-wrap: normal;
+  word-wrap: break-word;
 }
 
-#wave-text span.word {
+#wave-text span.letter {
   opacity: 0;
   display: inline-block;
   transform: translateY(8px);
@@ -114,6 +114,7 @@ article.book-item p { color: #bbb; }
 </button>
 
 <section id="books-list" hidden>
+  <!-- Верни все книги, как было -->
   <article class="book-item">
     <h3>«Самый богатый человек в Вавилоне» — Джордж Клейсон</h3>
     <p>Классика финансовой мудрости — простые принципы накопления богатства, проверенные временем.</p>
@@ -173,7 +174,7 @@ article.book-item p { color: #bbb; }
 </section>
 
 <script>
-// Текст разбитый на абзацы
+// Текст по буквам с сохранением пробелов
 const paragraphs = [
   "Привет! Меня зовут Павел, мне 14 лет.",
   "За последние месяцы я проделал огромную работу и не сдавался ни на шаг.",
@@ -188,16 +189,13 @@ const paragraphs = [
 
 const container = document.getElementById('wave-text');
 
-// Создание параграфов по словам с эффектом появления
 paragraphs.forEach((para) => {
   const p = document.createElement('p');
-  const words = para.split(' ');
-  words.forEach((word, idx) => {
+  para.split('').forEach((char, idx) => {
     const span = document.createElement('span');
-    span.className = 'word';
-    span.textContent = word + ' ';
-    span.style.transition = `opacity 0.4s ease, transform 0.4s ease`;
-    setTimeout(() => { span.style.opacity = 1; span.style.transform = 'translateY(0)'; }, 100 * idx);
+    span.className = 'letter';
+    span.textContent = char;
+    setTimeout(()=>{ span.style.opacity=1; span.style.transform='translateY(0)'; }, idx*30);
     p.appendChild(span);
   });
   container.appendChild(p);
@@ -223,19 +221,12 @@ btn.addEventListener('click', () => {
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w, h, particles = [];
-
 function initParticles(){
   w = canvas.width = window.innerWidth;
   h = canvas.height = window.innerHeight;
   particles = [];
   for(let i=0;i<100;i++){
-    particles.push({
-      x: Math.random()*w,
-      y: Math.random()*h,
-      r: Math.random()*2+1,
-      dx: (Math.random()-0.5)*0.5,
-      dy: (Math.random()-0.5)*0.5
-    });
+    particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});
   }
 }
 function drawParticles(){
@@ -246,8 +237,8 @@ function drawParticles(){
     ctx.fillStyle='rgba(255,204,0,0.4)';
     ctx.fill();
     p.x += p.dx; p.y += p.dy;
-    if(p.x> w) p.x=0; if(p.x<0) p.x=w;
-    if(p.y> h) p.y=0; if(p.y<0) p.y=h;
+    if(p.x>w)p.x=0; if(p.x<0)p.x=w;
+    if(p.y>h)p.y=0; if(p.y<0)p.y=h;
   });
   requestAnimationFrame(drawParticles);
 }
