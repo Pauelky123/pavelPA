@@ -15,14 +15,6 @@ body {
   overflow-x: hidden;
 }
 
-#particles {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -1;
-  pointer-events: none;
-}
-
 h1 {
   color: #ffcc00;
   font-size: 2.5rem;
@@ -43,13 +35,17 @@ h1.visible { opacity: 1; transform: translateY(0); }
   display: flex;
   flex-direction: column;
   gap: 20px;
-  word-wrap: break-word;
 }
 
-#wave-text span.letter {
+#wave-text p {
   opacity: 0;
-  display: inline-block;
-  transform: translateY(8px);
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#wave-text p.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 button {
@@ -104,8 +100,6 @@ article.book-item p { color: #bbb; }
 </head>
 <body>
 
-<canvas id="particles"></canvas>
-
 <h1 id="main-title">Обо мне</h1>
 <div id="wave-text"></div>
 
@@ -114,7 +108,7 @@ article.book-item p { color: #bbb; }
 </button>
 
 <section id="books-list" hidden>
-  <!-- Верни все книги, как было -->
+  <!-- все книги возвращены -->
   <article class="book-item">
     <h3>«Самый богатый человек в Вавилоне» — Джордж Клейсон</h3>
     <p>Классика финансовой мудрости — простые принципы накопления богатства, проверенные временем.</p>
@@ -174,7 +168,7 @@ article.book-item p { color: #bbb; }
 </section>
 
 <script>
-// Текст по буквам с сохранением пробелов
+// Текст — по абзацам
 const paragraphs = [
   "Привет! Меня зовут Павел, мне 14 лет.",
   "За последние месяцы я проделал огромную работу и не сдавался ни на шаг.",
@@ -189,16 +183,14 @@ const paragraphs = [
 
 const container = document.getElementById('wave-text');
 
-paragraphs.forEach((para) => {
+// Плавное появление текста по абзацам
+paragraphs.forEach((para, index) => {
   const p = document.createElement('p');
-  para.split('').forEach((char, idx) => {
-    const span = document.createElement('span');
-    span.className = 'letter';
-    span.textContent = char;
-    setTimeout(()=>{ span.style.opacity=1; span.style.transform='translateY(0)'; }, idx*30);
-    p.appendChild(span);
-  });
+  p.textContent = para;
   container.appendChild(p);
+  setTimeout(() => {
+    p.classList.add('visible');
+  }, index * 600);
 });
 
 // Кнопка книг
@@ -217,39 +209,10 @@ btn.addEventListener('click', () => {
   }
 });
 
-// Частицы на фоне
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let w, h, particles = [];
-function initParticles(){
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-  particles = [];
-  for(let i=0;i<100;i++){
-    particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});
-  }
-}
-function drawParticles(){
-  ctx.clearRect(0,0,w,h);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
-    ctx.fillStyle='rgba(255,204,0,0.4)';
-    ctx.fill();
-    p.x += p.dx; p.y += p.dy;
-    if(p.x>w)p.x=0; if(p.x<0)p.x=w;
-    if(p.y>h)p.y=0; if(p.y<0)p.y=h;
-  });
-  requestAnimationFrame(drawParticles);
-}
-window.addEventListener('resize', initParticles);
-initParticles(); drawParticles();
-
-// Плавное появление заголовка и кнопки
+// Заголовок и кнопка
 window.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('main-title').classList.add('visible');
   setTimeout(()=> btn.classList.add('visible'), 1200);
-  setTimeout(()=> booksList.classList.add('visible'), 1500);
 });
 </script>
 </body>
