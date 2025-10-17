@@ -1,64 +1,86 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PavelPA — Умный Telegram-ассистент</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PavelPA — Futuristic Ultra Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body, html { height:100%; font-family: 'Manrope', sans-serif; background:#121212; color:#ddd; }
-  
-  #preloader { position: fixed; top:0; left:0; width:100vw; height:100vh; background:#121212; display:flex; justify-content:center; align-items:center; z-index:9999; }
-  #preloader .spinner { border:5px solid rgba(255,255,255,0.15); border-top:5px solid #ffcc00; border-radius:50%; width:50px; height:50px; animation:spin 1s linear infinite; }
-  @keyframes spin { to{ transform:rotate(360deg);} }
+*{margin:0;padding:0;box-sizing:border-box;}
+body,html{height:100%;font-family:'Manrope',sans-serif;overflow-x:hidden;transition:0.5s;}
+body.dark{background:#0a0a1a;color:#ddd;}
+body.light{background:#f5f5f5;color:#222;}
 
-  .container { max-width: 900px; width: 90%; margin:60px auto; padding:40px; border-radius:16px; background: #1c1c1c; box-shadow:0 6px 18px rgba(0,0,0,0.5); text-align:center; }
-  
-  h1 { font-size:2.8rem; margin-bottom:15px; color:#ffcc00; }
-  p.description { font-size:1.15rem; color:#bbb; margin-bottom:35px; line-height:1.5; }
+/* Preloader */
+#preloader{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0a0a1a;display:flex;justify-content:center;align-items:center;z-index:9999;}
+#preloader .spinner{width:70px;height:70px;border:8px solid rgba(255,255,255,0.15);border-top:8px solid #ffcc00;border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-  .nav-links { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:50px; }
-  .nav-links a { font-weight:600; font-size:1.1rem; padding:12px 28px; border-radius:12px; text-decoration:none; color:#ddd; background: #2a2a2a; transition: all 0.3s ease; }
-  .nav-links a:hover { background:#ffcc00; color:#121212; transform:translateY(-3px); }
+/* Particles */
+#particles-js{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 
-  /* Выделяем кнопку "Обо мне" */
-  .nav-links a:first-child { background:#ffcc00; color:#121212; box-shadow:0 4px 12px rgba(255,204,0,0.4); }
-  .nav-links a:first-child:hover { background:#e6b800; }
+/* Container */
+.container{max-width:1000px;width:90%;margin:60px auto;padding:50px;border-radius:24px;background:rgba(20,20,30,0.8);backdrop-filter:blur(15px);box-shadow:0 0 50px rgba(255,204,0,0.3);text-align:center;transition:0.5s;}
 
-  /* Преимущества */
-  .features { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:25px; margin-bottom:50px; }
-  .feature { background:#2a2a2a; border-radius:16px; padding:22px; transition: transform 0.3s ease, background 0.3s ease; }
-  .feature:hover { transform: translateY(-5px); background:#333; }
-  .feature h3 { margin-bottom:12px; color:#ffcc00; font-size:1.25rem; }
-  .feature p { color:#ddd; }
+/* Hero */
+h1{font-size:3rem;color:#ffcc00;text-shadow:0 0 10px #ffcc00,0 0 25px #ffcc00;animation:glowText 2s ease-in-out infinite alternate;margin-bottom:20px;opacity:0;transform:translateY(50px);transition:0.8s;}
+@keyframes glowText{0%{text-shadow:0 0 5px #ffcc00,0 0 15px #ffcc00;}100%{text-shadow:0 0 15px #ffcc00,0 0 35px #ffcc00;}}
+p.description{font-size:1.2rem;color:#ccc;line-height:1.6;margin-bottom:40px;opacity:0;transform:translateY(50px);transition:0.8s;}
 
-  /* Отзывы */
-  .reviews { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:25px; margin-bottom:50px; }
-  .review { background:#2a2a2a; border-radius:16px; padding:22px; color:#ddd; transition: transform 0.3s ease, background 0.3s ease; }
-  .review:hover { transform: translateY(-3px); background:#333; }
+/* Theme Toggle */
+#themeToggle{margin-bottom:30px;padding:14px 28px;border:none;border-radius:14px;background:#ffcc00;color:#121212;font-weight:700;cursor:pointer;box-shadow:0 0 15px #ffcc00;transition:0.3s;}
+#themeToggle:hover{transform:scale(1.05);box-shadow:0 0 35px #ffcc00;}
 
-  footer { text-align:center; padding:25px; color:#aaa; font-size:0.9rem; }
+/* Navigation */
+.nav-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
+.nav-links a{font-weight:600;font-size:1.1rem;padding:14px 30px;border-radius:16px;text-decoration:none;color:#ddd;background:#2a2a2a;box-shadow:0 0 10px rgba(0,255,255,0.2);transition:0.3s;}
+.nav-links a:hover{background:#ffcc00;color:#121212;transform:translateY(-3px) scale(1.05);box-shadow:0 0 50px #ffcc00;}
 
-  @media (max-width:600px){ 
-    h1{ font-size:2rem;} 
-    p.description{ font-size:1rem; margin-bottom:25px;} 
-    .nav-links{ flex-direction:column; gap:12px;} 
-    .nav-links a{ font-size:1rem; padding:10px 20px;} 
-  }
+/* Features */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
+.feature{background:#2a2a2a;border-radius:20px;padding:28px;box-shadow:0 0 12px rgba(255,204,0,0.2);transition:0.5s;transform:translateY(0);}
+.feature:hover{transform:translateY(-10px) rotateX(5deg) scale(1.03);box-shadow:0 0 50px #ffcc00;animation:featureGlow 1.5s infinite alternate;}
+@keyframes featureGlow{0%{box-shadow:0 0 20px #ffcc00;}100%{box-shadow:0 0 50px #ffcc00;}}
+.feature h3{color:#ffcc00;margin-bottom:12px;text-shadow:0 0 6px #ffcc00;}
+.feature p{color:#ddd;}
+
+/* Gallery Slider */
+.gallery-container{position:relative;overflow:hidden;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
+.gallery{display:flex;transition:transform 0.5s ease;}
+.gallery img{width:250px;margin-right:20px;border-radius:18px;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;}
+.gallery img:hover{transform:scale(1.1);box-shadow:0 0 50px #ffcc00;}
+.gallery-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#ffcc00;font-size:2rem;padding:10px 14px;cursor:pointer;border-radius:50%;box-shadow:0 0 20px #ffcc00;}
+.gallery-btn.left{left:10px;}
+.gallery-btn.right{right:10px;}
+
+/* Reviews */
+.reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
+.review{background:#2a2a2a;border-radius:20px;padding:28px;box-shadow:0 0 12px rgba(255,204,0,0.2);transition:0.5s;transform:translateY(0);}
+.review:hover{transform:translateY(-6px) rotateX(3deg) scale(1.02);box-shadow:0 0 50px #ffcc00;}
+
+/* Footer */
+footer{text-align:center;padding:25px;color:#aaa;font-size:0.9rem;}
+
+/* Mobile */
+@media(max-width:600px){
+  h1{font-size:2.2rem;}
+  p.description{font-size:1rem;margin-bottom:25px;}
+  .nav-links{flex-direction:column;gap:12px;}
+  .nav-links a{font-size:1rem;padding:10px 20px;}
+  .gallery img{width:200px;margin-right:15px;}
+}
 </style>
 </head>
-<body>
+<body class="dark">
 
+<div id="particles-js"></div>
 <div id="preloader"><div class="spinner"></div></div>
 
 <div class="container" id="content">
-  <!-- Hero -->
   <h1>Привет! Я — PavelPA</h1>
-  <p class="description">
-    Умный Telegram-ассистент с голосом, генерацией и интеллектом.<br>
-    Помогаю в повседневных задачах, мотивирую, показываю факты и учусь вместе с тобой.
-  </p>
+  <p class="description">Премиум Telegram-ассистент с интеллектом, голосом, играми и мотивацией. Всё под контролем, сайт — это опыт футуристического уровня.</p>
+
+  <button id="themeToggle">💡 Переключить тему</button>
 
   <div class="nav-links">
     <a href="about.html" class="smooth-link">Обо мне</a>
@@ -66,47 +88,94 @@
     <a href="https://t.me/PauelkyyBot" target="_blank">Telegram-бот</a>
   </div>
 
-  <!-- Преимущества -->
-  <h2>Преимущества бота</h2>
-  <div class="features">
-    <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты и советы, чтобы оставаться продуктивным и мотивированным.</p></div>
-    <div class="feature"><h3>📚 Факты</h3><p>Интересные и научные факты каждый день — узнавай новое легко и весело.</p></div>
-    <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры, чтобы отдыхать и развивать логику без усилий.</p></div>
-    <div class="feature"><h3>🌤 Погода</h3><p>Простой прогноз погоды, чтобы планировать свой день без сюрпризов.</p></div>
-    <div class="feature"><h3>💬 Ответы</h3><p>Задавай вопросы и получай развернутые ответы от интеллектуального помощника.</p></div>
+  <h2 class="appear">Преимущества бота</h2>
+  <div class="features appear">
+    <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты и советы для продуктивности.</p></div>
+    <div class="feature"><h3>📚 Факты</h3><p>Научные и интересные факты каждый день.</p></div>
+    <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры для отдыха и развития логики.</p></div>
+    <div class="feature"><h3>🌤 Погода</h3><p>Прогноз погоды для удобного планирования дня.</p></div>
+    <div class="feature"><h3>💬 Ответы</h3><p>Интеллектуальный помощник отвечает на любые вопросы.</p></div>
   </div>
 
-  <!-- Отзывы -->
-  <h2>Отзывы пользователей</h2>
-  <div class="reviews">
-    <div class="review">"Очень удобный бот! Мотивация и факты каждый день поднимают настроение." — <b>Алексей</b></div>
+  <h2 class="appear">Галерея</h2>
+  <div class="gallery-container appear">
+    <button class="gallery-btn left">&#10094;</button>
+    <div class="gallery">
+      <img src="images/quadro1.jpg" alt="Квадроцикл 1">
+      <img src="images/quadro2.jpg" alt="Квадроцикл 2">
+      <img src="images/project1.jpg" alt="Проект 1">
+      <img src="images/project2.jpg" alt="Проект 2">
+    </div>
+    <button class="gallery-btn right">&#10095;</button>
+  </div>
+
+  <h2 class="appear">Отзывы пользователей</h2>
+  <div class="reviews appear">
+    <div class="review">"Очень удобный бот! Мотивация и факты поднимают настроение." — <b>Алексей</b></div>
     <div class="review">"PavelPA помогает организовать день и ответить на все вопросы быстро!" — <b>Марина</b></div>
     <div class="review">"Интерактивные игры и прогноз погоды — очень круто!" — <b>Иван</b></div>
   </div>
 </div>
 
-<footer>
-  © 2025 PavelPA. Все права защищены. | <a href="https://t.me/pauelkyy">Связь с создателем</a>
-</footer>
+<footer>© 2025 PavelPA. Все права защищены. | <a href="https://t.me/pauelkyy">Связь с создателем</a></footer>
 
+<!-- Particles.js -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
-  // Прелоадер
-  window.addEventListener('load', () => {
-    const preloader = document.getElementById('preloader');
-    preloader.style.opacity='0';
-    setTimeout(()=>{ preloader.style.display='none'; },500);
-  });
+/* Preloader */
+window.addEventListener('load',()=>{
+  document.getElementById('preloader').style.opacity='0';
+  setTimeout(()=>document.getElementById('preloader').style.display='none',500);
 
-  // Плавный переход для about.html
-  document.querySelectorAll('a.smooth-link').forEach(link=>{
-    link.addEventListener('click', e=>{
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      const content = document.getElementById('content');
-      content.classList.add('hide');
-      setTimeout(()=>{ window.location.href=href; },500);
-    });
+  document.querySelectorAll('h1, p.description, .nav-links, .features, .gallery-container, .reviews').forEach(el=>el.classList.add('appear'));
+});
+
+/* Smooth page transition */
+document.querySelectorAll('a.smooth-link').forEach(link=>{
+  link.addEventListener('click',e=>{
+    e.preventDefault();
+    document.getElementById('content').classList.add('hide');
+    setTimeout(()=>window.location.href=link.getAttribute('href'),500);
   });
+});
+
+/* Theme toggle */
+const toggle=document.getElementById('themeToggle');
+toggle.onclick=()=>{document.body.classList.toggle('dark');document.body.classList.toggle('light');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');};
+window.onload=()=>{const t=localStorage.getItem('theme');if(t)document.body.classList.add(t);};
+
+/* Gallery slider */
+const gallery=document.querySelector('.gallery');
+const leftBtn=document.querySelector('.gallery-btn.left');
+const rightBtn=document.querySelector('.gallery-btn.right');
+let scrollAmount=0;
+leftBtn.onclick=()=>{scrollAmount-=260;gallery.scrollTo({left:scrollAmount,behavior:'smooth'});}
+rightBtn.onclick=()=>{scrollAmount+=260;gallery.scrollTo({left:scrollAmount,behavior:'smooth'});}
+document.querySelectorAll('.gallery img').forEach(img=>img.addEventListener('click',()=>window.open(img.src,'_blank')));
+
+/* Scroll parallax */
+window.addEventListener('scroll',()=>{
+  const scrolled=window.scrollY;
+  document.querySelectorAll('.container, .features, .reviews, .gallery-container').forEach(el=>{
+    el.style.transform=`translateY(${scrolled*0.05}px)`;
+    el.style.boxShadow=`0 0 ${10+scrolled*0.05}px #ffcc00`;
+  });
+});
+
+/* Particles.js config */
+particlesJS("particles-js", {
+  "particles": {
+    "number": {"value":80,"density":{"enable":true,"value_area":800}},
+    "color":{"value":"#ffcc00"},
+    "shape":{"type":"circle"},
+    "opacity":{"value":0.5,"random":true},
+    "size":{"value":3,"random":true},
+    "line_linked":{"enable":true,"distance":150,"color":"#ffcc00","opacity":0.3,"width":1},
+    "move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}
+  },
+  "interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"}},"modes":{"grab":{"distance":200,"line_linked":{"opacity":0.5}},"push":{"particles_nb":4}}},
+  "retina_detect":true
+});
 </script>
 </body>
 </html>
