@@ -1,181 +1,226 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PavelPA — Futuristic Ultra Premium</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body,html{height:100%;font-family:'Manrope',sans-serif;overflow-x:hidden;transition:0.5s;}
-body.dark{background:#0a0a1a;color:#ddd;}
-body.light{background:#f5f5f5;color:#222;}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PavelPA — Умный Telegram-ассистент</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600;800&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0f1724">
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#111318;
+      --muted:#aeb6c3;
+      --accent:#ffd24d;
+      --glass: rgba(255,255,255,0.03);
+      --radius:18px;
+      --glass-2: rgba(255,255,255,0.02);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,var(--bg) 0%, #071226 100%); color:#e6eef8;-webkit-font-smoothing:antialiased}
 
-/* Preloader */
-#preloader{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0a0a1a;display:flex;justify-content:center;align-items:center;z-index:9999;}
-#preloader .spinner{width:70px;height:70px;border:8px solid rgba(255,255,255,0.15);border-top:8px solid #ffcc00;border-radius:50%;animation:spin 1s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
+    /* PRELOADER */
+    #preloader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:9999}
+    .spinner{width:56px;height:56px;border-radius:50%;border:6px solid rgba(255,255,255,0.08);border-top-color:var(--accent);animation:spin 900ms linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Particles */
-#particles-js{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+    /* LAYOUT */
+    .wrap{max-width:1100px;margin:48px auto;padding:28px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(2,6,23,0.6);backdrop-filter: blur(6px)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#2a2a2a, #1a1a1a);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    .logo svg{width:36px;height:36px}
+    .brand h1{font-size:1.05rem;color:var(--accent);letter-spacing:0.6px}
+    .brand p{font-size:0.78rem;color:var(--muted);margin-top:2px}
 
-/* Container */
-.container{max-width:1000px;width:90%;margin:60px auto;padding:50px;border-radius:24px;background:rgba(20,20,30,0.8);backdrop-filter:blur(15px);box-shadow:0 0 50px rgba(255,204,0,0.3);text-align:center;transition:0.5s;}
+    nav{display:flex;gap:12px;align-items:center}
+    .btn{font-weight:700;padding:10px 16px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;border:1px solid transparent}
+    .btn.ghost{background:transparent;color:var(--muted);border-color:transparent}
+    .btn.primary{background:linear-gradient(90deg,var(--accent), #ffb84d);color:#071226}
+    .btn:focus{outline:3px solid rgba(255,210,77,0.14)}
 
-/* Hero */
-h1{font-size:3rem;color:#ffcc00;text-shadow:0 0 10px #ffcc00,0 0 25px #ffcc00;animation:glowText 2s ease-in-out infinite alternate;margin-bottom:20px;opacity:0;transform:translateY(50px);transition:0.8s;}
-@keyframes glowText{0%{text-shadow:0 0 5px #ffcc00,0 0 15px #ffcc00;}100%{text-shadow:0 0 15px #ffcc00,0 0 35px #ffcc00;}}
-p.description{font-size:1.2rem;color:#ccc;line-height:1.6;margin-bottom:40px;opacity:0;transform:translateY(50px);transition:0.8s;}
+    /* THE HERO */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;padding:18px}
+    .hero-left h2{font-size:2.2rem;color:#fff;margin-bottom:12px}
+    .lead{color:var(--muted);font-size:1.05rem;line-height:1.5;margin-bottom:18px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
 
-/* Theme Toggle */
-#themeToggle{margin-bottom:30px;padding:14px 28px;border:none;border-radius:14px;background:#ffcc00;color:#121212;font-weight:700;cursor:pointer;box-shadow:0 0 15px #ffcc00;transition:0.3s;}
-#themeToggle:hover{transform:scale(1.05);box-shadow:0 0 35px #ffcc00;}
+    /* CARD */
+    .card{background:var(--card);padding:18px;border-radius:16px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
 
-/* Navigation */
-.nav-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
-.nav-links a{font-weight:600;font-size:1.1rem;padding:14px 30px;border-radius:16px;text-decoration:none;color:#ddd;background:#2a2a2a;box-shadow:0 0 10px rgba(0,255,255,0.2);transition:0.3s;}
-.nav-links a:hover{background:#ffcc00;color:#121212;transform:translateY(-3px) scale(1.05);box-shadow:0 0 50px #ffcc00;}
+    /* FEATURES */
+    .features{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:18px}
+    .feature{padding:14px;border-radius:12px;background:linear-gradient(180deg,var(--glass), var(--glass-2));border:1px solid rgba(255,255,255,0.02);min-height:96px}
+    .feature h3{font-size:1rem;color:var(--accent);margin-bottom:8px}
+    .feature p{color:var(--muted);font-size:0.9rem}
 
-/* Features */
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
-.feature{background:#2a2a2a;border-radius:20px;padding:28px;box-shadow:0 0 12px rgba(255,204,0,0.2);transition:0.5s;transform:translateY(0);}
-.feature:hover{transform:translateY(-10px) rotateX(5deg) scale(1.03);box-shadow:0 0 50px #ffcc00;animation:featureGlow 1.5s infinite alternate;}
-@keyframes featureGlow{0%{box-shadow:0 0 20px #ffcc00;}100%{box-shadow:0 0 50px #ffcc00;}}
-.feature h3{color:#ffcc00;margin-bottom:12px;text-shadow:0 0 6px #ffcc00;}
-.feature p{color:#ddd;}
+    /* GALLERY */
+    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:16px}
+    .thumb{height:90px;border-radius:12px;background:linear-gradient(135deg,#111827,#0b1220);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
 
-/* Gallery Slider */
-.gallery-container{position:relative;overflow:hidden;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
-.gallery{display:flex;transition:transform 0.5s ease;}
-.gallery img{width:250px;margin-right:20px;border-radius:18px;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;}
-.gallery img:hover{transform:scale(1.1);box-shadow:0 0 50px #ffcc00;}
-.gallery-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#ffcc00;font-size:2rem;padding:10px 14px;cursor:pointer;border-radius:50%;box-shadow:0 0 20px #ffcc00;}
-.gallery-btn.left{left:10px;}
-.gallery-btn.right{right:10px;}
+    /* REVIEWS */
+    .reviews{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+    .review{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+    .review b{color:var(--accent)}
 
-/* Reviews */
-.reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;margin-bottom:50px;opacity:0;transform:translateY(50px);transition:0.8s;}
-.review{background:#2a2a2a;border-radius:20px;padding:28px;box-shadow:0 0 12px rgba(255,204,0,0.2);transition:0.5s;transform:translateY(0);}
-.review:hover{transform:translateY(-6px) rotateX(3deg) scale(1.02);box-shadow:0 0 50px #ffcc00;}
+    footer{margin-top:26px;text-align:center;color:var(--muted);font-size:0.9rem;padding:10px}
 
-/* Footer */
-footer{text-align:center;padding:25px;color:#aaa;font-size:0.9rem;}
+    /* Dark/Light support */
+    .theme-toggle{display:inline-flex;align-items:center;gap:10px;padding:8px;border-radius:12px;background:rgba(255,255,255,0.02)}
 
-/* Mobile */
-@media(max-width:600px){
-  h1{font-size:2.2rem;}
-  p.description{font-size:1rem;margin-bottom:25px;}
-  .nav-links{flex-direction:column;gap:12px;}
-  .nav-links a{font-size:1rem;padding:10px 20px;}
-  .gallery img{width:200px;margin-right:15px;}
-}
-</style>
+    /* RESPONSIVE */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr 320px}
+    }
+    @media (max-width:760px){
+      .hero{grid-template-columns:1fr;}
+      .hero-right{order: -1}
+      .reviews{grid-template-columns:1fr}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .pill{padding:6px 10px;border-radius:999px;font-weight:700;background:rgba(255,255,255,0.02);font-size:0.85rem}
+
+    /* subtle animation */
+    .accent-glow{box-shadow:0 6px 30px rgba(255,210,77,0.12);}
+  </style>
 </head>
-<body class="dark">
+<body>
+  <div id="preloader"><div class="spinner"></div></div>
 
-<div id="particles-js"></div>
-<div id="preloader"><div class="spinner"></div></div>
+  <main class="wrap" id="app">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden>
+          <!-- simple monogram -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" fill="url(#g)"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#0b1220"/></linearGradient></defs><path d="M7 16V8l6 8V8" stroke="#ffd24d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h1>PavelPA</h1>
+          <p>Умный Telegram-ассистент — голос, факты, игры</p>
+        </div>
+      </div>
 
-<div class="container" id="content">
-  <h1>Привет! Я — PavelPA</h1>
-  <p class="description">Премиум Telegram-ассистент с интеллектом, голосом, играми и мотивацией. Всё под контролем, сайт — это опыт футуристического уровня.</p>
+      <nav>
+        <a class="btn ghost" href="about.html">Обо мне</a>
+        <a class="btn ghost" href="https://t.me/PauelkyyBot" target="_blank">Открыть бота</a>
+        <a class="btn primary" href="https://pauelky123.github.io/pavel/" target="_blank">Сайт (демо)</a>
+        <div class="theme-toggle" id="themeToggle" title="Тёмная/Светлая тема" role="button" tabindex="0">🌗 <span class="muted">Тема</span></div>
+      </nav>
+    </header>
 
-  <button id="themeToggle">💡 Переключить тему</button>
+    <section class="hero">
+      <div class="hero-left">
+        <h2>Привет — я PavelPA. Помогаю учиться, мотивировать и автоматизировать рутину.</h2>
+        <p class="lead">Голосовые ответы, генерация изображений, напоминания, игры и персональная мотивация. Удобно в Telegram — быстро и просто.</p>
+        <div class="cta-row">
+          <a href="https://t.me/PauelkyyBot" target="_blank" class="btn primary">🚀 Запустить бота</a>
+          <a href="#features" class="btn ghost">Изучить функции</a>
+          <a href="mailto:pavel@example.com" class="btn ghost">📩 Связаться</a>
+        </div>
 
-  <div class="nav-links">
-    <a href="about.html" class="smooth-link">Обо мне</a>
-    <a href="https://www.tiktok.com/@ebitda001" target="_blank">TikTok</a>
-    <a href="https://t.me/PauelkyyBot" target="_blank">Telegram-бот</a>
-  </div>
+        <div id="features" class="card" style="margin-top:18px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div style="min-width:0">
+              <div class="pill">Новое</div>
+              <h3 style="margin-top:8px;color:#fff">Голос + AI + Автопомощник</h3>
+              <p class="muted" style="margin-top:6px">Сохраняет голосовой режим, отправляет ежедневные цитаты и умеет отвечать голосом.</p>
+            </div>
+            <div style="text-align:right">
+              <div class="muted">Пользователей: <strong style="color:var(--accent);">~1k+</strong></div>
+              <div class="muted" style="margin-top:6px">Версия: <strong class="muted">2025.10</strong></div>
+            </div>
+          </div>
 
-  <h2 class="appear">Преимущества бота</h2>
-  <div class="features appear">
-    <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты и советы для продуктивности.</p></div>
-    <div class="feature"><h3>📚 Факты</h3><p>Научные и интересные факты каждый день.</p></div>
-    <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры для отдыха и развития логики.</p></div>
-    <div class="feature"><h3>🌤 Погода</h3><p>Прогноз погоды для удобного планирования дня.</p></div>
-    <div class="feature"><h3>💬 Ответы</h3><p>Интеллектуальный помощник отвечает на любые вопросы.</p></div>
-  </div>
+          <div class="features" style="margin-top:12px">
+            <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты и быстрые чек-листы, чтобы действовать, а не мечтать.</p></div>
+            <div class="feature"><h3>📚 Факты</h3><p>Короткие научные и интересные факты — подойдут для обучения и контента.</p></div>
+            <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры и квизы для перерывов и прокачки мозга.</p></div>
+            <div class="feature"><h3>🌤 Погода</h3><p>Простой прогноз и напоминания о погодных сменах перед тренировкой.</p></div>
+          </div>
+        </div>
+      </div>
 
-  <h2 class="appear">Галерея</h2>
-  <div class="gallery-container appear">
-    <button class="gallery-btn left">&#10094;</button>
-    <div class="gallery">
-      <img src="images/quadro1.jpg" alt="Квадроцикл 1">
-      <img src="images/quadro2.jpg" alt="Квадроцикл 2">
-      <img src="images/project1.jpg" alt="Проект 1">
-      <img src="images/project2.jpg" alt="Проект 2">
-    </div>
-    <button class="gallery-btn right">&#10095;</button>
-  </div>
+      <aside class="hero-right">
+        <div class="card">
+          <h4 style="margin-bottom:8px;color:var(--accent)">Превью интерфейса</h4>
+          <div class="gallery">
+            <div class="thumb">Чат</div>
+            <div class="thumb">Голос</div>
+            <div class="thumb">Факты</div>
+            <div class="thumb">Игры</div>
+            <div class="thumb">Профиль</div>
+            <div class="thumb">Статистика</div>
+          </div>
 
-  <h2 class="appear">Отзывы пользователей</h2>
-  <div class="reviews appear">
-    <div class="review">"Очень удобный бот! Мотивация и факты поднимают настроение." — <b>Алексей</b></div>
-    <div class="review">"PavelPA помогает организовать день и ответить на все вопросы быстро!" — <b>Марина</b></div>
-    <div class="review">"Интерактивные игры и прогноз погоды — очень круто!" — <b>Иван</b></div>
-  </div>
-</div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <a class="btn ghost" href="#reviews">Отзывы</a>
+            <a class="btn ghost" href="/docs/guide.pdf">Руководство</a>
+          </div>
+        </div>
+      </aside>
+    </section>
 
-<footer>© 2025 PavelPA. Все права защищены. | <a href="https://t.me/pauelkyy">Связь с создателем</a></footer>
+    <section style="margin-top:16px">
+      <h3 style="color:var(--accent)">Почему PavelPA</h3>
+      <p class="muted" style="margin-top:6px;max-width:900px">Разработан как простой инструмент, который объединяет голос, автоматизацию и развлекательный контент в одном телеграм-боте. Лёгкая настройка и быстрый старт — идеален для школьников и тех, кто любит порядок.</p>
 
-<!-- Particles.js -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script>
-/* Preloader */
-window.addEventListener('load',()=>{
-  document.getElementById('preloader').style.opacity='0';
-  setTimeout(()=>document.getElementById('preloader').style.display='none',500);
+      <div class="reviews" id="reviews">
+        <div class="review">"Очень удобный бот! Мотивация и факты каждый день поднимают настроение." — <b>Алексей</b></div>
+        <div class="review">"PavelPA помогает организовать день и ответить на все вопросы быстро!" — <b>Марина</b></div>
+        <div class="review">"Интерактивные игры и прогноз погоды — очень круто!" — <b>Иван</b></div>
+        <div class="review">"Голосовые ответы реально работают, спасибо!" — <b>Оля</b></div>
+      </div>
+    </section>
 
-  document.querySelectorAll('h1, p.description, .nav-links, .features, .gallery-container, .reviews').forEach(el=>el.classList.add('appear'));
-});
+    <footer>
+      © 2025 PavelPA. Все права защищены. <span style="margin-left:8px">|</span> <a href="https://t.me/pauelkyy" target="_blank" style="color:var(--muted);text-decoration:none;margin-left:8px">Связь с создателем</a>
+    </footer>
+  </main>
 
-/* Smooth page transition */
-document.querySelectorAll('a.smooth-link').forEach(link=>{
-  link.addEventListener('click',e=>{
-    e.preventDefault();
-    document.getElementById('content').classList.add('hide');
-    setTimeout(()=>window.location.href=link.getAttribute('href'),500);
-  });
-});
+  <script>
+    // preloader
+    window.addEventListener('load', ()=>{
+      const pre = document.getElementById('preloader');
+      pre.style.opacity = '0';
+      setTimeout(()=>pre.remove(),600);
+    });
 
-/* Theme toggle */
-const toggle=document.getElementById('themeToggle');
-toggle.onclick=()=>{document.body.classList.toggle('dark');document.body.classList.toggle('light');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');};
-window.onload=()=>{const t=localStorage.getItem('theme');if(t)document.body.classList.add(t);};
+    // theme toggle (light/dark) — stores in localStorage
+    const toggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    function setTheme(name){
+      if(name === 'light'){
+        root.style.setProperty('--bg','#f7fafc');
+        root.style.setProperty('--card','#ffffff');
+        root.style.setProperty('--muted','#334155');
+        root.style.setProperty('--accent','#ffb84d');
+        root.style.setProperty('--glass','rgba(2,6,23,0.03)');
+      } else {
+        root.style.setProperty('--bg','#0f1724');
+        root.style.setProperty('--card','#111318');
+        root.style.setProperty('--muted','#aeb6c3');
+        root.style.setProperty('--accent','#ffd24d');
+        root.style.setProperty('--glass','rgba(255,255,255,0.03)');
+      }
+      localStorage.setItem('pavelpa_theme', name);
+    }
+    // init
+    const saved = localStorage.getItem('pavelpa_theme') || 'dark';
+    setTheme(saved);
+    toggle.addEventListener('click', ()=> setTheme(localStorage.getItem('pavelpa_theme') === 'dark' ? 'light' : 'dark') );
+    toggle.addEventListener('keypress', (e)=>{ if(e.key === 'Enter') toggle.click(); });
 
-/* Gallery slider */
-const gallery=document.querySelector('.gallery');
-const leftBtn=document.querySelector('.gallery-btn.left');
-const rightBtn=document.querySelector('.gallery-btn.right');
-let scrollAmount=0;
-leftBtn.onclick=()=>{scrollAmount-=260;gallery.scrollTo({left:scrollAmount,behavior:'smooth'});}
-rightBtn.onclick=()=>{scrollAmount+=260;gallery.scrollTo({left:scrollAmount,behavior:'smooth'});}
-document.querySelectorAll('.gallery img').forEach(img=>img.addEventListener('click',()=>window.open(img.src,'_blank')));
-
-/* Scroll parallax */
-window.addEventListener('scroll',()=>{
-  const scrolled=window.scrollY;
-  document.querySelectorAll('.container, .features, .reviews, .gallery-container').forEach(el=>{
-    el.style.transform=`translateY(${scrolled*0.05}px)`;
-    el.style.boxShadow=`0 0 ${10+scrolled*0.05}px #ffcc00`;
-  });
-});
-
-/* Particles.js config */
-particlesJS("particles-js", {
-  "particles": {
-    "number": {"value":80,"density":{"enable":true,"value_area":800}},
-    "color":{"value":"#ffcc00"},
-    "shape":{"type":"circle"},
-    "opacity":{"value":0.5,"random":true},
-    "size":{"value":3,"random":true},
-    "line_linked":{"enable":true,"distance":150,"color":"#ffcc00","opacity":0.3,"width":1},
-    "move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}
-  },
-  "interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"}},"modes":{"grab":{"distance":200,"line_linked":{"opacity":0.5}},"push":{"particles_nb":4}}},
-  "retina_detect":true
-});
-</script>
+    // smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
 </body>
 </html>
