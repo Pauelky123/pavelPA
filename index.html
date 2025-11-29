@@ -6,45 +6,7 @@
   <title>PavelPA — Умный Telegram-ассистент</title>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600;800&display=swap" rel="stylesheet">
   <meta name="theme-color" content="#0f1724">
-  <!-- Для вставки в <head> (замените значения на реальные URL/email) -->
-<meta name="description" content="PavelPA — умный Telegram-ассистент: голосовые ответы, напоминания, игры и персональная мотивация. Запустите бота и начните автоматизировать рутину.">
-<link rel="canonical" href="https://pauelky123.github.io/pavel/">
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/manifest.json">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="PavelPA — Умный Telegram-ассистент">
-<meta property="og:description" content="Голосовые ответы, генерация изображений, напоминания и мини-игры. Удобный интерфейс и автоматизация рутинных задач.">
-<meta property="og:url" content="https://pauelky123.github.io/pavel/">
-<meta property="og:image" content="https://pauelky123.github.io/pavel/og-image.png">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PavelPA — Умный Telegram-ассистент">
-<meta name="twitter:description" content="Голосовые ответы, генерация изображений, напоминания и мини-игры.">
-<meta name="twitter:image" content="https://pauelky123.github.io/pavel/og-image.png">
-
-<!-- JSON-LD (SoftwareApplication) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "PavelPA",
-  "operatingSystem": "Telegram",
-  "applicationCategory": "MessagingApplication",
-  "url": "https://pauelky123.github.io/pavel/",
-  "description": "Умный Telegram-ассистент с голосом, фактами, играми и напоминаниями.",
-  "author": {
-    "@type": "Person",
-    "name": "Pavel",
-    "url": "https://github.com/Pauelky123"
-  }
-}
-</script>
-
-<style>
+  <style>
     :root{
       --bg:#0f1724;
       --card:#111318;
@@ -52,7 +14,6 @@
       --accent:#ffd24d;
       --glass: rgba(255,255,255,0.03);
       --radius:18px;
-      --glass-2: rgba(255,255,255,0.02);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%;font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,var(--bg) 0%, #071226 100%); color:#e6eef8;-webkit-font-smoothing:antialiased}
@@ -63,7 +24,7 @@
     @keyframes spin{to{transform:rotate(360deg)}}
 
     /* LAYOUT */
-    .wrap{max-width:1100px;margin:48px auto;padding:28px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(2,6,23,0.6);backdrop-filter: blur(6px)}
+    .wrap{max-width:1100px;margin:48px auto;padding:28px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(2,6,23,0.6);backdrop-filter: blur(6px)}
     header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
     .brand{display:flex;align-items:center;gap:14px}
     .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#2a2a2a, #1a1a1a);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
@@ -88,7 +49,7 @@
 
     /* FEATURES */
     .features{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:18px}
-    .feature{padding:14px;border-radius:12px;background:linear-gradient(180deg,var(--glass), var(--glass-2));border:1px solid rgba(255,255,255,0.02);min-height:96px}
+    .feature{padding:14px;border-radius:12px;background:linear-gradient(180deg,var(--glass), var(--glass));border:1px solid rgba(255,255,255,0.02);min-height:96px}
     .feature h3{font-size:1rem;color:var(--accent);margin-bottom:8px}
     .feature p{color:var(--muted);font-size:0.9rem}
 
@@ -104,7 +65,7 @@
     footer{margin-top:26px;text-align:center;color:var(--muted);font-size:0.9rem;padding:10px}
 
     /* Dark/Light support */
-    .theme-toggle{display:inline-flex;align-items:center;gap:10px;padding:8px;border-radius:12px;background:rgba(255,255,255,0.02)}
+    .theme-toggle{display:inline-flex;align-items:center;gap:10px;padding:8px;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer}
 
     /* RESPONSIVE */
     @media (max-width:980px){
@@ -119,9 +80,6 @@
     /* small helpers */
     .muted{color:var(--muted)}
     .pill{padding:6px 10px;border-radius:999px;font-weight:700;background:rgba(255,255,255,0.02);font-size:0.85rem}
-
-    /* subtle animation */
-    .accent-glow{box-shadow:0 6px 30px rgba(255,210,77,0.12);}
   </style>
 </head>
 <body>
@@ -131,7 +89,6 @@
     <header>
       <div class="brand">
         <div class="logo" aria-hidden>
-          <!-- simple monogram -->
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" fill="url(#g)"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#0b1220"/></linearGradient></defs><path d="M7 16V8l6 8V8" stroke="#ffd24d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
@@ -141,29 +98,31 @@
       </div>
 
       <nav>
+        <a class="btn ghost" href="index.html">Главная</a>
         <a class="btn ghost" href="about.html">Обо мне</a>
         <a class="btn ghost" href="https://t.me/PauelkyyBot" target="_blank">Открыть бота</a>
-        <a class="btn primary" href="https://pauelky123.github.io/pavel/" target="_blank">Сайт (демо)</a>
+        <a class="btn ghost" href="docs/guide.pdf" target="_blank" rel="noopener">Руководство</a>
         <div class="theme-toggle" id="themeToggle" title="Тёмная/Светлая тема" role="button" tabindex="0">🌗 <span class="muted">Тема</span></div>
       </nav>
     </header>
 
     <section class="hero">
       <div class="hero-left">
-        <h2>Привет — я PavelPA. Помогаю учиться, мотивировать и автоматизировать рутину.</h2>
-        <p class="lead">Голосовые ответы, генерация изображений, напоминания, игры и персональная мотивация. Удобно в Telegram — быстро и просто.</p>
+        <h2>Привет! Я — PavelPA. Твой персональный Telegram-ассистент.</h2>
+        <p class="lead">Голосовые ответы, генерация изображений, напоминания, игры и персональная мотивация. Быстро, удобно и с заботой о твоём времени.</p>
+
         <div class="cta-row">
           <a href="https://t.me/PauelkyyBot" target="_blank" class="btn primary">🚀 Запустить бота</a>
-          <a href="#features" class="btn ghost">Изучить функции</a>
-          <a href="mailto:pavel@example.com" class="btn ghost">📩 Связаться</a>
+          <a href="about.html" class="btn ghost">Узнать обо мне</a>
+          <a href="#features" class="btn ghost">Функции</a>
         </div>
 
-        <div id="features" class="card" style="margin-top:18px;">
+        <div class="card" style="margin-top:18px;">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <div style="min-width:0">
               <div class="pill">Новое</div>
-              <h3 style="margin-top:8px;color:#fff">Голос + AI + Автопомощник</h3>
-              <p class="muted" style="margin-top:6px">Сохраняет голосовой режим, отправляет ежедневные цитаты и умеет отвечать голосом.</p>
+              <h3 style="margin-top:8px;color:#fff">Голос, AI и автоматизация</h3>
+              <p class="muted" style="margin-top:6px">Сохраняет голосовой режим, отправляет ежедневные цитаты и умеет отвечать голосом в Telegram.</p>
             </div>
             <div style="text-align:right">
               <div class="muted">Пользователей: <strong style="color:var(--accent);">~1k+</strong></div>
@@ -171,11 +130,13 @@
             </div>
           </div>
 
-          <div class="features" style="margin-top:12px">
-            <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты и быстрые чек-листы, чтобы действовать, а не мечтать.</p></div>
-            <div class="feature"><h3>📚 Факты</h3><p>Короткие научные и интересные факты — подойдут для обучения и контента.</p></div>
-            <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры и квизы для перерывов и прокачки мозга.</p></div>
-            <div class="feature"><h3>🌤 Погода</h3><p>Простой прогноз и напоминания о погодных сменах перед тренировкой.</p></div>
+          <div id="features" class="features" style="margin-top:12px">
+            <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты, чек-листы и напоминания для целей.</p></div>
+            <div class="feature"><h3>📚 Факты</h3><p>Интересные и научные факты для контента и развития.</p></div>
+            <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры и квизы для отдыха и тренировки мозга.</p></div>
+            <div class="feature"><h3>🌤 Погода</h3><p>Простой прогноз и уведомления перед тренировкой.</p></div>
+            <div class="feature"><h3>🔊 Голос</h3><p>Ответы голосом через edge-tts — удобно и живо.</p></div>
+            <div class="feature"><h3>⚙️ Автоматизация</h3><p>Напоминания, отчёты и простые сценарии для рутинных задач.</p></div>
           </div>
         </div>
       </div>
@@ -197,13 +158,20 @@
             <a class="btn ghost" href="docs/guide.pdf" target="_blank" rel="noopener">Руководство</a>
           </div>
         </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h4 style="color:var(--accent);margin-bottom:8px">Поддержать проект</h4>
+          <p class="muted">Если хочешь поддержать развитие бота — напиши автору в Telegram или отправь идею для фичи.</p>
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+            <a class="btn ghost" href="https://t.me/pauelkyy" target="_blank">Связаться</a>
+            <a class="btn ghost" href="mailto:pavel@example.com">Написать email</a>
+          </div>
+        </div>
       </aside>
     </section>
 
-    <section style="margin-top:16px">
-      <h3 style="color:var(--accent)">Почему PavelPA</h3>
-      <p class="muted" style="margin-top:6px;max-width:900px">Разработан как простой инструмент, который объединяет голос, автоматизацию и развлекательный контент в одном телеграм-боте. Лёгкая настройка и быстрый старт — идеален для школьников и тех, кто любит порядок.</p>
-
+    <section style="margin-top:18px">
+      <h3 style="color:var(--accent)">Отзывы пользователей</h3>
       <div class="reviews" id="reviews">
         <div class="review">"Очень удобный бот! Мотивация и факты каждый день поднимают настроение." — <b>Алексей</b></div>
         <div class="review">"PavelPA помогает организовать день и ответить на все вопросы быстро!" — <b>Марина</b></div>
