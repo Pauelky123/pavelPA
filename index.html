@@ -4,229 +4,173 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PavelPA — Умный Telegram-ассистент</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600;800&display=swap" rel="stylesheet">
-  <meta name="theme-color" content="#0f1724">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#f8f9fb">
   <style>
     :root{
-      --bg:#0f1724;
-      --card:#111318;
-      --muted:#aeb6c3;
-      --accent:#ffd24d;
-      --glass: rgba(255,255,255,0.03);
-      --radius:18px;
+      --bg: #f8f9fb; /* soft white */
+      --card: #ffffff;
+      --muted: #6b7280;
+      --lead: #374151;
+      --accent: #007aff; /* apple blue */
+      --glass: rgba(15,23,42,0.02);
+      --shadow: 0 8px 30px rgba(2,6,23,0.06);
+      --radius: 16px;
+      --container: 1100px;
     }
+
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,var(--bg) 0%, #071226 100%); color:#e6eef8;-webkit-font-smoothing:antialiased}
+    html,body{height:100%;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--lead); -webkit-font-smoothing:antialiased}
 
-    /* PRELOADER */
-    #preloader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:9999}
-    .spinner{width:56px;height:56px;border-radius:50%;border:6px solid rgba(255,255,255,0.08);border-top-color:var(--accent);animation:spin 900ms linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
+    .page{max-width:var(--container);margin:56px auto;padding:36px}
 
-    /* LAYOUT */
-    .wrap{max-width:1100px;margin:48px auto;padding:28px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(2,6,23,0.6);backdrop-filter: blur(6px)}
-    header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand{display:flex;align-items:center;gap:14px}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#2a2a2a, #1a1a1a);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
-    .logo svg{width:36px;height:36px}
-    .brand h1{font-size:1.05rem;color:var(--accent);letter-spacing:0.6px}
-    .brand p{font-size:0.78rem;color:var(--muted);margin-top:2px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(180deg,#fff,#f3f4f6);display:flex;align-items:center;justify-content:center;border:1px solid rgba(15,23,42,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.03)}
+    .logo svg{width:30px;height:30px}
+    .brand h1{font-size:1rem;color:var(--lead);letter-spacing:0.2px}
+    .brand p{font-size:0.8rem;color:var(--muted)}
 
     nav{display:flex;gap:12px;align-items:center}
-    .btn{font-weight:700;padding:10px 16px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;border:1px solid transparent}
-    .btn.ghost{background:transparent;color:var(--muted);border-color:transparent}
-    .btn.primary{background:linear-gradient(90deg,var(--accent), #ffb84d);color:#071226}
-    .btn:focus{outline:3px solid rgba(255,210,77,0.14)}
+    .nav-link{font-weight:600;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--lead)}
+    .nav-ghost{background:transparent}
+    .nav-primary{background:linear-gradient(180deg,var(--accent), #0060d6);color:#fff;box-shadow:0 6px 24px rgba(0,122,255,0.12)}
 
-    /* THE HERO */
-    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;padding:18px}
-    .hero-left h2{font-size:2.2rem;color:#fff;margin-bottom:12px}
-    .lead{color:var(--muted);font-size:1.05rem;line-height:1.5;margin-bottom:18px}
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:34px;align-items:center;margin-top:28px}
+    .hero h2{font-size:2.6rem;color:#0f1724;line-height:1.02;margin-bottom:12px}
+    .subtitle{color:var(--muted);font-size:1.05rem;line-height:1.5;margin-bottom:20px}
+
     .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .cta{padding:14px 18px;border-radius:12px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
 
-    /* CARD */
-    .card{background:var(--card);padding:18px;border-radius:16px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    /* Product card with mock phone */
+    .card{background:var(--card);border-radius:20px;padding:20px;box-shadow:var(--shadow);border:1px solid rgba(2,6,23,0.04)}
+    .device{width:320px;height:600px;border-radius:36px;background:linear-gradient(180deg,#fafafa,#f2f4f7);border:1px solid rgba(15,23,42,0.06);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(15,23,42,0.04)}
+    .device-screen{width:88%;height:86%;background:linear-gradient(180deg,#ffffff,#fbfdff);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-weight:600}
+    .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    .feature-pill{background:#f8fafc;border-radius:12px;padding:10px;font-weight:700;color:#0f1724;border:1px solid rgba(15,23,42,0.03);text-align:center}
 
-    /* FEATURES */
-    .features{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:18px}
-    .feature{padding:14px;border-radius:12px;background:linear-gradient(180deg,var(--glass), var(--glass));border:1px solid rgba(255,255,255,0.02);min-height:96px}
-    .feature h3{font-size:1rem;color:var(--accent);margin-bottom:8px}
-    .feature p{color:var(--muted);font-size:0.9rem}
+    /* Features section */
+    section.features{margin-top:36px}
+    .features-list{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .feature-card{background:var(--card);padding:20px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(2,6,23,0.04)}
+    .feature-card h3{margin-bottom:8px;color:#0f1724}
+    .feature-card p{color:var(--muted);font-size:0.95rem}
 
-    /* GALLERY */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:16px}
-    .thumb{height:90px;border-radius:12px;background:linear-gradient(135deg,#111827,#0b1220);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+    /* Testimonials */
+    .testimonials{display:flex;gap:14px;margin-top:28px}
+    .testimonial{flex:1;background:linear-gradient(180deg,#fff,#fbfdff);padding:16px;border-radius:12px;border:1px solid rgba(2,6,23,0.04);box-shadow:0 6px 20px rgba(2,6,23,0.04)}
+    .testimonial b{color:#0f1724}
 
-    /* REVIEWS */
-    .reviews{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
-    .review{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
-    .review b{color:var(--accent)}
+    footer{margin-top:40px;text-align:center;color:var(--muted);font-size:0.95rem;padding-bottom:30px}
 
-    footer{margin-top:26px;text-align:center;color:var(--muted);font-size:0.9rem;padding:10px}
-
-    /* Dark/Light support */
-    .theme-toggle{display:inline-flex;align-items:center;gap:10px;padding:8px;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer}
-
-    /* RESPONSIVE */
+    /* Responsive */
     @media (max-width:980px){
-      .hero{grid-template-columns:1fr 320px}
+      .hero{grid-template-columns:1fr}
+      .device{width:260px;height:520px}
+      .features-list{grid-template-columns:repeat(2,1fr)}
     }
-    @media (max-width:760px){
-      .hero{grid-template-columns:1fr;}
-      .hero-right{order: -1}
-      .reviews{grid-template-columns:1fr}
+    @media (max-width:600px){
+      .page{margin:28px auto;padding:20px}
+      .features-list{grid-template-columns:1fr}
+      .brand h1{font-size:0.95rem}
+      .hero h2{font-size:1.6rem}
     }
 
-    /* small helpers */
-    .muted{color:var(--muted)}
-    .pill{padding:6px 10px;border-radius:999px;font-weight:700;background:rgba(255,255,255,0.02);font-size:0.85rem}
   </style>
 </head>
 <body>
-  <div id="preloader"><div class="spinner"></div></div>
-
-  <main class="wrap" id="app">
+  <div class="page">
     <header>
       <div class="brand">
         <div class="logo" aria-hidden>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" fill="url(#g)"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#0b1220"/></linearGradient></defs><path d="M7 16V8l6 8V8" stroke="#ffd24d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" fill="#fff" stroke="rgba(15,23,42,0.04)"/><path d="M7 16V8l6 8V8" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
           <h1>PavelPA</h1>
-          <p>Умный Telegram-ассистент — голос, факты, игры</p>
+          <p>Умный Telegram-ассистент</p>
         </div>
       </div>
 
       <nav>
-        <a class="btn ghost" href="index.html">Главная</a>
-        <a class="btn ghost" href="about.html">Обо мне</a>
-        <a class="btn ghost" href="https://t.me/PauelkyyBot" target="_blank">Открыть бота</a>
-        <a class="btn ghost" href="docs/guide.pdf" target="_blank" rel="noopener">Руководство</a>
-        <div class="theme-toggle" id="themeToggle" title="Тёмная/Светлая тема" role="button" tabindex="0">🌗 <span class="muted">Тема</span></div>
+        <a class="nav-link nav-ghost" href="about.html">Обо мне</a>
+        <a class="nav-link nav-ghost" href="docs/guide.pdf" target="_blank" rel="noopener">Руководство</a>
+        <a class="nav-link nav-primary" href="https://t.me/PauelkyyBot" target="_blank">Запустить бота</a>
       </nav>
     </header>
 
-    <section class="hero">
-      <div class="hero-left">
-        <h2>Привет! Я — PavelPA. Твой персональный Telegram-ассистент.</h2>
-        <p class="lead">Голосовые ответы, генерация изображений, напоминания, игры и персональная мотивация. Быстро, удобно и с заботой о твоём времени.</p>
+    <main class="hero">
+      <div>
+        <h2>Интеллект, голос и автоматизация — в одном аккуратном боте.</h2>
+        <p class="subtitle">PavelPA — инструмент для продуктивности, мотивации и легкого развлечения. Сделано просто, приятно и понятно — как Apple делает продукты.</p>
 
         <div class="cta-row">
-          <a href="https://t.me/PauelkyyBot" target="_blank" class="btn primary">🚀 Запустить бота</a>
-          <a href="about.html" class="btn ghost">Узнать обо мне</a>
-          <a href="#features" class="btn ghost">Функции</a>
+          <a href="https://t.me/PauelkyyBot" target="_blank" class="cta nav-primary">🚀 Запустить бота</a>
+          <a href="about.html" class="cta nav-ghost">Узнать обо мне</a>
+          <a href="#features" class="cta nav-ghost">Функции</a>
         </div>
 
-        <div class="card" style="margin-top:18px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-            <div style="min-width:0">
-              <div class="pill">Новое</div>
-              <h3 style="margin-top:8px;color:#fff">Голос, AI и автоматизация</h3>
-              <p class="muted" style="margin-top:6px">Сохраняет голосовой режим, отправляет ежедневные цитаты и умеет отвечать голосом в Telegram.</p>
-            </div>
-            <div style="text-align:right">
-              <div class="muted">Пользователей: <strong style="color:var(--accent);">~1k+</strong></div>
-              <div class="muted" style="margin-top:6px">Версия: <strong class="muted">2025.10</strong></div>
+        <div class="card" style="margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:18px">
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:700;color:#0f1724">Новый голосовой режим</div>
+            <div style="color:var(--muted);margin-top:6px">Ответы голосом через edge-tts, сохранение состояния и быстрые напоминания.</div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <div class="feature-pill">Голос</div>
+              <div class="feature-pill">Напоминания</div>
+              <div class="feature-pill">Игры</div>
             </div>
           </div>
-
-          <div id="features" class="features" style="margin-top:12px">
-            <div class="feature"><h3>💡 Мотивация</h3><p>Ежедневные цитаты, чек-листы и напоминания для целей.</p></div>
-            <div class="feature"><h3>📚 Факты</h3><p>Интересные и научные факты для контента и развития.</p></div>
-            <div class="feature"><h3>🎲 Игры</h3><p>Мини-игры и квизы для отдыха и тренировки мозга.</p></div>
-            <div class="feature"><h3>🌤 Погода</h3><p>Простой прогноз и уведомления перед тренировкой.</p></div>
-            <div class="feature"><h3>🔊 Голос</h3><p>Ответы голосом через edge-tts — удобно и живо.</p></div>
-            <div class="feature"><h3>⚙️ Автоматизация</h3><p>Напоминания, отчёты и простые сценарии для рутинных задач.</p></div>
+          <div style="width:360px;display:flex;justify-content:center">
+            <div class="device" aria-hidden>
+              <div class="device-screen">Превью чата<br><small style="color:var(--muted);margin-top:8px">(здесь можно вставить скриншот)</small></div>
+            </div>
           </div>
         </div>
+
+        <section id="features" class="features">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3 style="margin:0;color:#0f1724">Возможности</h3>
+            <div style="color:var(--muted);font-weight:600">Легко настраивается • Без лишнего</div>
+          </div>
+
+          <div class="features-list" style="margin-top:14px">
+            <div class="feature-card"><h3>Мотивация</h3><p>Ежедневные цитаты, чек-листы и цели — всё это в удобных сообщениях.</p></div>
+            <div class="feature-card"><h3>Голосовые ответы</h3><p>Ответы голосом для удобного прослушивания — на тренировке или в дороге.</p></div>
+            <div class="feature-card"><h3>Генерация</h3><p>Картинки и быстрые мемы по запросу — контент без лишних усилий.</p></div>
+            <div class="feature-card"><h3>Игры</h3><p>Квизы и мини-игры для перерывов и прокачки логики.</p></div>
+            <div class="feature-card"><h3>Погода</h3><p>Погодные напоминания перед тренировкой и короткие прогнозы.</p></div>
+            <div class="feature-card"><h3>Автоматизация</h3><p>Напоминания, отчёты и простые сценарии — бот работает по расписанию.</p></div>
+          </div>
+        </section>
+
       </div>
 
-      <aside class="hero-right">
+      <aside>
         <div class="card">
-          <h4 style="margin-bottom:8px;color:var(--accent)">Превью интерфейса</h4>
-          <div class="gallery">
-            <div class="thumb">Чат</div>
-            <div class="thumb">Голос</div>
-            <div class="thumb">Факты</div>
-            <div class="thumb">Игры</div>
-            <div class="thumb">Профиль</div>
-            <div class="thumb">Статистика</div>
+          <h4 style="margin-bottom:8px;color:#0f1724">Отзывы</h4>
+          <div class="testimonials">
+            <div class="testimonial">"Очень удобный бот — простой и понятный" — <b>Алексей</b></div>
+            <div class="testimonial">"Голосовые ответы спасают на тренировках" — <b>Иван</b></div>
           </div>
 
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-            <a class="btn ghost" href="#reviews">Отзывы</a>
-            <a class="btn ghost" href="docs/guide.pdf" target="_blank" rel="noopener">Руководство</a>
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+            <a class="cta nav-ghost" href="https://t.me/pauelkyy" target="_blank">Связаться</a>
+            <a class="cta nav-ghost" href="mailto:pavel@example.com">Написать email</a>
           </div>
         </div>
 
-        <div class="card" style="margin-top:12px;">
-          <h4 style="color:var(--accent);margin-bottom:8px">Поддержать проект</h4>
-          <p class="muted">Если хочешь поддержать развитие бота — напиши автору в Telegram или отправь идею для фичи.</p>
-          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-            <a class="btn ghost" href="https://t.me/pauelkyy" target="_blank">Связаться</a>
-            <a class="btn ghost" href="mailto:pavel@example.com">Написать email</a>
-          </div>
+        <div class="card" style="margin-top:16px;text-align:center">
+          <div style="font-weight:700;color:#0f1724">Поддержать проект</div>
+          <p style="color:var(--muted);margin-top:8px">Идеи, фиды и небольшая поддержка помогают разрабатывать новые функции.</p>
+          <a class="cta nav-primary" style="margin-top:12px;display:inline-block" href="https://t.me/PauelkyyBot" target="_blank">Поддержать</a>
         </div>
       </aside>
-    </section>
-
-    <section style="margin-top:18px">
-      <h3 style="color:var(--accent)">Отзывы пользователей</h3>
-      <div class="reviews" id="reviews">
-        <div class="review">"Очень удобный бот! Мотивация и факты каждый день поднимают настроение." — <b>Алексей</b></div>
-        <div class="review">"PavelPA помогает организовать день и ответить на все вопросы быстро!" — <b>Марина</b></div>
-        <div class="review">"Интерактивные игры и прогноз погоды — очень круто!" — <b>Иван</b></div>
-        <div class="review">"Голосовые ответы реально работают, спасибо!" — <b>Оля</b></div>
-      </div>
-    </section>
+    </main>
 
     <footer>
-      © 2025 PavelPA. Все права защищены. <span style="margin-left:8px">|</span> <a href="https://t.me/pauelkyy" target="_blank" style="color:var(--muted);text-decoration:none;margin-left:8px">Связь с создателем</a>
+      © 2025 PavelPA — Сделано с аккуратностью. <a href="about.html" style="color:var(--muted);text-decoration:none;margin-left:8px">Обо мне</a>
     </footer>
-  </main>
-
-  <script>
-    // preloader
-    window.addEventListener('load', ()=>{
-      const pre = document.getElementById('preloader');
-      pre.style.opacity = '0';
-      setTimeout(()=>pre.remove(),600);
-    });
-
-    // theme toggle (light/dark) — stores in localStorage
-    const toggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    function setTheme(name){
-      if(name === 'light'){
-        root.style.setProperty('--bg','#f7fafc');
-        root.style.setProperty('--card','#ffffff');
-        root.style.setProperty('--muted','#334155');
-        root.style.setProperty('--accent','#ffb84d');
-        root.style.setProperty('--glass','rgba(2,6,23,0.03)');
-      } else {
-        root.style.setProperty('--bg','#0f1724');
-        root.style.setProperty('--card','#111318');
-        root.style.setProperty('--muted','#aeb6c3');
-        root.style.setProperty('--accent','#ffd24d');
-        root.style.setProperty('--glass','rgba(255,255,255,0.03)');
-      }
-      localStorage.setItem('pavelpa_theme', name);
-    }
-    // init
-    const saved = localStorage.getItem('pavelpa_theme') || 'dark';
-    setTheme(saved);
-    toggle.addEventListener('click', ()=> setTheme(localStorage.getItem('pavelpa_theme') === 'dark' ? 'light' : 'dark') );
-    toggle.addEventListener('keypress', (e)=>{ if(e.key === 'Enter') toggle.click(); });
-
-    // smooth scroll for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        e.preventDefault();
-        const id = a.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
-  </script>
+  </div>
 </body>
 </html>
