@@ -1,202 +1,219 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Обо мне — PavelPA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600;800&display=swap" rel="stylesheet">
-  <meta name="theme-color" content="#0f1724">
-  <style>
-    :root{
-      --bg:#0f1724;
-      --card:#111318;
-      --muted:#aeb6c3;
-      --accent:#ffd24d;
-      --glass: rgba(255,255,255,0.03);
-      --radius:16px;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,var(--bg) 0%, #071226 100%); color:#e6eef8;-webkit-font-smoothing:antialiased}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Обо мне - PavelPA</title>
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  background: #121212;
+  color: #ddd;
+  font-family: 'Manrope', sans-serif;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
 
-    /* page container */
-    .wrap{max-width:1100px;margin:48px auto;padding:28px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(2,6,23,0.6);backdrop-filter: blur(6px)}
+h1 {
+  color: #ffcc00;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255,204,0,0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
 
-    header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#2a2a2a, #1a1a1a);display:flex;align-items:center;justify-content:center}
-    .brand h1{font-size:1.05rem;color:var(--accent)}
-    .brand p{font-size:0.78rem;color:var(--muted)}
-    nav{display:flex;gap:12px;align-items:center}
-    .btn{font-weight:700;padding:8px 14px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border:1px solid transparent}
-    .btn.ghost{background:transparent;color:var(--muted)}
-    .btn.primary{background:linear-gradient(90deg,var(--accent), #ffb84d);color:#071226}
+h1.visible { opacity: 1; transform: translateY(0); }
 
-    /* hero */
-    .hero{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
-    .hero-left h2{font-size:2rem;color:#fff;margin-bottom:12px}
-    .lead{color:var(--muted);font-size:1rem;line-height:1.6;margin-bottom:18px}
+#wave-text {
+  font-size: 1.15rem;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    /* about card */
-    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
-    .about-paragraph{color:#e6eef8;margin-bottom:12px;opacity:0;transform:translateY(8px);transition:all 0.6s ease}
-    .about-paragraph.visible{opacity:1;transform:translateY(0)}
+#wave-text p {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 
-    /* books */
-    .books-toggle{display:flex;justify-content:center;margin:18px 0}
-    .books-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-    .book{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px}
-    .book h4{color:var(--accent);margin-bottom:6px}
-    .book p{color:var(--muted);font-size:0.95rem}
+#wave-text p.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    footer{margin-top:24px;text-align:center;color:var(--muted);font-size:0.9rem;padding:10px}
+button {
+  display: block;
+  margin: 0 auto 40px;
+  padding: 14px 28px;
+  font-size: 1rem;
+  background: #ffcc00;
+  color: #121212;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
 
-    @media (max-width:880px){
-      .hero{grid-template-columns:1fr}
-      .hero-right{order:-1}
-    }
+button:hover {
+  transform: translateY(-3px);
+  background: #e6b800;
+  box-shadow: 0 0 15px rgba(255,204,0,0.6);
+}
 
-  </style>
+button.visible { opacity: 1; transform: translateY(0); }
+
+#books-list {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
+}
+
+#books-list.visible { opacity: 1; transform: translateY(0); }
+
+article.book-item {
+  margin-bottom: 20px;
+  background: #1f1f1f;
+  border-radius: 10px;
+  padding: 14px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
+
+article.book-item h3 { color: #ffcc00; margin-bottom: 6px; }
+article.book-item p { color: #bbb; }
+
+@media (max-width: 480px) {
+  body { padding: 16px; }
+  #wave-text { font-size: 1rem; gap: 16px; }
+}
+</style>
 </head>
 <body>
-  <main class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" fill="url(#g)"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#0b1220"/></linearGradient></defs><path d="M7 16V8l6 8V8" stroke="#ffd24d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <h1>PavelPA</h1>
-          <p>Обо мне — проект и история</p>
-        </div>
-      </div>
 
-      <nav>
-        <a class="btn ghost" href="/">Главная</a>
-        <a class="btn ghost" href="https://t.me/PauelkyyBot" target="_blank">Открыть бота</a>
-        <a class="btn primary" href="https://pauelky123.github.io/pavel/" target="_blank">Сайт (демо)</a>
-      </nav>
-    </header>
+<h1 id="main-title">Обо мне</h1>
+<div id="wave-text"></div>
 
-    <section class="hero">
-      <div class="hero-left">
-        <h2 id="main-title">Обо мне — Павел</h2>
-        <div class="card" style="margin-top:12px">
-          <div id="about-content">
-            <!-- paragraphs will be inserted here -->
-          </div>
+<button id="toggle-books-btn" aria-expanded="false" aria-controls="books-list">
+  Книги, которые я прочитал и советую к прочтению
+</button>
 
-          <div class="books-toggle">
-            <button id="toggle-books" class="btn ghost" aria-expanded="false" aria-controls="books">
-              📚 Показать список рекомендованных книг
-            </button>
-          </div>
+<section id="books-list" hidden>
+  <!-- все книги возвращены -->
+  <article class="book-item">
+    <h3>«Самый богатый человек в Вавилоне» — Джордж Клейсон</h3>
+    <p>Классика финансовой мудрости — простые принципы накопления богатства, проверенные временем.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Думай как миллионер» — Харв Экер</h3>
+    <p>Образ мышления и привычки, которые помогают людям добиваться финансового успеха.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Тонкое искусство пофигизма» — Марк Мэнсон</h3>
+    <p>Необычный взгляд на личностный рост и умение правильно расставлять приоритеты.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Как разговаривать с кем угодно, когда угодно» — Ларри Кинг</h3>
+    <p>Советы легендарного телеведущего по эффективной коммуникации в любой ситуации.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Правила жизни успешных людей» — Дейл Карнеги</h3>
+    <p>Мудрые принципы, которые помогли миллионам стать более уверенными и успешными.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Как завоёвывать друзей и оказывать влияние на людей» — Дейл Карнеги</h3>
+    <p>Классика о том, как строить отношения, убеждать и быть влиятельным.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Бизнес без MBA» — Олег Тиньков</h3>
+    <p>Жизненный путь предпринимателя и советы для тех, кто хочет строить бизнес по-своему.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Правило номер 1: никогда не быть номер 2» — Дэн Мильштейн</h3>
+    <p>Как стать лидером в конкурентной среде, не теряя свою индивидуальность.</p>
+  </article>
+  <article class="book-item">
+    <h3>«48 законов власти» — Роберт Грин</h3>
+    <p>Психология влияния и стратегии власти, основанные на реальных исторических примерах.</p>
+  </article>
+  <article class="book-item">
+    <h3>«21 неопровержимый закон лидерства» — Джон Максвелл</h3>
+    <p>Мировой бестселлер о принципах, которые делают лидеров по-настоящему великими.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Атомные привычки» — Джеймс Клир</h3>
+    <p>Как маленькие привычки ежедневно формируют большие изменения в жизни.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Гении и аутсайдеры» — Малкольм Гладуэлл</h3>
+    <p>Почему успех — это не только талант, но и стечение обстоятельств, труда и времени.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Виртуозы общения» — Чарльз Дахигг</h3>
+    <p>О том, как создавать эффективные команды, принимать решения и общаться с пользой.</p>
+  </article>
+  <article class="book-item">
+    <h3>«Как разговаривать с мудаками» — Марк Гоулстон</h3>
+    <p>Практическое руководство по общению с токсичными людьми и сохранению самообладания.</p>
+  </article>
+</section>
 
-          <div id="books" class="books-list" hidden>
-            <!-- books will be rendered here -->
-          </div>
-        </div>
-      </div>
+<script>
+// Текст — по абзацам
+const paragraphs = [
+  "Привет! Меня зовут Павел, мне 14 лет.",
+  "За последние месяцы я проделал огромную работу и не сдавался ни на шаг.",
+  "Я активно развиваюсь в спорте — бокс помогает мне выстраивать дисциплину, силу и выносливость.",
+  "Моя страсть — квадроциклы: Yamaha YFZ 450 стал символом упорства, свободы и адреналина.",
+  "Каждый выезд, трюки и тренировки делают меня сильнее и закаляют характер.",
+  "Параллельно я создаю Telegram-ассистента PavelPA с голосовыми ответами, напоминаниями и генерацией изображений.",
+  "Этот проект помогает изучать технологии и искусственный интеллект на практике.",
+  "Я уверен, что дисциплина, труд и страсть к развитию помогают достигать амбициозных целей и превращать мечты в реальность.",
+  "Следите за моими соцсетями, чтобы не пропустить новые приключения и крутые проекты."
+];
 
-      <aside class="hero-right">
-        <div class="card">
-          <h4 style="color:var(--accent);margin-bottom:8px">Коротко обо мне</h4>
-          <p class="lead muted">14 лет, спортсмен (бокс), разработчик и создатель Telegram-бота PavelPA. Люблю квадроциклы и технологии.</p>
+const container = document.getElementById('wave-text');
 
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-            <a class="btn ghost" href="https://t.me/pauelkyy" target="_blank">Связаться</a>
-            <a class="btn ghost" href="docs/guide.pdf" target="_blank" rel="noopener">Руководство</a>
-          </div>
-        </div>
-      </aside>
-    </section>
+// Плавное появление текста по абзацам
+paragraphs.forEach((para, index) => {
+  const p = document.createElement('p');
+  p.textContent = para;
+  container.appendChild(p);
+  setTimeout(() => {
+    p.classList.add('visible');
+  }, index * 600);
+});
 
-    <footer>
-      © 2025 PavelPA. <a href="https://pauelky123.github.io/pavel/" style="color:var(--muted);text-decoration:none">Главная</a>
-    </footer>
-  </main>
+// Кнопка книг
+const btn = document.getElementById('toggle-books-btn');
+const booksList = document.getElementById('books-list');
+btn.addEventListener('click', () => {
+  const isHidden = booksList.hasAttribute('hidden');
+  if (isHidden) {
+    booksList.removeAttribute('hidden');
+    btn.setAttribute('aria-expanded', 'true');
+    btn.textContent = 'Скрыть список книг';
+  } else {
+    booksList.setAttribute('hidden', '');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = 'Книги, которые я прочитал и советую к прочтению';
+  }
+});
 
-  <script>
-    // content from user
-    const paragraphs = [
-      "Привет! Меня зовут Павел, мне 14 лет.",
-      "За последние месяцы я проделал огромную работу и не сдавался ни на шаг.",
-      "Я активно развиваюсь в спорте — бокс помогает мне выстраивать дисциплину, силу и выносливость.",
-      "Моя страсть — квадроциклы: Yamaha YFZ 450 стал символом упорства, свободы и адреналина.",
-      "Каждый выезд, трюки и тренировки делают меня сильнее и закаляют характер.",
-      "Параллельно я создаю Telegram-ассистента PavelPA с голосовыми ответами, напоминаниями и генерацией изображений.",
-      "Этот проект помогает изучать технологии и искусственный интеллект на практике.",
-      "Я уверен, что дисциплина, труд и страсть к развитию помогают достигать амбициозных целей и превращать мечты в реальность.",
-      "Следите за моими соцсетями, чтобы не пропустить новые приключения и крутые проекты."
-    ];
-
-    const books = [
-      {title: '«Самый богатый человек в Вавилоне» — Джордж Клейсон', desc: 'Классика финансовой мудрости — простые принципы накопления богатства, проверенные временем.'},
-      {title: '«Думай как миллионер» — Харв Экер', desc: 'Образ мышления и привычки, которые помогают людям добиваться финансового успеха.'},
-      {title: '«Тонкое искусство пофигизма» — Марк Мэнсон', desc: 'Необычный взгляд на личностный рост и умение правильно расставлять приоритеты.'},
-      {title: '«Как разговаривать с кем угодно, когда угодно» — Ларри Кинг', desc: 'Советы легендарного телеведущего по эффективной коммуникации в любой ситуации.'},
-      {title: '«Правила жизни успешных людей» — Дейл Карнеги', desc: 'Мудрые принципы, которые помогли миллионам стать более уверенными и успешными.'},
-      {title: '«Как завоёвывать друзей и оказывать влияние на людей» — Дейл Карнеги', desc: 'Классика о том, как строить отношения, убеждать и быть влиятельным.'},
-      {title: '«Бизнес без MBA» — Олег Тиньков', desc: 'Жизненный путь предпринимателя и советы для тех, кто хочет строить бизнес по-своему.'},
-      {title: '«Правило номер 1: никогда не быть номер 2» — Дэн Мильштейн', desc: 'Как стать лидером в конкурентной среде, не теряя свою индивидуальность.'},
-      {title: '«48 законов власти» — Роберт Грин', desc: 'Психология влияния и стратегии власти, основанные на реальных исторических примерах.'},
-      {title: '«21 неопровержимый закон лидерства» — Джон Максвелл', desc: 'Мировой бестселлер о принципах, которые делают лидеров по-настоящему великими.'},
-      {title: '«Атомные привычки» — Джеймс Клир', desc: 'Как маленькие привычки ежедневно формируют большие изменения в жизни.'},
-      {title: '«Гении и аутсайдеры» — Малкольм Гладуэлл', desc: 'Почему успех — это не только талант, но и стечение обстоятельств, труда и времени.'},
-      {title: '«Виртуозы общения» — Чарльз Дахигг', desc: 'О том, как создавать эффективные команды, принимать решения и общаться с пользой.'},
-      {title: '«Как разговаривать с мудаками» — Марк Гоулстон', desc: 'Практическое руководство по общению с токсичными людьми и сохранению самообладания.'}
-    ];
-
-    const aboutContainer = document.getElementById('about-content');
-    paragraphs.forEach((t, i) => {
-      const p = document.createElement('p');
-      p.className = 'about-paragraph';
-      p.textContent = t;
-      aboutContainer.appendChild(p);
-      setTimeout(()=> p.classList.add('visible'), 200 + i*500);
-    });
-
-    const booksEl = document.getElementById('books');
-    books.forEach(b => {
-      const el = document.createElement('article');
-      el.className = 'book card book-item';
-      el.innerHTML = `<h4>${b.title}</h4><p>${b.desc}</p>`;
-      booksEl.appendChild(el);
-    });
-
-    const toggle = document.getElementById('toggle-books');
-    toggle.addEventListener('click', ()=>{
-      const hidden = booksEl.hasAttribute('hidden');
-      if(hidden){
-        booksEl.removeAttribute('hidden');
-        toggle.setAttribute('aria-expanded','true');
-        toggle.textContent = '📚 Скрыть список книг';
-      } else {
-        booksEl.setAttribute('hidden','');
-        toggle.setAttribute('aria-expanded','false');
-        toggle.innerHTML = '📚 Показать список рекомендованных книг';
-      }
-    });
-
-    // theme support (uses same css vars as main page)
-    (function(){
-      const root = document.documentElement;
-      function setTheme(name){
-        if(name === 'light'){
-          root.style.setProperty('--bg','#f7fafc');
-          root.style.setProperty('--card','#ffffff');
-          root.style.setProperty('--muted','#334155');
-          root.style.setProperty('--accent','#ffb84d');
-        } else {
-          root.style.setProperty('--bg','#0f1724');
-          root.style.setProperty('--card','#111318');
-          root.style.setProperty('--muted','#aeb6c3');
-          root.style.setProperty('--accent','#ffd24d');
-        }
-        localStorage.setItem('pavelpa_theme', name);
-      }
-      const saved = localStorage.getItem('pavelpa_theme') || 'dark';
-      setTheme(saved);
-    })();
-  </script>
+// Заголовок и кнопка
+window.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('main-title').classList.add('visible');
+  setTimeout(()=> btn.classList.add('visible'), 1200);
+});
+</script>
 </body>
 </html>
