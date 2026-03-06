@@ -1,176 +1,395 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PavelPA — Умный Telegram-ассистент</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
-  <meta name="theme-color" content="#f8f9fb">
-  <style>
-    :root{
-      --bg: #f8f9fb; /* soft white */
-      --card: #ffffff;
-      --muted: #6b7280;
-      --lead: #374151;
-      --accent: #007aff; /* apple blue */
-      --glass: rgba(15,23,42,0.02);
-      --shadow: 0 8px 30px rgba(2,6,23,0.06);
-      --radius: 16px;
-      --container: 1100px;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Насколько ты редкий — Demo</title>
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--lead); -webkit-font-smoothing:antialiased}
+<!-- Telegram Web App SDK (если мини-приложение запускается внутри Telegram) -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    .page{max-width:var(--container);margin:56px auto;padding:36px}
+<style>
+  :root{
+    --bg:#f4f6fb;
+    --card:#ffffff;
+    --accent:#6c63ff;
+    --muted:#7b7f91;
+  }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, Arial, sans-serif;
+    background: linear-gradient(180deg,#eef2ff 0%, #f7f8fb 100%);
+    -webkit-font-smoothing:antialiased;
+    color:#111;
+    padding:24px;
+    display:flex;
+    justify-content:center;
+  }
+  .wrap{
+    width:100%;
+    max-width:520px;
+  }
+  .header{
+    text-align:left;
+    margin-bottom:12px;
+  }
+  h1{ margin:0; font-size:20px; color:#121212; }
+  p.lead{ margin:6px 0 18px; color:var(--muted); font-size:14px }
 
-    header{display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(180deg,#fff,#f3f4f6);display:flex;align-items:center;justify-content:center;border:1px solid rgba(15,23,42,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.03)}
-    .logo svg{width:30px;height:30px}
-    .brand h1{font-size:1rem;color:var(--lead);letter-spacing:0.2px}
-    .brand p{font-size:0.8rem;color:var(--muted)}
+  .card{
+    background:var(--card);
+    border-radius:16px;
+    padding:16px;
+    box-shadow:0 10px 30px rgba(33,36,64,0.06);
+    margin-bottom:14px;
+  }
 
-    nav{display:flex;gap:12px;align-items:center}
-    .nav-link{font-weight:600;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--lead)}
-    .nav-ghost{background:transparent}
-    .nav-primary{background:linear-gradient(180deg,var(--accent), #0060d6);color:#fff;box-shadow:0 6px 24px rgba(0,122,255,0.12)}
+  /* Question block */
+  .question-title{ font-weight:600; margin-bottom:12px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opt-btn{
+    display:block;
+    border-radius:10px;
+    padding:12px 14px;
+    border:1px solid #eceef7;
+    background:white;
+    cursor:pointer;
+    text-align:left;
+    font-weight:600;
+  }
+  .opt-btn:hover{ transform:translateY(-2px); transition:all .12s ease; }
 
-    /* Hero */
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:34px;align-items:center;margin-top:28px}
-    .hero h2{font-size:2.6rem;color:#0f1724;line-height:1.02;margin-bottom:12px}
-    .subtitle{color:var(--muted);font-size:1.05rem;line-height:1.5;margin-bottom:20px}
+  .progress{ margin-top:10px; color:var(--muted); font-size:13px; }
 
-    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
-    .cta{padding:14px 18px;border-radius:12px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+  /* Result (BuzzFeed-like) */
+  .result-hero{
+    display:grid;
+    grid-template-columns: 120px 1fr;
+    gap:16px;
+    align-items:center;
+  }
+  .result-image{
+    width:120px;
+    height:120px;
+    border-radius:12px;
+    background-size:cover;
+    background-position:center;
+    box-shadow:0 8px 24px rgba(100,110,250,0.14);
+  }
+  /* give result-content a minimal style to avoid empty ruleset */
+  .result-content{ padding-left:4px; }
+  .result-label{ font-size:15px; color:var(--muted); font-weight:600; margin-bottom:6px;}
+  .result-percent{ font-size:40px; font-weight:800; color:var(--accent); }
+  .result-desc{ margin-top:8px; color:#4b4f63; font-size:14px; }
 
-    /* Product card with mock phone */
-    .card{background:var(--card);border-radius:20px;padding:20px;box-shadow:var(--shadow);border:1px solid rgba(2,6,23,0.04)}
-    .device{width:320px;height:600px;border-radius:36px;background:linear-gradient(180deg,#fafafa,#f2f4f7);border:1px solid rgba(15,23,42,0.06);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(15,23,42,0.04)}
-    .device-screen{width:88%;height:86%;background:linear-gradient(180deg,#ffffff,#fbfdff);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-weight:600}
-    .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
-    .feature-pill{background:#f8fafc;border-radius:12px;padding:10px;font-weight:700;color:#0f1724;border:1px solid rgba(15,23,42,0.03);text-align:center}
+  .share-row{ display:flex; gap:10px; margin-top:14px; }
+  .btn{
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    border:none;
+    font-weight:700;
+  }
+  .btn-primary{ background:var(--accent); color:white; box-shadow:0 8px 20px rgba(108,99,255,0.16); }
+  .btn-ghost{ background:transparent; border:1px solid #e6e7f6; color:#333; }
 
-    /* Features section */
-    section.features{margin-top:36px}
-    .features-list{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .feature-card{background:var(--card);padding:20px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(2,6,23,0.04)}
-    .feature-card h3{margin-bottom:8px;color:#0f1724}
-    .feature-card p{color:var(--muted);font-size:0.95rem}
+  /* Traits / MBTI-like */
+  .traits{ margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+  .trait-pill{ background:#f5f7ff; padding:8px 10px; border-radius:999px; font-weight:600; color:#3940a8; font-size:13px; }
 
-    /* Testimonials */
-    .testimonials{display:flex;gap:14px;margin-top:28px}
-    .testimonial{flex:1;background:linear-gradient(180deg,#fff,#fbfdff);padding:16px;border-radius:12px;border:1px solid rgba(2,6,23,0.04);box-shadow:0 6px 20px rgba(2,6,23,0.04)}
-    .testimonial b{color:#0f1724}
+  /* small helper */
+  .small{ color:var(--muted); font-size:13px; }
 
-    footer{margin-top:40px;text-align:center;color:var(--muted);font-size:0.95rem;padding-bottom:30px}
-
-    /* Responsive */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .device{width:260px;height:520px}
-      .features-list{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:600px){
-      .page{margin:28px auto;padding:20px}
-      .features-list{grid-template-columns:1fr}
-      .brand h1{font-size:0.95rem}
-      .hero h2{font-size:1.6rem}
-    }
-
-  </style>
+  /* animation: subtle */
+  .fade-in{ animation:fadeIn .28s ease both; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+</style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" fill="#fff" stroke="rgba(15,23,42,0.04)"/><path d="M7 16V8l6 8V8" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <h1>PavelPA</h1>
-          <p>Умный Telegram-ассистент</p>
-        </div>
-      </div>
+  <div class="wrap">
+    <div class="header">
+      <h1>Насколько ты редкий человек?</h1>
+      <p class="lead">Короткий тест — 20 вопросов. Узнай, насколько ты уникален и получи совет.</p>
+    </div>
 
-      <nav>
-        <a class="nav-link nav-ghost" href="about.html">Обо мне</a>
-        <a class="nav-link nav-ghost" href="docs/guide.pdf" target="_blank" rel="noopener">Руководство</a>
-        <a class="nav-link nav-primary" href="https://t.me/PauelkyyBot" target="_blank">Запустить бота</a>
-      </nav>
-    </header>
-
-    <main class="hero">
-      <div>
-        <h2>Интеллект, голос и автоматизация — в одном аккуратном боте.</h2>
-        <p class="subtitle">PavelPA — инструмент для продуктивности, мотивации и легкого развлечения. Сделано просто, приятно и понятно — как Apple делает продукты.</p>
-
-        <div class="cta-row">
-          <a href="https://t.me/PauelkyyBot" target="_blank" class="cta nav-primary">🚀 Запустить бота</a>
-          <a href="about.html" class="cta nav-ghost">Узнать обо мне</a>
-          <a href="#features" class="cta nav-ghost">Функции</a>
-        </div>
-
-        <div class="card" style="margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:18px">
-          <div style="flex:1;min-width:0">
-            <div style="font-weight:700;color:#0f1724">Новый голосовой режим</div>
-            <div style="color:var(--muted);margin-top:6px">Ответы голосом через edge-tts, сохранение состояния и быстрые напоминания.</div>
-            <div style="display:flex;gap:8px;margin-top:12px">
-              <div class="feature-pill">Голос</div>
-              <div class="feature-pill">Напоминания</div>
-              <div class="feature-pill">Игры</div>
-            </div>
-          </div>
-          <div style="width:360px;display:flex;justify-content:center">
-            <div class="device" aria-hidden>
-              <div class="device-screen">Превью чата<br><small style="color:var(--muted);margin-top:8px">(здесь можно вставить скриншот)</small></div>
-            </div>
-          </div>
-        </div>
-
-        <section id="features" class="features">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h3 style="margin:0;color:#0f1724">Возможности</h3>
-            <div style="color:var(--muted);font-weight:600">Легко настраивается • Без лишнего</div>
-          </div>
-
-          <div class="features-list" style="margin-top:14px">
-            <div class="feature-card"><h3>Мотивация</h3><p>Ежедневные цитаты, чек-листы и цели — всё это в удобных сообщениях.</p></div>
-            <div class="feature-card"><h3>Голосовые ответы</h3><p>Ответы голосом для удобного прослушивания — на тренировке или в дороге.</p></div>
-            <div class="feature-card"><h3>Генерация</h3><p>Картинки и быстрые мемы по запросу — контент без лишних усилий.</p></div>
-            <div class="feature-card"><h3>Игры</h3><p>Квизы и мини-игры для перерывов и прокачки логики.</p></div>
-            <div class="feature-card"><h3>Погода</h3><p>Погодные напоминания перед тренировкой и короткие прогнозы.</p></div>
-            <div class="feature-card"><h3>Автоматизация</h3><p>Напоминания, отчёты и простые сценарии — бот работает по расписанию.</p></div>
-          </div>
-        </section>
-
-      </div>
-
-      <aside>
-        <div class="card">
-          <h4 style="margin-bottom:8px;color:#0f1724">Отзывы</h4>
-          <div class="testimonials">
-            <div class="testimonial">"Очень удобный бот — простой и понятный" — <b>Алексей</b></div>
-            <div class="testimonial">"Голосовые ответы спасают на тренировках" — <b>Иван</b></div>
-          </div>
-
-          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
-            <a class="cta nav-ghost" href="https://t.me/pauelkyy" target="_blank">Связаться</a>
-            <a class="cta nav-ghost" href="mailto:pavel@example.com">Написать email</a>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:16px;text-align:center">
-          <div style="font-weight:700;color:#0f1724">Поддержать проект</div>
-          <p style="color:var(--muted);margin-top:8px">Идеи, фиды и небольшая поддержка помогают разрабатывать новые функции.</p>
-          <a class="cta nav-primary" style="margin-top:12px;display:inline-block" href="https://t.me/PauelkyyBot" target="_blank">Поддержать</a>
-        </div>
-      </aside>
-    </main>
-
-    <footer>
-      © 2025 PavelPA — Сделано с аккуратностью. <a href="about.html" style="color:var(--muted);text-decoration:none;margin-left:8px">Обо мне</a>
-    </footer>
+    <div id="root"></div>
   </div>
+
+<script>
+/*
+  Demo Mini App:
+  - вопросы (20) -> начисляем очки в 5 traits
+  - по завершении: считаем нормализованные значения -> main rarity (от среднего) + dominant label
+  - показываем BuzzFeed-like карточку с картинкой, count-up анимацией процентов
+  - показываем MBTI-like: "Ты X% интроверт" (по social trait)
+  - кнопка Поделиться: открывает deeplink в Telegram (или окно)
+*/
+
+const root = document.getElementById('root');
+const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+
+// Replace with your backend endpoint if you want to POST results and get token/AI verdict
+const BACKEND_URL = ""; // e.g. "https://abcd-1234.ngrok.io" — если пусто, вердикт генерируется локально
+
+// BOT username for deep link sharing (replace)
+const BOT_USERNAME = "YOUR_BOT_USERNAME"; // ← поменяй на своё
+
+// --- Questions: 20 items. Каждая опция добавляет 1 к указанному trait.
+const QUESTIONS = [
+  {q:"Ты планируешь неделю заранее или импровизируешь?", opts:[{t:"logic", txt:"Планирую"},{t:"creativity", txt:"Импровизирую"},{t:"social", txt:"Согласуюсь с друзьями"}]},
+  {q:"Как принимаешь важные решения?", opts:[{t:"logic", txt:"По фактам"},{t:"emotion", txt:"По интуиции"},{t:"social", txt:"Советуюсь с людьми"}]},
+  {q:"Тебе ближе работа:", opts:[{t:"logic", txt:"Системная"},{t:"creativity", txt:"Творческая"},{t:"social", txt:"Командная"}]},
+  {q:"Как ты относишься к риску?", opts:[{t:"risk", txt:"Я рискую часто"},{t:"logic", txt:"Я считаю риски"},{t:"emotion", txt:"Зависит от настроения"}]},
+  {q:"На досуге ты предпочитаешь:", opts:[{t:"creativity", txt:"Творчество"},{t:"social", txt:"Встречи с друзьями"},{t:"logic", txt:"Чтение/учёба"}]},
+  {q:"В споре ты обычно:", opts:[{t:"logic", txt:"Аргументирую"},{t:"emotion", txt:"От души защищаю"},{t:"social", txt:"Ищу компромисс"}]},
+  {q:"Как учишься новому лучше всего?", opts:[{t:"logic", txt:"Структура и примеры"},{t:"creativity", txt:"Практика и эксперимент"},{t:"social", txt:"Через обсуждение"}]},
+  {q:"Твой отпуск идеален если:", opts:[{t:"creativity", txt:"Есть искусство и приключения"},{t:"risk", txt:"Есть острые ощущения"},{t:"social", txt:"Есть компания"}]},
+  {q:"Что ценишь в диалоге больше всего?", opts:[{t:"social", txt:"Эмпатию"},{t:"logic", txt:"Ясность"},{t:"emotion", txt:"Глубокие чувства"}]},
+  {q:"В команде ты чаще:", opts:[{t:"social", txt:"Координатор"},{t:"logic", txt:"Планировщик"},{t:"creativity", txt:"Генератор идей"}]},
+  {q:"Если нужно быстро сделать проект — ты:", opts:[{t:"risk", txt:"Иду на риск ради скорости"},{t:"logic", txt:"Сделаю план"},{t:"creativity", txt:"Придумаю фишку"}]},
+  {q:"Тебя вдохновляет:", opts:[{t:"creativity", txt:"Новые идеи"},{t:"logic", txt:"изящное решение"},{t:"social", txt:"талантливые люди"}]},
+  {q:"Когда дела идут плохо, ты:", opts:[{t:"emotion", txt:"переживаю"},{t:"logic", txt:"пересматриваю план"},{t:"social", txt:"ищу поддержки"}]},
+  {q:"Что для тебя важнее на работе?", opts:[{t:"logic", txt:"результат"},{t:"creativity", txt:"смысл"},{t:"social", txt:"команда"}]},
+  {q:"Ты предпочитаешь задачи:", opts:[{t:"creativity", txt:"творческие"},{t:"logic", txt:"структурированные"},{t:"risk", txt:"экспериментальные"}]},
+  {q:"Как бы тебя описали друзья?", opts:[{t:"social", txt:"общительный"},{t:"logic", txt:"организованный"},{t:"creativity", txt:"странный(ая) в хорошем смысле"}]},
+  {q:"Тебя заводит:", opts:[{t:"risk", txt:"вызов"},{t:"creativity", txt:"создание нового"},{t:"social", txt:"влияние на людей"}]},
+  {q:"Предпочитаешь команду:", opts:[{t:"social", txt:"слаженную"},{t:"logic", txt:"эффективную"},{t:"creativity", txt:"свободную"}]},
+  {q:"Что для тебя успех?", opts:[{t:"logic", txt:"чёткий результат"},{t:"emotion", txt:"внутреннее удовлетворение"},{t:"social", txt:"признание"}]},
+  {q:"Какое хобби выберешь?", opts:[{t:"creativity", txt:"искусство"},{t:"risk", txt:"экстрим"},{t:"logic", txt:"шахматы"}]}
+];
+
+let idx = 0;
+const total = QUESTIONS.length;
+const vector = {logic:0, emotion:0, social:0, creativity:0, risk:0};
+
+function renderQuestion(){
+  const Q = QUESTIONS[idx];
+  root.innerHTML = `
+    <div class="card fade-in">
+      <div class="question-title">Вопрос ${idx+1} из ${total}</div>
+      <div class="question-title">${escapeHtml(Q.q)}</div>
+      <div class="opts" id="opts"></div>
+      <div class="progress small">Прогресс: ${idx+1}/${total}</div>
+    </div>
+  `;
+  const opts = document.getElementById('opts');
+  Q.opts.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt-btn';
+    b.innerText = o.txt;
+    b.onclick = () => choose(i);
+    opts.appendChild(b);
+  });
+}
+
+function choose(optionIndex){
+  const t = QUESTIONS[idx].opts[optionIndex].t;
+  vector[t] = (vector[t]||0) + 1;
+  idx++;
+  if(idx >= total){
+    computeAndShow();
+  } else {
+    renderQuestion();
+  }
+}
+
+function computeAndShow(){
+  // normalize 0..1
+  const norm = {};
+  for(const k of Object.keys(vector)){
+    norm[k] = (vector[k] || 0) / total;
+  }
+
+  // compute rarity: distance from mean(0.5)
+  // same as backend algorithm but local for instant UI
+  const mean = 0.5;
+  const v = [norm.logic, norm.emotion, norm.social, norm.creativity, norm.risk];
+  let dist = 0;
+  for (let i=0;i<v.length;i++){
+    dist += (v[i]-mean)*(v[i]-mean);
+  }
+  dist = Math.sqrt(dist);
+  const maxDist = Math.sqrt(5*(0.5*0.5)); // ~1.118...
+  const normDist = dist / maxDist;
+  const rarity = Math.pow(normDist, 0.7);
+  const rarityPercent = Math.round(rarity*1000)/10; // one decimal
+
+  // Determine dominant trait label
+  const entries = Object.entries(norm).sort((a,b)=>b[1]-a[1]);
+  const dominant = entries[0][0];
+  const labelMap = {
+    logic:"Стратег-аналитик",
+    emotion:"Чувственный эмпат",
+    social:"Командный лидер",
+    creativity:"Креативный новатор",
+    risk:"Рискованный первопроходец"
+  };
+  const label = labelMap[dominant] || "Уникальная личность";
+
+  // MBTI-like: introversion % as inverse of social trait
+  // introversionPercent = (1 - social_norm) * 100, rounded
+  const introversionPercent = Math.round((1 - (norm.social||0)) * 100);
+
+  // local AI-verdict fallback if no backend
+  let aiVerdict = "Краткий совет: используй свои сильные стороны (" + label.toLowerCase() + ").";
+
+  // If BACKEND_URL is set, send normalized vector to backend to compute + store + get token+ai_verdict
+  if (BACKEND_URL){
+    showLoading();
+    fetch(BACKEND_URL + '/api/compute', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ vector: norm })
+    }).then(r=>r.json()).then(data=>{
+      showResultBlock(data, introversionPercent);
+    }).catch(e=>{
+      console.warn('backend error',e);
+      showResultBlock({label, rarity_percent:rarityPercent, people_like_you:"1 из " + Math.max(1,Math.round(1/(1-rarity || 0.001))), ai_verdict: aiVerdict, token: null}, introversionPercent);
+    });
+  } else {
+    // local-only -> build fake people_like_you
+    const peopleLike = "1 из " + Math.max(1, Math.round(1/(1-rarity || 0.001)));
+    showResultBlock({label, rarity_percent:rarityPercent, people_like_you:peopleLike, ai_verdict:aiVerdict, token:null}, introversionPercent);
+  }
+}
+
+// show "loading" intermediate card
+function showLoading(){
+  root.innerHTML = '<div class="card"><div class="small">Считаем…</div></div>';
+}
+
+// show result block (BuzzFeed-like)
+function showResultBlock(data, introversionPercent){
+  // pick an image based on dominant label (simple logic)
+  const img = pickImageByLabel(data.label);
+
+  // build HTML + animate count-up
+  root.innerHTML = `
+    <div class="card result-hero fade-in">
+      <div class="result-image" id="heroImg" style="background-image:url('${img}');"></div>
+      <div class="result-content">
+        <div class="result-label">Тип: ${escapeHtml(data.label)}</div>
+        <div class="result-percent" id="countUp">0%</div>
+        <div class="small">${escapeHtml(data.people_like_you)}</div>
+        <div class="result-desc" id="aiVerdict">${escapeHtml(data.ai_verdict || '')}</div>
+        <div class="traits" id="traitsRow"></div>
+        <div class="share-row">
+          <button class="btn btn-primary" id="shareBtn">Поделиться</button>
+          <button class="btn btn-ghost" id="closeBtn">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // traits pills: show normalized trait percents
+  const traitEls = document.getElementById('traitsRow');
+  // compute simple percentages from vector normalized by total
+  const totalAnswers = total;
+  const vnorm = {};
+  for(const k of Object.keys(vector)){
+    vnorm[k] = Math.round((vector[k]||0) / totalAnswers * 100);
+  }
+  // show top 3 traits
+  Object.entries(vnorm).sort((a,b)=>b[1]-a[1]).slice(0,3).forEach(([k,val])=>{
+    const pill = document.createElement('div');
+    pill.className = 'trait-pill';
+    pill.innerText = mapTraitName(k) + ' · ' + val + '%';
+    traitEls.appendChild(pill);
+  });
+
+  // MBTI-like text
+  const mbtiPill = document.createElement('div');
+  mbtiPill.className = 'trait-pill';
+  mbtiPill.innerText = 'Ты ' + introversionPercent + '% интроверт';
+  traitEls.appendChild(mbtiPill);
+
+  // animate count up to rarity_percent
+  animateCountUp('countUp', 0, Number(data.rarity_percent || 0));
+
+  // share button
+  document.getElementById('shareBtn').onclick = () => {
+    // if backend returned token — share deeplink with token, else share simple text
+    const token = data.token || null;
+    const shareText = 'Я редче ' + data.rarity_percent + '% людей — ' + data.label + '. Проверь себя!';
+    if (token && BOT_USERNAME && BOT_USERNAME !== 'YOUR_BOT_USERNAME'){
+      const url = 'https://t.me/' + BOT_USERNAME + '?start=' + token;
+      openLink(url);
+    } else {
+      // fallback: native share or copy
+      if (navigator.share) {
+        navigator.share({title:'Мой результат', text:shareText});
+      } else {
+        copyToClipboard(shareText);
+        alert('Результат скопирован в буфер обмена:\n' + shareText);
+      }
+    }
+  };
+
+  document.getElementById('closeBtn').onclick = () => {
+    if (tg && tg.close) tg.close();
+    else root.innerHTML = '<div class="card"><div class="small">Спасибо! Вернись позже.</div></div>';
+  };
+}
+
+// helper: animate numeric count-up
+function animateCountUp(elId, start, end){
+  const el = document.getElementById(elId);
+  const duration = 900; // ms
+  const startTime = performance.now();
+  function step(now){
+    const t = Math.min(1, (now - startTime) / duration);
+    // easeOutCubic
+    const eased = 1 - Math.pow(1 - t, 3);
+    const current = Math.round((start + (end - start) * eased) * 10) / 10;
+    el.innerText = (current % 1 === 0 ? current.toFixed(0) : current.toFixed(1)) + '%';
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// small util: pick image by label (uses Unsplash — free hotlinking for demo)
+function pickImageByLabel(label){
+  label = (label || '').toLowerCase();
+  if(label.includes('стратег')) return 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=60';
+  if(label.includes('эмпат')) return 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=60';
+  if(label.includes('команд')) return 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=60';
+  if(label.includes('креатив')) return 'https://images.unsplash.com/photo-1496317899792-9d7dbcd928a1?auto=format&fit=crop&w=800&q=60';
+  if(label.includes('риск')) return 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60';
+  return 'https://images.unsplash.com/photo-1531123414780-fc8a5f7d4b8a?auto=format&fit=crop&w=800&q=60';
+}
+
+function mapTraitName(k){
+  return {
+    logic:'Аналитика',
+    emotion:'Эмоции',
+    social:'Общение',
+    creativity:'Креатив',
+    risk:'Риск'
+  }[k] || k;
+}
+
+function escapeHtml(s){
+  if(!s) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function openLink(url){
+  if (tg && typeof tg.openLink === 'function') tg.openLink(url);
+  else window.open(url, '_blank');
+}
+
+function copyToClipboard(text){
+  try {
+    navigator.clipboard.writeText(text);
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
+  }
+}
+
+// initial render
+renderQuestion();
+
+</script>
 </body>
 </html>
